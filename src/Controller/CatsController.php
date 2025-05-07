@@ -12,6 +12,15 @@ use \Cake\Error;
  */
 class CatsController extends AppController
 {
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Remove 'index' from unauthenticated actions for this specific controller
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+    }
+
     public function view($id): void
     {
         $cat = $this->Cats->get($id); // Fetch the cat by ID
@@ -21,7 +30,7 @@ class CatsController extends AppController
     public function index(): void
     {
         $this->loadComponent('Paginator');
-        $cats = $this->Paginator->paginate($this->Cats->find('all'));
+        $cats = $this->Paginator->paginate($this->Cats->find('all'), ['limit' => 12]);
         $this->set(compact('cats'));
     }
 

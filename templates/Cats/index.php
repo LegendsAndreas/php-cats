@@ -1,6 +1,8 @@
 <?php
 /**
+ * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cat[] $cats
+ * @var \App\Model\Entity\User $currentUser
  */
 
 ?>
@@ -9,9 +11,22 @@
     <div class="row text-center">
         <div class="col">
             <a href="cats/add">
-                <button class="fs-3">Add new Cat</button>
+                <button class="fs-3 mt-3">Add new Cat</button>
             </a>
         </div>
+        <?php if ($currentUser): ?>
+            <div class="col">
+                <a href="users/logout">
+                    <button class="fs-3 mt-3">Logout</button>
+                </a>
+            </div>
+        <?php else: ?>
+            <div class="col">
+                <a href="users/login">
+                    <button class="fs-3 mt-3">Login</button>
+                </a>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
         <?php
@@ -21,7 +36,7 @@
                 <div class="cat-index__wrapper">
                     <?= $this->Html->link(
                         $this->Html->image(
-                            'data:image/png;base64,' . $cat->base64_image,
+                            'data:image/png;base64,' . h($cat->base64_image),
                             [
                                 'style' => 'width: 100%; height: 100%; object-fit: cover;',
                                 'alt' => 'Cat',
@@ -54,5 +69,13 @@
 
         <?php
         endforeach; ?>
+    </div>
+
+    <div class="pagination mt-5">
+        <?= $this->Paginator->first('<< ' . __('First')) ?>
+        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
+        <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => 3]) ?>
+        <?= $this->Paginator->next(__('Next') . ' >') ?>
+        <?= $this->Paginator->last(__('Last') . ' >>') ?>
     </div>
 </div>
