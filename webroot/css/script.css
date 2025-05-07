@@ -1,0 +1,10 @@
+@import "bootstrap.min.css";
+@import "styles.css";
+@import "cat-index.css";
+@import "fonts.css";
+@import "terminal-window.css";
+@import "cats-view.css";
+
+* {
+    font-family: "JetBrains Mono", sans-serif !important;
+}
