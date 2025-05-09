@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -28,16 +30,6 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        // for all controllers in our application, make index and view
-        // actions public, skipping the authentication check
-        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
-        // We want to know if a user is logged in globally, so we put it in the AppController
-        $this->set('currentUser', $this->request->getAttribute('identity'));
-
-    }
 
     /**
      * Initialization hook method.
@@ -61,5 +53,28 @@ class AppController extends Controller
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // for all controllers in our application, make index and view
+        // actions public, skipping the authentication check
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+        // We want to know if a user is logged in globally, so we put it in the AppController
+        $this->set('currentUser', $this->request->getAttribute('identity'));
+
+        if (!$this->Authentication->getResult()->isValid()) {
+            switch ($this->request->getParam('action')) {
+                case 'edit':
+                    $this->Flash->warning('You must log in, in order to edit a cat.');
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                    break;
+                case 'delete':
+                    $this->Flash->warning('You must log in, in order to delete a cat.');
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                    break;
+            }
+        }
     }
 }

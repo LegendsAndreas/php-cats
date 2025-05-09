@@ -11,7 +11,10 @@
 echo $this->Form->create($cat);
 echo $this->Form->control('function_name', ['type' => 'text', 'required' => true]);
 echo $this->Form->control('function_description', ['type' => 'textarea', 'required' => true]);
-echo $this->Form->control('function_example', ['type' => 'textarea', 'required' => true]);
+echo $this->Form->control(
+    'function_example',
+    ['type' => 'textarea', 'required' => true, 'class' => 'cats-edit__textarea'],
+);
 echo $this->Form->control('base64_image', [
     'type' => 'text',
     'required' => true,
@@ -27,11 +30,11 @@ echo $this->Form->end();
     Clear image field
 </button>
 
-<a href="/">
-    <button>
-        Back to index
-    </button>
-</a>
+<?= $this->Html->link(
+    '<button class="my-4">Go to Cat</button>',
+    ['action' => 'view', $cat->id],
+    ['escape' => false]
+) ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

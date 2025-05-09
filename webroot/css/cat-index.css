@@ -2,6 +2,16 @@
   margin-top: 65px;
   margin-bottom: 65px;
 }
+.cat-index__order-checkbox {
+  position: relative;
+  top: 25%;
+  width: 20px;
+  height: 20px;
+}
+.cat-index__order-checkbox:checked {
+  background-color: #C93941;
+  border: none;
+}
 .cat-index__wrapper {
   width: 400px;
   height: 350px;

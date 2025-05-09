@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Cake\Http\Response;
+use Cake\I18n\FrozenTime;
 use JetBrains\PhpStorm\NoReturn;
 use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\Log\Log;
@@ -12,12 +14,10 @@ use \Cake\Error;
  */
 class CatsController extends AppController
 {
-
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
 
-        // Remove 'index' from unauthenticated actions for this specific controller
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 
@@ -27,14 +27,37 @@ class CatsController extends AppController
         $this->set(compact('cat'));
     }
 
-    public function index(): void
+    // http://localhost:8765/cats/index/__?reverseOrder=false
+    public function index(string $catName = null): void
     {
         $this->loadComponent('Paginator');
-        $cats = $this->Paginator->paginate($this->Cats->find('all'), ['limit' => 12]);
+        $query = $this->Cats->find('all')->where(['deleted IS' => null]);
+
+        if ($this->request->getQuery('reverseOrder') === 'true') {
+            $query->orderDesc('created');
+        } else {
+            $query->orderAsc('created');
+        }
+
+
+        if (empty($catName)) {
+            $cats = $this->Paginator->paginate($query, ['limit' => 12]);
+        } else {
+            $catName = $this->formatCatName($catName);
+
+            $cats = $this->Paginator->paginate($query
+                    ->where(['function_name LIKE' => '%' . $catName . '%']),
+                ['limit' => 12]);
+        }
         $this->set(compact('cats'));
     }
 
-    public function add(): ?\Cake\Http\Response
+    // To make sure that it also looks after special characters, we add a backslash to escape them
+    private function formatCatName(string $catName): string {
+        return str_replace(['%', '_'], ['\\%', '\\_'], $catName);
+    }
+
+    public function add(): ?Response
     {
         $cat = $this->Cats->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -60,7 +83,7 @@ class CatsController extends AppController
         return $this->render();
     }
 
-    public function edit($id): ?\Cake\Http\Response
+    public function edit($id): Response
     {
         $cat = $this->Cats
             ->findById($id)
@@ -83,18 +106,21 @@ class CatsController extends AppController
         return $this->render();
     }
 
-    public function delete($id): ?\Cake\Http\Response
+    public function delete($id): Response
     {
+        date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
         $cat = $this->Cats->findById($id)->firstOrFail();
-        if ($this->Cats->delete($cat)) {
-            $this->Flash->success(__('The "{0}" article has been deleted.', $cat->function_name));
+        $this->Cats->patchEntity($cat,
+            ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
+
+        if ($this->Cats->save($cat)) {
+            $this->Flash->success(__('The "{0}" article has been archived as deleted.', $cat->function_name));
             return $this->redirect(['action' => 'index']);
         } else {
-            $this->Flash->error(__('The "{0}" article could not be deleted. Please, try again.', $cat->function_name));
+            $this->Flash->error(__('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name));
+            return $this->redirect(['action' => 'index']);
         }
-
-        return $this->render();
     }
 }

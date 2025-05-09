@@ -1,5 +1,12 @@
-.card {
-  background-color: #d33c44;
-}
+@import "bootstrap.min.css";
+@import "fonts.css";
+@import "terminal-window.css";
+@import "layout-default.css";
+@import "cat-index.css";
+@import "cats-view.css";
+@import "cats-edit.css";
+@import "cats-add.css";
 
-/*# sourceMappingURL=styles.css.map */
+* {
+    font-family: "JetBrains Mono", sans-serif !important;
+}

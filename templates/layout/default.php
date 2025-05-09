@@ -25,20 +25,17 @@
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'script']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'styles']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
 <main class="main">
+    <a href="/" class="position-fixed top-0 left-0 p-2 z-3">
+        <?= $this->Html->image('php-cats-logo-1.svg', ['alt' => 'Logo', 'class' => 'img-fluid layout-default__image']) ?>
+    </a>
     <div class="container">
-<!--        <a href="#" class="hover-sound">Hover me!</a>
-
-        <audio id="hover-audio" preload="auto">
-            <source src="<?php /*= $this->Url->build('/sound/fart-83471.mp3') */?>" type="audio/mpeg">
-        </audio>-->
         <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
     </div>
@@ -47,6 +44,9 @@
 </footer>
 </body>
 </html>
+
+<!--'defer' makes it load when the whole DOM is ready -->
+<?= $this->Html->script('script', ['defer' => true, 'type' => 'module']) ?>
 
 <?php
 $this->append('script') ?>
