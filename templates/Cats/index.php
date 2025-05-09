@@ -14,6 +14,11 @@
                 <button class="fs-3 mt-3">Add new Cat</button>
             </a>
         </div>
+        <div class="col">
+            <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>">
+                <button class="fs-3 mt-3">Deleted Cats</button>
+            </a>
+        </div>
         <?php
         if ($currentUser): ?>
             <div class="col">
@@ -31,6 +36,7 @@
         <?php
         endif; ?>
     </div>
+
     <div class="row text-center mt-5 justify-content-md-center">
         <div class="col">
             <input type="text" class="form-control fs-3 mt-3 d-inline js-input-search w-25"
@@ -51,6 +57,13 @@
             </div>
         </div>
     </div>
+    <div class="pagination mt-5 cat-index__pagination">
+        <?= $this->Paginator->first('<< ' . __('First')) ?>
+        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
+        <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => 3]) ?>
+        <?= $this->Paginator->next(__('Next') . ' >') ?>
+        <?= $this->Paginator->last(__('Last') . ' >>') ?>
+    </div>
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
         <?php
         foreach ($cats as $cat): ?>
@@ -70,21 +83,23 @@
                             ['controller' => 'Cats', 'action' => 'view', $cat->id],
                             ['escape' => false, 'class' => 'position-relative'],
                         ) ?>
-<!--                        <div class="position-absolute top-0 end-0 m-3">
+                        <!--                        <div class="position-absolute top-0 end-0 m-3">
                             <div class="cat-index__image__footer__button-a d-inline">
-                                <?php /*= $this->Form->postLink(
-                                    'Delete',
-                                    ['action' => 'delete', $cat->id],
-                                    ['confirm' => 'Are you sure?'],
-                                )
-                                */?>
+                                <?php
+                        /*= $this->Form->postLink(
+                                                           'Delete',
+                                                           ['action' => 'delete', $cat->id],
+                                                           ['confirm' => 'Are you sure?'],
+                                                       )
+                                                       */ ?>
                             </div>
                             <div class="cat-index__image__footer__button-a d-inline">
-                                <?php /*= $this->Form->postLink(
-                                    'Edit',
-                                    ['action' => 'edit', $cat->id],
-                                )
-                                */?>
+                                <?php
+                        /*= $this->Form->postLink(
+                                                           'Edit',
+                                                           ['action' => 'edit', $cat->id],
+                                                       )
+                                                       */ ?>
                             </div>
                         </div>-->
                     </div>
@@ -114,13 +129,16 @@
         endforeach; ?>
     </div>
 
-    <div class="pagination mt-5">
+    <div class="pagination mt-5 cat-index__pagination">
         <?= $this->Paginator->first('<< ' . __('First')) ?>
         <?= $this->Paginator->prev('< ' . __('Previous')) ?>
         <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => 3]) ?>
         <?= $this->Paginator->next(__('Next') . ' >') ?>
         <?= $this->Paginator->last(__('Last') . ' >>') ?>
     </div>
+    <p class="text-center"><?= $this->Paginator->counter(
+            __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'),
+        ) ?></p>
 </div>
 
 <?php

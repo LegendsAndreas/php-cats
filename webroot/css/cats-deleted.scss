@@ -1,0 +1,55 @@
+.cats-deleted {
+    margin-top: 65px;
+    margin-bottom: 65px;
+
+    &__order-checkbox {
+        position: relative;
+        top: 25%;
+        width: 20px;
+        height: 20px;
+
+        &:checked {
+            background-color: #C93941;
+            border: none;
+        }
+    }
+
+    &__wrapper {
+        width: 400px;
+        height: 350px;
+        margin: 0 auto;
+
+        @media (max-width: 768px) {
+            width: 350px;
+            height: 300px;
+        }
+    }
+
+    &__image {
+        border: 1px solid black;
+        border-radius: 5px 5px 0 0;
+        transition: opacity 0.2s ease-in-out;
+        &:hover {
+            opacity: 80%;
+        }
+
+        &__footer {
+            padding: 5px 10px 15px 10px;
+            color: #F6FDFF;
+            background-color: #C93941;
+            border-radius: 0 0 5px 5px;
+
+            &__button-a a {
+                border-radius: 4px;
+                text-decoration: none;
+                color: #F6FDFF;
+                background-color: #8f272b;
+                padding: 5px;
+            }
+
+            &__button-a a:hover {
+                background-color: #119e0a;
+            }
+        }
+    }
+}

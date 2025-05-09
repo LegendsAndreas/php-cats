@@ -2,6 +2,56 @@
     margin-top: 65px;
     margin-bottom: 65px;
 
+    &__pagination {
+        li a {
+            color: #636363 !important;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: none;
+        }
+
+        li {
+            background-color: #f5f7fa;
+            border: 1px solid lightslategray;
+            margin: 0;
+            // Do not put more padding to the sides, otherwise the clickable area will not align
+            padding-bottom: 10px;
+            padding-top: 10px;
+
+            &:hover {
+                background-color: #C93941;
+                border-left-color: #C93941;
+                border-right-color: #C93941;
+                a {
+                    color: white !important;
+                    transition: none;
+                }
+            }
+        }
+
+        .active {
+            background-color: #C93941;
+            border-left-color: #C93941;
+            border-right-color: #C93941;
+            a {
+                color: white !important;
+            }
+        }
+
+        .last {
+            border-radius: 0px 25px 25px 0px;
+        }
+        .first {
+            border-radius: 25px 0px 0px 25px;
+        }
+        .prev.disabled {
+            border-radius: 25px 0px 0px 25px !important;
+        }
+        .next.disabled {
+            border-radius: 0px 25px 25px 0px !important;
+        }
+    }
+
     &__order-checkbox {
         position: relative;
         top: 25%;
@@ -29,6 +79,7 @@
         border: 1px solid black;
         border-radius: 5px 5px 0 0;
         transition: opacity 0.2s ease-in-out;
+
         &:hover {
             opacity: 80%;
         }

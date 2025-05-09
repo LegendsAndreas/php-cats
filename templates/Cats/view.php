@@ -18,6 +18,11 @@ $test = 1;
         <p class="cats-view__function-examples p-3 js-function-example"><strong>Usage:</strong> <?= h($cat->function_example)
             ?></p>
     </div>
+
+    <?= $this->Html->link(
+        '<button>Edit Cat</button>',
+        ['action' => 'edit', $cat->id],
+        ['escape' => false]) ?>
 </div>
 
 <script>

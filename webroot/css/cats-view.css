@@ -1,0 +1,24 @@
+.cats-view {
+  background-color: #C93941;
+}
+.cats-view__function-name {
+  font-size: 60px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  background-color: wheat;
+}
+.cats-view__function-description {
+  font-size: 20px;
+  color: white;
+}
+.cats-view__function-examples {
+  font-size: 20px;
+  background-color: wheat;
+  border-radius: 3px;
+  white-space: pre-wrap;
+}
+.cats-view__image {
+  min-width: 350px;
+}
+
+/*# sourceMappingURL=cats-view.css.map */

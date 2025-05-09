@@ -1,0 +1,51 @@
+.cats-deleted {
+  margin-top: 65px;
+  margin-bottom: 65px;
+}
+.cats-deleted__order-checkbox {
+  position: relative;
+  top: 25%;
+  width: 20px;
+  height: 20px;
+}
+.cats-deleted__order-checkbox:checked {
+  background-color: #C93941;
+  border: none;
+}
+.cats-deleted__wrapper {
+  width: 400px;
+  height: 350px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .cats-deleted__wrapper {
+    width: 350px;
+    height: 300px;
+  }
+}
+.cats-deleted__image {
+  border: 1px solid black;
+  border-radius: 5px 5px 0 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.cats-deleted__image:hover {
+  opacity: 80%;
+}
+.cats-deleted__image__footer {
+  padding: 5px 10px 15px 10px;
+  color: #F6FDFF;
+  background-color: #C93941;
+  border-radius: 0 0 5px 5px;
+}
+.cats-deleted__image__footer__button-a a {
+  border-radius: 4px;
+  text-decoration: none;
+  color: #F6FDFF;
+  background-color: #8f272b;
+  padding: 5px;
+}
+.cats-deleted__image__footer__button-a a:hover {
+  background-color: #119e0a;
+}
+
+/*# sourceMappingURL=cats-deleted.css.map */

@@ -27,7 +27,6 @@ class CatsController extends AppController
         $this->set(compact('cat'));
     }
 
-    // http://localhost:8765/cats/index/__?reverseOrder=false
     public function index(string $catName = null): void
     {
         $this->loadComponent('Paginator');
@@ -122,5 +121,26 @@ class CatsController extends AppController
             $this->Flash->error(__('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name));
             return $this->redirect(['action' => 'index']);
         }
+    }
+
+    public function deleted(): void
+    {
+        $this->loadComponent('Paginator');
+        $cats = $this->Cats->find('all')->where(['deleted IS NOT' => null]);
+        $this->set(compact('cats'));
+    }
+
+    public function restore($id)
+    {
+        $cat = $this->Cats->findById($id)->firstOrFail();
+        $this->Cats->patchEntity($cat,
+            ['deleted' => null]);
+
+        if ($this->Cats->save($cat)) {
+            $this->Flash->success(__('The "{0}" article has been restored.', $cat->function_name));
+        } else {
+            $this->Flash->error(__('The "{0}" article could not be restored. Please, try again.', $cat->function_name));
+        }
+        return $this->redirect(['action' => 'index']);
     }
 }

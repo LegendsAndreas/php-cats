@@ -6,6 +6,7 @@
 @import "cats-view.css";
 @import "cats-edit.css";
 @import "cats-add.css";
+@import "cats-deleted.css";
 
 * {
     font-family: "JetBrains Mono", sans-serif !important;
