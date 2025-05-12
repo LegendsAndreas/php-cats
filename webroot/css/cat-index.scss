@@ -2,6 +2,21 @@
     margin-top: 65px;
     margin-bottom: 65px;
 
+    &__top-button {
+        width: 200px;
+    }
+
+    &__input-search {
+        @media (max-width: 768px) {
+            width: 200px !important;
+        }
+        &__button {
+            @media (max-width: 768px) {
+                width: 200px !important;
+            }
+        }
+    }
+
     &__pagination {
         li a {
             color: #636363 !important;

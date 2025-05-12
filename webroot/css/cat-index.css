@@ -2,6 +2,19 @@
   margin-top: 65px;
   margin-bottom: 65px;
 }
+.cat-index__top-button {
+  width: 200px;
+}
+@media (max-width: 768px) {
+  .cat-index__input-search {
+    width: 200px !important;
+  }
+}
+@media (max-width: 768px) {
+  .cat-index__input-search__button {
+    width: 200px !important;
+  }
+}
 .cat-index__pagination li a {
   color: #636363 !important;
   text-decoration: none;

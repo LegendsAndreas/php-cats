@@ -14,6 +14,13 @@
  * @var \App\View\AppView $this
  */
 
+//dd($this);
+
+// I assume that we get the title from the controller name.
+if ($this->getRequest()->getParam('controller') === 'Cats') {
+    $this->assign('title', 'PHP Cats');
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,6 +54,7 @@
 
 <!--'defer' makes it load when the whole DOM is ready -->
 <?= $this->Html->script('script', ['defer' => true, 'type' => 'module']) ?>
+
 
 <?php
 $this->append('script') ?>

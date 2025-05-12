@@ -5,65 +5,67 @@
  * @var \App\Model\Entity\User $currentUser
  */
 
+$modulus = 4;
+
 ?>
 
 <div class="my-5">
-    <div class="row text-center">
-        <div class="col">
-            <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'add']) ?>">
-                <button class="fs-3 mt-3">Add new Cat</button>
-            </a>
-        </div>
-        <div class="col">
-            <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>">
-                <button class="fs-3 mt-3">Deleted Cats</button>
-            </a>
-        </div>
-        <?php
-        if ($currentUser): ?>
+    <div class="py-4" style="background-color: wheat; border-radius: 5px;">
+        <div class="row text-center row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xxl-3">
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>">
-                    <button class="fs-3 mt-3">Logout</button>
+                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'add']) ?>">
+                    <button class="fs-3 mt-3 cat-index__top-button">Add new Cat</button>
                 </a>
             </div>
-        <?php
-        else: ?>
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>">
-                    <button class="fs-3 mt-3">Login</button>
+                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>">
+                    <button class="fs-3 mt-3 cat-index__top-button">Deleted Cats</button>
                 </a>
             </div>
-        <?php
-        endif; ?>
-    </div>
+            <?php
+            if ($currentUser): ?>
+                <div class="col">
+                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>">
+                        <button class="fs-3 mt-3 cat-index__top-button">Logout</button>
+                    </a>
+                </div>
+            <?php
+            else: ?>
+                <div class="col">
+                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>">
+                        <button class="fs-3 mt-3 cat-index__top-button">Login</button>
+                    </a>
+                </div>
+            <?php
+            endif; ?>
+        </div>
 
-    <div class="row text-center mt-5 justify-content-md-center">
-        <div class="col">
-            <input type="text" class="form-control fs-3 mt-3 d-inline js-input-search w-25"
-                   placeholder="Search by name">
-            <?= $this->Html->link(
-                '<button class="fs-3 mt-3 d-inline js-search-button">Search</button>',
-                ['controller' => 'Cats', 'action' => 'index'],
-                ['escape' => false, 'class' => 'text-decoration-none js-link-search', 'href' => '/cats/index//0'],
-            ) ?>
+        <div class="row text-center mt-5 justify-content-md-center">
+            <div class="col">
+                <input type="text" class="form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
+                       placeholder="Search by name" style="background-color: white">
+                <?= $this->Html->link(
+                    '<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button">Search</button>',
+                    ['controller' => 'Cats', 'action' => 'index'],
+                    ['escape' => false, 'class' => 'text-decoration-none js-link-search', 'href' => '/cats/index//0'],
+                ) ?>
 
-            <div>
-                <?= $this->Form->label('select-column', 'Reverse Order', ['class' => 'form-check-label fs-3']) ?>
-                <?= $this->Form->checkbox('select_column', [
-                    'class' => 'form-check-input js-order-checkbox cat-index__order-checkbox',
-                    'id' => 'select-column',
-                    'checked' => false,
-                ]) ?>
+                <div>
+                    <?= $this->Form->label('select-column', 'Reverse Order', ['class' => 'form-check-label fs-3']) ?>
+                    <?= $this->Form->checkbox('select_column', [
+                        'class' => 'form-check-input js-order-checkbox cat-index__order-checkbox',
+                        'id' => 'select-column',
+                        'checked' => false,
+                    ]) ?>
+                </div>
             </div>
         </div>
+
+        <?= $this->element('Cats/cats-paginator', [
+            'modulus' => $modulus,
+        ]) ?>
     </div>
-    <div class="pagination mt-5 cat-index__pagination">
-        <?= $this->Paginator->first('<< ' . __('First')) ?>
-        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
-        <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => 3]) ?>
-        <?= $this->Paginator->next(__('Next') . ' >') ?>
-        <?= $this->Paginator->last(__('Last') . ' >>') ?>
-    </div>
+
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
         <?php
         foreach ($cats as $cat): ?>
@@ -129,16 +131,9 @@
         endforeach; ?>
     </div>
 
-    <div class="pagination mt-5 cat-index__pagination">
-        <?= $this->Paginator->first('<< ' . __('First')) ?>
-        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
-        <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => 3]) ?>
-        <?= $this->Paginator->next(__('Next') . ' >') ?>
-        <?= $this->Paginator->last(__('Last') . ' >>') ?>
-    </div>
-    <p class="text-center"><?= $this->Paginator->counter(
-            __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'),
-        ) ?></p>
+    <?= $this->element('Cats/cats-paginator', [
+        'modulus' => $modulus,
+    ]) ?>
 </div>
 
 <?php

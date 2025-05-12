@@ -20,13 +20,10 @@ function toggleCheckbox() {
 }
 
 function resizeSearchBarMobile() {
-    console.log('toggleSearchBarMobileWidth');
     const searchBar = document.querySelector('.js-input-search');
     if (window.innerWidth < 768) {
-        console.log('window.innerWidth < 768');
         searchBar.classList.remove('w-25')
     } else {
-        console.log('window.innerWidth > 768');
         searchBar.classList.add('w-25')
     }
 }
