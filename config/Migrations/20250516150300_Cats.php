@@ -4,6 +4,9 @@ use Phinx\Migration\AbstractMigration;
 
 class Cats extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up()
     {
         $this->execute('
