@@ -26,14 +26,14 @@ $modulus = 4;
                 </a>
             </div>
             <?php
-            if ($currentUser): ?>
+            if ($currentUser) : ?>
                 <div class="col">
                     <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>">
                         <button class="fs-3 mt-3 cat-index__top-button">Logout</button>
                     </a>
                 </div>
             <?php
-            else: ?>
+            else : ?>
                 <div class="col">
                     <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>">
                         <button class="fs-3 mt-3 cat-index__top-button">Login</button>
@@ -45,8 +45,8 @@ $modulus = 4;
 
         <div class="row text-center mt-5 justify-content-md-center">
             <div class="col">
-                <input type="text" class="form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
-                       placeholder="Search by name" style="background-color: white">
+                <input type="text" class="bg-white form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
+                       placeholder="Search by name">
                 <?= $this->Html->link(
                     '<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button">Search</button>',
                     ['controller' => 'Cats', 'action' => 'index'],
@@ -71,8 +71,7 @@ $modulus = 4;
 
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
         <?php
-        foreach ($cats as $cat): ?>
-
+        foreach ($cats as $cat) : ?>
             <div class="col cat-index">
                 <div class="cat-index__wrapper">
                     <div class="position-relative cat-index__wrapper">
@@ -146,5 +145,40 @@ $this->Html->script('index', ['defer' => true, 'type' => 'module']) ?>
         resizeSearchBarMobile();
         modifySearchHref();
         toggleCheckbox();
+
+        const searchInput = document.querySelector('.js-input-search');
+        searchInput.addEventListener('input', () => {
+            setCookie('searchQuery', searchInput.value, 7);
+        });
+
+        const searchQuery = getCookie('searchQuery');
+        if (searchQuery) {
+            console.log('Search Query Cookie:', searchQuery);
+            // Optionally, set the value back into the search input
+            const searchInput = document.querySelector('.js-input-search');
+            if (searchInput) {
+                searchInput.value = searchQuery; // Populate the search input field
+            }
+        } else {
+            console.log('Search Query Cookie does not exist.');
+        }
     });
+
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring((name.length + 1));
+            }
+        }
+        return null;
+    }
 </script>
