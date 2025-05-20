@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Cat[] $cats
  * @var \App\Model\Entity\User $currentUser
  */
-
 $modulus = 4;
 
 ?>
@@ -145,40 +144,5 @@ $this->Html->script('index', ['defer' => true, 'type' => 'module']) ?>
         resizeSearchBarMobile();
         modifySearchHref();
         toggleCheckbox();
-
-        const searchInput = document.querySelector('.js-input-search');
-        searchInput.addEventListener('input', () => {
-            setCookie('searchQuery', searchInput.value, 7);
-        });
-
-        const searchQuery = getCookie('searchQuery');
-        if (searchQuery) {
-            console.log('Search Query Cookie:', searchQuery);
-            // Optionally, set the value back into the search input
-            const searchInput = document.querySelector('.js-input-search');
-            if (searchInput) {
-                searchInput.value = searchQuery; // Populate the search input field
-            }
-        } else {
-            console.log('Search Query Cookie does not exist.');
-        }
     });
-
-    function setCookie(name, value, days) {
-        const d = new Date();
-        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + d.toUTCString();
-        document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    }
-
-    function getCookie(name) {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith(name + '=')) {
-                return cookie.substring((name.length + 1));
-            }
-        }
-        return null;
-    }
 </script>

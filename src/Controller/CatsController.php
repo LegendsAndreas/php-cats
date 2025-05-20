@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Cake\Http\Cookie\Cookie;
+use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
 use JetBrains\PhpStorm\NoReturn;
@@ -14,6 +16,12 @@ use \Cake\Error;
  */
 class CatsController extends AppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+    }
+
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -30,7 +38,9 @@ class CatsController extends AppController
     public function index(string $catName = null): void
     {
         $this->loadComponent('Paginator');
+
         $query = $this->Cats->find('all')->where(['deleted IS' => null]);
+//        $this->setCookie();
 
         if ($this->request->getQuery('reverseOrder') === 'true') {
             $query->orderDesc('created');
@@ -44,17 +54,51 @@ class CatsController extends AppController
         } else {
             $catName = $this->formatCatName($catName);
 
-            $cats = $this->Paginator->paginate($query
+            $cats = $this->Paginator->paginate(
+                $query
                     ->where(['function_name LIKE' => '%' . $catName . '%']),
-                ['limit' => 12]);
+                ['limit' => 12],
+            );
         }
         $this->set(compact('cats'));
     }
 
     // To make sure that it also looks after special characters, we add a backslash to escape them
-    private function formatCatName(string $catName): string {
+    private function formatCatName(string $catName): string
+    {
         return str_replace(['%', '_'], ['\\%', '\\_'], $catName);
     }
+
+/*    private function setCookie()
+    {
+        // Create a cookie collection
+        $cookies = new CookieCollection();
+
+        // Create multiple cookies
+        $cookie1 = (new Cookie('php-cookie'))
+            ->withValue('true')
+            ->withExpiry(new \DateTime('+1 year'))
+            ->withPath('/')
+            ->withHttpOnly(true)
+            ->withSecure(false);
+
+        $cookie2 = (new Cookie('another-cookie'))
+            ->withValue('false')
+            ->withExpiry(new \DateTime('+1 month'))
+            ->withPath('/')
+            ->withHttpOnly(true)
+            ->withSecure(false);
+
+        // Add cookies to the cookie collection
+        $cookies = $cookies->add($cookie1)->add($cookie2);
+
+        // Attach all cookies from the collection to the response object
+        foreach ($cookies as $currentCookie) {
+            $this->response = $this->response->withCookie($currentCookie);
+        }
+
+    }*/
+
 
     public function add(): ?Response
     {
@@ -111,14 +155,18 @@ class CatsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $cat = $this->Cats->findById($id)->firstOrFail();
-        $this->Cats->patchEntity($cat,
-            ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
+        $this->Cats->patchEntity(
+            $cat,
+            ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))],
+        );
 
         if ($this->Cats->save($cat)) {
             $this->Flash->success(__('The "{0}" article has been archived as deleted.', $cat->function_name));
             return $this->redirect(['action' => 'index']);
         } else {
-            $this->Flash->error(__('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name));
+            $this->Flash->error(
+                __('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name),
+            );
             return $this->redirect(['action' => 'index']);
         }
     }
@@ -133,8 +181,10 @@ class CatsController extends AppController
     public function restore($id)
     {
         $cat = $this->Cats->findById($id)->firstOrFail();
-        $this->Cats->patchEntity($cat,
-            ['deleted' => null]);
+        $this->Cats->patchEntity(
+            $cat,
+            ['deleted' => null],
+        );
 
         if ($this->Cats->save($cat)) {
             $this->Flash->success(__('The "{0}" article has been restored.', $cat->function_name));
