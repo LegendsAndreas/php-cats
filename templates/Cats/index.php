@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cat[] $cats
@@ -44,7 +45,8 @@ $modulus = 4;
 
         <div class="row text-center mt-5 justify-content-md-center">
             <div class="col">
-                <input type="text" class="bg-white form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
+                <input type="text"
+                       class="bg-white form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
                        placeholder="Search by name">
                 <?= $this->Html->link(
                     '<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button">Search</button>',
