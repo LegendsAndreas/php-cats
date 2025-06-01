@@ -361,6 +361,14 @@ return [
             'scopes' => false,
             'levels' => ['notice', 'info', 'debug'],
         ],
+        'countries' => [
+            'className' => FileLog::class,
+            'path' => LOGS, // Default log directory
+            'file' => 'countries', // This creates `countries.log`
+            'levels' => ['info', 'debug'], // Log levels
+            'scopes' => ['countries'], // Define a scope for this logger
+        ],
+
         'error' => [
             'className' => FileLog::class,
             'path' => LOGS,

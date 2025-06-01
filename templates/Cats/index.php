@@ -1,5 +1,6 @@
 <?php
 use Cake\Log\Log;
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cat[] $cats
@@ -19,8 +20,7 @@ function getCountryFromIp($ipAddress) {
 
 $ip = $this->request->clientIp();
 $country = getCountryFromIp($ip);
-
-Log::debug($country);
+Log::write('info', $country, ['scope' => 'countries']);
 
 ?>
 
