@@ -1,11 +1,26 @@
 <?php
-
+use Cake\Log\Log;
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cat[] $cats
  * @var \App\Model\Entity\User $currentUser
  */
 $modulus = 4;
+function getCountryFromIp($ipAddress) {
+    $accessKey = 'c25b359c3d9751572d92c1055e5c9a82';
+
+    $apiUrl = "http://api.ipstack.com/$ipAddress?access_key=$accessKey";
+
+    $response = file_get_contents($apiUrl);
+    $data = json_decode($response, true);
+
+    return $data['country_name'] ?? null;
+}
+
+$ip = $this->request->clientIp();
+$country = getCountryFromIp($ip);
+
+Log::debug($country);
 
 ?>
 

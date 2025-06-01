@@ -1,0 +1,45 @@
+<?php
+return [
+    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+
+    'Session' => [
+        'defaults' => 'php',
+        'cookie' => 'CAKEPHP_SESSION', // Should match CSRF cookie
+        'timeout' => 1440, // Session expiry (in minutes)
+    ],
+
+    'Security' => [
+        'salt' => env('SECURITY_SALT', 'e1ed29b1e3efb1f5ec87dd639c17ddb51a16bdd984500f00726caef72f0d105e'),
+        'cookieKey' => 'your-secure-key-here', // Must be a strong random string
+    ],
+
+    'Datasources' => [
+        'default' => [
+            'host' => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'nothing',
+            'url' => env('DATABASE_URL', null),
+        ],
+        'test' => [
+            'host' => 'localhost',
+            //'port' => 'non_standard_port_number',
+            'username' => 'my_app',
+            'password' => 'secret',
+            'database' => 'test_myapp',
+            //'schema' => 'myapp',
+            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
+        ],
+    ],
+
+    'EmailTransport' => [
+        'default' => [
+            'host' => 'localhost',
+            'port' => 25,
+            'username' => null,
+            'password' => null,
+            'client' => null,
+            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+        ],
+    ],
+];
