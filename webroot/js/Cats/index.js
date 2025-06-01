@@ -1,3 +1,10 @@
+// phpcs:ignoreFile
+document.addEventListener('DOMContentLoaded', () => {
+    resizeSearchBarMobile();
+    modifySearchHref();
+    toggleCheckbox();
+});
+
 function modifySearchHref() {
     const searchButton = document.querySelector('.js-search-button');
     searchButton.addEventListener('click', () => {

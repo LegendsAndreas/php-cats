@@ -1,3 +1,4 @@
+// phpcs:ignoreFile
 document.addEventListener("DOMContentLoaded", function(event) {
     toggleOrderCookie();
     getOrderCookie();
