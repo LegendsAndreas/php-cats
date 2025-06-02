@@ -8,7 +8,7 @@ use Cake\Log\Log;
  * @var \App\Model\Entity\User $currentUser
  */
 $modulus = 4;
-function getCountryFromIp($ipAddress) {
+/*function getCountryFromIp($ipAddress) {
     $accessKey = 'c25b359c3d9751572d92c1055e5c9a82';
 
     $apiUrl = "http://api.ipstack.com/$ipAddress?access_key=$accessKey";
@@ -19,9 +19,9 @@ function getCountryFromIp($ipAddress) {
     return $data['country_name'] ?? null;
 }
 
-$ip = $this->request->clientIp();
+$ip = '8.8.8.8';
 $country = getCountryFromIp($ip);
-Log::write('info', $country, ['scope' => 'countries']);
+Log::write('info', $country, ['scope' => 'countries']);*/
 
 ?>
 
@@ -156,11 +156,3 @@ Log::write('info', $country, ['scope' => 'countries']);
 </div>
 
 <?php
-$this->Html->script('index', ['defer' => true, 'type' => 'module']) ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        resizeSearchBarMobile();
-        modifySearchHref();
-        toggleCheckbox();
-    });
-</script>
