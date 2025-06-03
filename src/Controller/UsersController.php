@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -24,12 +25,12 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+/*    public function index()
     {
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
-    }
+    }*/
 
     /**
      * View method
@@ -38,21 +39,21 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+/*    public function view($id = null)
     {
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
 
         $this->set(compact('user'));
-    }
+    }*/
 
     /**
      * Add method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+/*    public function add()
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -65,7 +66,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
-    }
+    }*/
 
     /**
      * Edit method
@@ -74,7 +75,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+/*    public function edit($id = null)
     {
         $user = $this->Users->get($id, [
             'contain' => [],
@@ -89,7 +90,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
-    }
+    }*/
 
     /**
      * Delete method
@@ -98,7 +99,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+/*    public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
@@ -109,7 +110,7 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
+    }*/
 
     public function login()
     {

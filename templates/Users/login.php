@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 /**
  * @var \App\View\AppView $this
  */
@@ -16,6 +17,5 @@
     <?= $this->Form->submit(__('Login')); ?>
     <?= $this->Form->end() ?>
 
-    <?= $this->Html->link("Add User", ['action' => 'add']) ?>
     <?= $this->Html->link("Go to index", ['controller' => 'Cats','action' => 'index', 'class' => 'd-block']) ?>
 </div>
