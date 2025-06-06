@@ -1,5 +1,7 @@
 <?php
+use App\Utility;
 // phpcs:ignoreFile
+use Cake\Cache\Cache;
 use Cake\Log\Log;
 
 /**
@@ -8,20 +10,9 @@ use Cake\Log\Log;
  * @var \App\Model\Entity\User $currentUser
  */
 $modulus = 4;
-/*function getCountryFromIp($ipAddress) {
-    $accessKey = 'c25b359c3d9751572d92c1055e5c9a82';
 
-    $apiUrl = "http://api.ipstack.com/$ipAddress?access_key=$accessKey";
-
-    $response = file_get_contents($apiUrl);
-    $data = json_decode($response, true);
-
-    return $data['country_name'] ?? null;
-}
-
-$ip = '8.8.8.8';
-$country = getCountryFromIp($ip);
-Log::write('info', $country, ['scope' => 'countries']);*/
+$tester = new Utility\LogCountry();
+$tester->getCountryFromIp($this->request->clientIp());
 
 ?>
 
