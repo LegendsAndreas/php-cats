@@ -40,7 +40,6 @@ class CatsController extends AppController
         $this->loadComponent('Paginator');
 
         $query = $this->Cats->find('all')->where(['deleted IS' => null]);
-//        $this->setCookie();
 
         if ($this->request->getQuery('reverseOrder') === 'true') {
             $query->orderDesc('created');
