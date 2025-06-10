@@ -46,15 +46,15 @@ return [
      *   `plugins`, `templates`, `locales` subkeys, which allow the definition of
      *   paths for plugins, view templates and locale files respectively.
      */
-    'App' => [
-        'namespace' => 'App',
-        'encoding' => env('APP_ENCODING', 'UTF-8'),
-        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
+    'App'            => [
+        'namespace'       => 'App',
+        'encoding'        => env('APP_ENCODING', 'UTF-8'),
+        'defaultLocale'   => env('APP_DEFAULT_LOCALE', 'en_US'),
         'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
-        'base' => false,
-        'dir' => 'src',
-        'webroot' => 'webroot',
-        'wwwRoot' => WWW_ROOT,
+        'base'            => false,
+        'dir'             => 'src',
+        'webroot'         => 'webroot',
+        'wwwRoot'         => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
         'fullBaseUrl' => 'http://phpcats.dk',
         'imageBaseUrl' => 'img/',
@@ -63,7 +63,7 @@ return [
         'paths' => [
             'plugins' => [ROOT . DS . 'plugins' . DS],
             'templates' => [ROOT . DS . 'templates' . DS],
-            'locales' => [RESOURCES . 'locales' . DS],
+            'locales'   => [RESOURCES . 'locales' . DS],
         ],
     ],
 
@@ -371,7 +371,7 @@ return [
             'className' => FileLog::class,
             'path'      => LOGS, // Default log directory
             'file'      => 'countries', // This creates `countries.log`
-            'levels'    => ['info', 'debug'], // Log levels
+            'levels'    => ['info', 'error'], // Log levels
             'scopes'    => ['countries'], // Define a scope for this logger
         ],
 
