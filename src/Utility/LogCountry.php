@@ -38,6 +38,11 @@ class LogCountry
 
     public function getIpCountry(string $ip): void
     {
+        if (Cache::read("logged_ip_{$ip}", 'ip_logging')) {
+            Log::write('info', "IP address already logged: {$ip}", ['scope' => 'countries']);
+            return;
+        }
+
         $databasePath = ROOT . '/resources/GeoLite2-Country.mmdb';
 
         $reader = new Reader($databasePath);
@@ -56,9 +61,7 @@ class LogCountry
 
         $countryName = $record->country->name ?? 'Could not determine country';
 
-        if (!Cache::read("logged_ip_{$ip}", 'ip_logging')) {
-            Log::write('info', $countryName . " ($ip)", ['scope' => 'countries']);
-            Cache::write("logged_ip_{$ip}", true, 'ip_logging');
-        }
+        Log::write('info', $countryName . " ($ip)", ['scope' => 'countries']);
+        Cache::write("logged_ip_{$ip}", true, 'ip_logging');
     }
 }

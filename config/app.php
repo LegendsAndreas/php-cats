@@ -56,12 +56,12 @@ return [
         'webroot'         => 'webroot',
         'wwwRoot'         => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
-        'fullBaseUrl' => 'http://phpcats.dk',
-        'imageBaseUrl' => 'img/',
-        'cssBaseUrl' => 'css/',
-        'jsBaseUrl' => 'js/',
-        'paths' => [
-            'plugins' => [ROOT . DS . 'plugins' . DS],
+        'fullBaseUrl'     => env('APP_FULL_BASE_URL', false),
+        'imageBaseUrl'    => 'img/',
+        'cssBaseUrl'      => 'css/',
+        'jsBaseUrl'       => 'js/',
+        'paths'           => [
+            'plugins'   => [ROOT . DS . 'plugins' . DS],
             'templates' => [ROOT . DS . 'templates' . DS],
             'locales'   => [RESOURCES . 'locales' . DS],
         ],
@@ -75,7 +75,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security'       => [
-        'salt' => env('SECURITY_SALT'),
+        'salt' => env('SECURITY_KEY', 'un-secure-string'),
     ],
 
     /*

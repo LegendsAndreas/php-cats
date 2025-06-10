@@ -9,16 +9,16 @@ return [
     ],
 
     'Security' => [
-        'salt' => env('SECURITY_SALT', 'e1ed29b1e3efb1f5ec87dd639c17ddb51a16bdd984500f00726caef72f0d105e'),
-        'cookieKey' => 'your-secure-key-here', // Must be a strong random string
+        'salt' => env('SECURITY_KEY', 'un-secure-string'),
+        'cookieKey' => env('COOKIE_KEY', 'un-secure-string'),
     ],
 
     'Datasources' => [
         'default' => [
-            'host' => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'database' => 'nothing',
+            'host' => env('DATABASE_HOST', 'piss'),
+            'username' => env('DATABASE_USERNAME', 'pisster'),
+            'password' => env('DATABASE_PASSWORD', ''),
+            'database' => env('DATABASE_NAME', 'my_app'),
             'url' => env('DATABASE_URL', null),
         ],
         'test' => [

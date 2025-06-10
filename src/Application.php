@@ -55,10 +55,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
         } else {
-            FactoryLocator::add(
-                'Table',
-                (new TableLocator())->allowFallbackClass(false)
-            );
+            FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
         }
 
         /*
@@ -69,14 +66,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             $this->addPlugin('DebugKit');
             $this->addPlugin('Migrations');
         }
-
-        // Load more plugins here
+        $dotenv = new \josegonzalez\Dotenv\Loader(ROOT . DS . '.env');
+        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
     }
 
     /**
      * Setup the middleware queue your application will use.
      *
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
+     *
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
@@ -100,10 +98,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
-            ->add(new BodyParserMiddleware())
-            ->add(new RoutingMiddleware($this))
-            ->add(new BodyParserMiddleware())
-            ->add(new AuthenticationMiddleware($this))
+            ->add(new BodyParserMiddleware())->add(new RoutingMiddleware($this))->add(new BodyParserMiddleware())->add(new AuthenticationMiddleware($this))
 
             // Cross Site Request Forgery (CSRF) Protection Middleware
             // https://book.cakephp.org/4/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
@@ -118,6 +113,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * Register application container services.
      *
      * @param \Cake\Core\ContainerInterface $container The Container to update.
+     *
      * @return void
      * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
      */
@@ -137,7 +133,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $this->addOptionalPlugin('Bake');
 
         $this->addPlugin('Migrations');
-
         // Load more plugins here
     }
 
@@ -145,7 +140,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     {
         $authenticationService = new AuthenticationService([
             'unauthenticatedRedirect' => Router::url('/users/login'),
-            'queryParam' => 'redirect',
+            'queryParam'              => 'redirect',
         ]);
 
         // Load identifiers, ensure we check email and password fields
@@ -153,14 +148,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'fields' => [
                 'username' => 'email',
                 'password' => 'password',
-            ]
+            ],
         ]);
 
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
-            'fields' => [
+            'fields'   => [
                 'username' => 'email',
                 'password' => 'password',
             ],
