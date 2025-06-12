@@ -16,7 +16,6 @@ $modulus = 4;
 $tester = new Utility\LogCountry();
 $tester->getIpCountry($this->request->clientIp());
 ?>
-
     <div class="my-5">
         <a href="https://http.cat/" target="_blank">
             See also HTTP cats ->
@@ -75,36 +74,17 @@ $tester->getIpCountry($this->request->clientIp());
             ]) ?>
         </div>
 
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3" style="justify-self: center">
             <?php
             foreach ($cats as $cat) : ?>
                 <div class="col cat-index">
                     <div class="cat-index__wrapper">
                         <div class="position-relative cat-index__wrapper">
                             <?= $this->Html->link($this->Html->image('data:image/png;base64,' . h($cat->base64_image), [
-                                    'style' => 'width: 100%; height: 100%; object-fit: cover;',
-                                    'alt'   => 'Cat',
-                                    'class' => 'cat-index__image',
-                                ],), ['controller' => 'Cats', 'action' => 'view', $cat->id], ['escape' => false, 'class' => 'position-relative'],) ?>
-                            <!--                        <div class="position-absolute top-0 end-0 m-3">
-                            <div class="cat-index__image__footer__button-a d-inline">
-                                <?php
-                            /*= $this->Form->postLink(
-                                                               'Delete',
-                                                               ['action' => 'delete', $cat->id],
-                                                               ['confirm' => 'Are you sure?'],
-                                                           )
-                                                           */ ?>
-                            </div>
-                            <div class="cat-index__image__footer__button-a d-inline">
-                                <?php
-                            /*= $this->Form->postLink(
-                                                               'Edit',
-                                                               ['action' => 'edit', $cat->id],
-                                                           )
-                                                           */ ?>
-                            </div>
-                        </div>-->
+                                'style' => 'width: 100%; height: 100%; object-fit: cover;',
+                                'alt'   => 'Cat',
+                                'class' => 'cat-index__image',
+                            ]), ['controller' => 'Cats', 'action' => 'view', $cat->id], ['escape' => false, 'class' => 'position-relative'],) ?>
                         </div>
 
                         <div class="cat-index__image__footer">
