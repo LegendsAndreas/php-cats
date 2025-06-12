@@ -20,6 +20,9 @@ $tester->getIpCountry($this->request->clientIp());
         <a href="https://http.cat/" target="_blank">
             See also HTTP cats ->
         </a>
+        <a href="<?= $this->Url->build('/cats/help') ?>" target="_blank">
+            I need your help...
+        </a>
         <div class="py-4" style="background-color: wheat; border-radius: 5px;">
             <div class="row text-center row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xxl-3">
                 <div class="col">
