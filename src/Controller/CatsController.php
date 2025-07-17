@@ -93,7 +93,7 @@ class CatsController extends AppController
         return $this->render();
     }
 
-    public function index(string $catName = null): void
+    public function index(): void
     {
         $this->loadComponent('Paginator');
 
@@ -105,6 +105,7 @@ class CatsController extends AppController
             $query->orderAsc('created');
         }
 
+        $catName = $this->request->getQuery('catName', '');
         if (empty($catName)) {
             $cats = $this->Paginator->paginate($query, ['limit' => 12]);
         } else {

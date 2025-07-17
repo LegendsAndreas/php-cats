@@ -14,7 +14,7 @@ function modifySearchHref() {
         const checkBox = document.querySelector('.js-order-checkbox');
         const checkBoxValue = checkBox.checked;
 
-        linkSearch.setAttribute('href', '/cats/index/' + searchValue + '?' + 'reverseOrder=' + checkBoxValue);
+        linkSearch.setAttribute('href', '/cats/index?catName=' + searchValue + '&' + 'reverseOrder=' + checkBoxValue);
         console.log(linkSearch.getAttribute('href'));
     });
 }
