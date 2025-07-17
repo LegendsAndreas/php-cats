@@ -78,6 +78,12 @@
     height: 300px;
   }
 }
+@media (max-width: 400px) {
+  .cat-index__wrapper {
+    width: 300px;
+    height: 250px;
+  }
+}
 .cat-index__image {
   border: 1px solid black;
   border-radius: 5px 5px 0 0;
