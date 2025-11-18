@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function modifySearchHref() {
     const searchButton = document.querySelector('.js-search-button');
+    if (!searchButton) {
+        console.warn('js-search-button element not found.');
+        return
+    }
     searchButton.addEventListener('click', () => {
         const searchValue = document.querySelector('.js-input-search').value;
 
@@ -21,6 +25,10 @@ function modifySearchHref() {
 
 function toggleCheckbox() {
     const checkbox = document.querySelector('.js-order-checkbox');
+    if (!checkbox) {
+        console.warn('js-order-checkbox element not found.');
+        return
+    }
     checkbox.addEventListener('change', (event) => {
         checkbox.setAttribute('checked', event.target.checked);
     });
@@ -28,6 +36,10 @@ function toggleCheckbox() {
 
 function resizeSearchBarMobile() {
     const searchBar = document.querySelector('.js-input-search');
+    if (!searchBar) {
+        console.warn('js-input-search element not found.');
+        return
+    }
     if (window.innerWidth < 768) {
         searchBar.classList.remove('w-25')
     } else {

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
+use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use JetBrains\PhpStorm\NoReturn;
@@ -40,20 +42,13 @@ class CatsController extends AppController
     public function help(): Response
     {
         if ($this->request->is('post')) {
-            TransportFactory::setConfig('gmail', [
-                'host' => 'ssl://smtp.gmail.com',
-                'port' => 465,
-                'username' => 'andreas2x2@gmail.com',
-                'password' => '158andalias',
-                'className' => 'Smtp'
-            ]);
-
-            $mailer = new Mailer('default');
-            $mailer->setFrom(['andreas2x2@gmail.com' => 'My Site'])
+/*            $mailer = new Mailer();
+            $mailer->setTransport('default'); // Explicitly use 'default' transport from your configuration
+            $mailer->setFrom(['andreas2x2@gmail.com' => 'CakePHP Email'])
                    ->setTo('andreas2x2@gmail.com')
-                   ->setSubject('About')
-                   ->deliver('My message');
-//            mail.protonmail.ch
+                   ->setSubject('Testing Explicit Transport')
+                   ->deliver('This is a test email.');*/
+            //            mail.protonmail.ch
             /*            $data = $this->request->getData();
 
                         // Extract the form data
@@ -112,6 +107,7 @@ class CatsController extends AppController
             $catName = $this->formatCatName($catName);
 
             $cats = $this->Paginator->paginate($query->where(['function_name LIKE' => '%' . $catName . '%']), ['limit' => 12]);
+
         }
         $this->set(compact('cats'));
     }
@@ -122,52 +118,21 @@ class CatsController extends AppController
         return str_replace(['%', '_'], ['\\%', '\\_'], $catName);
     }
 
-    /*    private function setCookie()
-        {
-            // Create a cookie collection
-            $cookies = new CookieCollection();
-
-            // Create multiple cookies
-            $cookie1 = (new Cookie('php-cookie'))
-                ->withValue('true')
-                ->withExpiry(new \DateTime('+1 year'))
-                ->withPath('/')
-                ->withHttpOnly(true)
-                ->withSecure(false);
-
-            $cookie2 = (new Cookie('another-cookie'))
-                ->withValue('false')
-                ->withExpiry(new \DateTime('+1 month'))
-                ->withPath('/')
-                ->withHttpOnly(true)
-                ->withSecure(false);
-
-            // Add cookies to the cookie collection
-            $cookies = $cookies->add($cookie1)->add($cookie2);
-
-            // Attach all cookies from the collection to the response object
-            foreach ($cookies as $currentCookie) {
-                $this->response = $this->response->withCookie($currentCookie);
-            }
-
-        }*/
-
     public function add(): ?Response
     {
         $cat = $this->Cats->newEmptyEntity();
         if ($this->request->is('post')) {
-            $existingCat = $this->Cats->findByFunctionName($this->request->getData('function_name'))->first();
+            $data = $this->request->getData();
+            $existingCat = $this->Cats->findByFunctionName($data['function_name'])->first();
             if ($existingCat) {
                 $this->Flash->error(__('A cat with the same name already exists.'));
 
                 return $this->redirect(['action' => 'add']);
             }
 
-            $cat = $this->Cats->newEntity($this->request->getData());
+            $cat = $this->Cats->newEntity($data);
 
-            if (!$cat->base64_image) {
-                $this->Flash->error(__('Cat image not found.'));
-            } elseif ($this->Cats->save($cat)) {
+            if ($this->Cats->save($cat)) {
                 $this->Flash->success(__('New cat added.'));
 
                 return $this->redirect(['action' => 'index']);

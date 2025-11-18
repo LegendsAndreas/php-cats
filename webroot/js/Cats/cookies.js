@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function toggleOrderCookie() {
     const checkbox = document.querySelector('.js-order-checkbox');
+    if (!checkbox) {
+        console.warn('Checkbox element not found.');
+        return
+    }
     checkbox.addEventListener('change', (event) => {
         const isChecked = event.target.checked;
         const expirationDate = new Date();
@@ -30,6 +34,10 @@ function getOrderCookie() {
 
 function toggleSearchQueryCookie() {
     const searchInput = document.querySelector('.js-input-search');
+    if (!searchInput) {
+        console.warn('Search input element not found.');
+        return
+    }
     searchInput.addEventListener('input', () => {
         setCookie('searchQuery', searchInput.value, 7);
     });

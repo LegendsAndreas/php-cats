@@ -86,7 +86,7 @@ $tester->getIpCountry($this->request->clientIp());
                             <?= $this->Html->link($this->Html->image('data:image/png;base64,' . h($cat->base64_image), [
                                 'style' => 'width: 100%; height: 100%; object-fit: cover;',
                                 'alt'   => 'Cat',
-                                'class' => 'cat-index__image',
+                                'class' => 'cat-index__image img-fluid',
                             ]), ['controller' => 'Cats', 'action' => 'view', $cat->id], ['escape' => false, 'class' => 'position-relative'],) ?>
                         </div>
 
