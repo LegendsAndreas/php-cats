@@ -31,15 +31,4 @@ return [
             'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
         ],
     ],
-
-    'EmailTransport' => [
-        'default' => [
-            'host' => 'localhost',
-            'port' => 25,
-            'username' => null,
-            'password' => null,
-            'client' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
-        ],
-    ],
 ];

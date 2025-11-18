@@ -8,7 +8,6 @@
   background-color: wheat;
 }
 .cats-view__function-description {
-  font-size: 20px;
   color: white;
 }
 .cats-view__function-examples {
@@ -16,9 +15,6 @@
   background-color: wheat;
   border-radius: 3px;
   white-space: pre-wrap;
-}
-.cats-view__image {
-  min-width: 350px;
 }
 
 /*# sourceMappingURL=cats-view.css.map */

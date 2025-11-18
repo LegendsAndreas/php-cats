@@ -38,7 +38,6 @@ $this->disableAutoLayout();
 </head>
 <body>
 <main class="main">
-    <?= $this->element('../Cats/index') ?>
 </main>
 </body>
 </html>

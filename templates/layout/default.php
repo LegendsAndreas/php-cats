@@ -23,10 +23,11 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A website that parodies HTTP.cat, working as a lexicon for PHP functionalities, as well as CakePHP functions">
     <title>
         <?= $this->fetch('title') ?>
     </title>
@@ -39,7 +40,7 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
 </head>
 <body>
 <main class="main">
-    <a href="/" class="position-fixed top-0 left-0 p-2 z-3">
+    <a href="/" class="position-fixed top-0 left-0 p-2 z-3" title="Go to frontpage">
         <?= $this->Html->image('php-cats-logo-1.svg', ['alt' => 'Logo', 'class' => 'img-fluid layout-default__image']) ?>
     </a>
     <div class="container">
