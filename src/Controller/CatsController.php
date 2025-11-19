@@ -36,7 +36,8 @@ class CatsController extends AppController
     public function view($id): void
     {
         $cat = $this->Cats->get($id); // Fetch the cat by ID
-        $this->set(compact('cat'));
+
+        $this->set('cat', $cat);
     }
 
     public function help(): Response

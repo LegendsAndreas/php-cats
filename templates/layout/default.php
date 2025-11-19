@@ -57,6 +57,7 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
 <?= $this->Html->script('script', ['defer' => true, 'type' => 'module']) ?>
 
 
+<?= $this->fetch('script') ?>
 <?php
 $this->append('script') ?>
 <script>

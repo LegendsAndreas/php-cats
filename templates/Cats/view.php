@@ -1,10 +1,9 @@
 <?php
 // phpcs:ignoreFile
 /**
- * @var \App\View\AppView $this
+ * @var \App\View\AppView     $this
  * @var \App\Model\Entity\Cat $cat
  */
-$test = 1;
 ?>
 
 <div class="text-center cats-view p-3 my-3">
@@ -15,25 +14,37 @@ $test = 1;
 
     <div class="text-start">
         <h2 class="fw-bold fs-1 mb-4 text-white">Description</h2>
-        <p class="cats-view__function-description fs-2"><?= h($cat->function_description) ?></p>
-        <p class="cats-view__function-examples p-3 js-function-example"><strong>Usage:</strong> <?= h($cat->function_example)
-            ?></p>
+        <p class="cats-view__function-description fs-2"><?= $cat->function_description ?></p>
+        <p class="cats-view__function-examples p-3 js-color-comments"><strong>Usage:</strong> <?= h($cat->function_example) ?>
+        </p>
     </div>
 
-    <?= $this->Html->link(
-        '<button>Edit Cat</button>',
-        ['action' => 'edit', $cat->id],
-        ['escape' => false]) ?>
+    <?= $this->Html->link('<button>Edit Cat</button>', ['action' => 'edit', $cat->id], ['escape' => false]) ?>
 </div>
 
+<?php $this->append('css') ?>
+<style>
+    .comment {
+        color: green;
+    }
+</style>
+<?php $this->end() ?>
+
+<?php $this->append('script') ?>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        boldenOutput();
+        colorComment();
     });
 
-    function boldenOutput() {
-        const functionExample = document.querySelector('.js-function-example');
-        console.log(functionExample.innerHTML);
-        functionExample.innerHTML = functionExample.innerHTML.replace(/Output/g, '<strong>Output</strong>');
+    function colorComment() {
+        const description = document.querySelector('.js-color-comments');
+        if (!description) {
+            console.warn('js-color-comments element not found.');
+            return;
+        }
+        description.innerHTML = description.innerHTML.replace(/CC(.*)CC/g, (match, matchContent) => {
+            return `<span class="comment">${matchContent}</span>`;
+        });
     }
 </script>
+<?php $this->end() ?>
