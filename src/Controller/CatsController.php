@@ -43,13 +43,12 @@ class CatsController extends AppController
     public function help(): Response
     {
         if ($this->request->is('post')) {
-/*            $mailer = new Mailer();
-            $mailer->setTransport('default'); // Explicitly use 'default' transport from your configuration
-            $mailer->setFrom(['andreas2x2@gmail.com' => 'CakePHP Email'])
-                   ->setTo('andreas2x2@gmail.com')
-                   ->setSubject('Testing Explicit Transport')
-                   ->deliver('This is a test email.');*/
-            //            mail.protonmail.ch
+            /*            $mailer = new Mailer();
+                        $mailer->setTransport('default'); // Explicitly use 'default' transport from your configuration
+                        $mailer->setFrom(['andreas2x2@gmail.com' => 'CakePHP Email'])
+                               ->setTo('andreas2x2@gmail.com')
+                               ->setSubject('Testing Explicit Transport')
+                               ->deliver('This is a test email.');*/ //            mail.protonmail.ch
             /*            $data = $this->request->getData();
 
                         // Extract the form data
@@ -108,7 +107,6 @@ class CatsController extends AppController
             $catName = $this->formatCatName($catName);
 
             $cats = $this->Paginator->paginate($query->where(['function_name LIKE' => '%' . $catName . '%']), ['limit' => 12]);
-
         }
         $this->set(compact('cats'));
     }
@@ -123,7 +121,7 @@ class CatsController extends AppController
     {
         $cat = $this->Cats->newEmptyEntity();
         if ($this->request->is('post')) {
-            $data = $this->request->getData();
+            $data        = $this->request->getData();
             $existingCat = $this->Cats->findByFunctionName($data['function_name'])->first();
             if ($existingCat) {
                 $this->Flash->error(__('A cat with the same name already exists.'));
@@ -154,9 +152,7 @@ class CatsController extends AppController
         if ($this->request->is(['put'])) {
             $this->Cats->patchEntity($cat, $this->request->getData());
 
-            if (!$cat->base64_image) {
-                $this->Flash->error(__('Cat image not found.'));
-            } elseif ($this->Cats->save($cat)) {
+            if ($this->Cats->save($cat)) {
                 $this->Flash->success(__('Cat got updated.'));
 
                 return $this->redirect(['action' => 'edit', $id]);
