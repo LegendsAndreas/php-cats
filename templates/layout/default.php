@@ -55,31 +55,4 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
 
 <!--'defer' makes it load when the whole DOM is ready -->
 <?= $this->Html->script('script', ['defer' => true, 'type' => 'module']) ?>
-
-
 <?= $this->fetch('script') ?>
-<?php
-$this->append('script') ?>
-<script>
-    let audioUnlocked = false;
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const audio = document.getElementById('hover-audio');
-
-        document.addEventListener('click', () => {
-            audioUnlocked = true;
-        });
-
-        document.querySelectorAll('.hover-sound').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                if (!audioUnlocked) return;
-
-                audio.play().catch(e => {
-                    console.warn("Audio play failed:", e);
-                });
-            });
-        });
-    });
-</script>
-<?php
-$this->end() ?>
