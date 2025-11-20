@@ -39,6 +39,14 @@
                         )
                         ?>
                     </div>
+                    <div class="cats-deleted__image__footer__button-a d-inline">
+                        <?= $this->Form->postLink(
+                            'Full Delete',
+                            ['action' => 'full_delete', $cat->id],
+                            ['confirm' => 'Are you sure?'],
+                        )
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,7 +16,9 @@ use Cake\Log\Log;
 use \Cake\Error;
 
 /**
- * @property \App\Model\Table\CatsTable $Cats
+ * @property \App\Model\Table\CatsTable            $Cats
+ * @property \App\Model\Table\ContributorsTable    $Contributors
+ * @property \App\Model\Table\CatContributorsTable $CatContributors
  */
 class CatsController extends AppController
 {
@@ -24,6 +26,8 @@ class CatsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->Contributors    = $this->fetchTable('Contributors');
+        $this->CatContributors = $this->fetchTable('CatContributors');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -117,11 +121,15 @@ class CatsController extends AppController
         return str_replace(['%', '_'], ['\\%', '\\_'], $catName);
     }
 
+    // Right now, it automatically creates the contributors and sets the cat contributors relations
     public function add(): ?Response
     {
         $cat = $this->Cats->newEmptyEntity();
         if ($this->request->is('post')) {
-            $data        = $this->request->getData();
+            $data = $this->request->getData();
+
+            $data['contributors'] = $this->getContributorsIdsAndAddMissingEntities($data['contributors']);
+
             $existingCat = $this->Cats->findByFunctionName($data['function_name'])->first();
             if ($existingCat) {
                 $this->Flash->error(__('A cat with the same name already exists.'));
@@ -140,17 +148,62 @@ class CatsController extends AppController
             }
         }
 
-        $this->set('cat', $cat);
+        $this->set(compact('cat'));
 
         return $this->render();
     }
 
+    /**
+     * @param array $contributors
+     *
+     * Because CakePHP automatically creates the relations if given the IDs, we get the IDs of the existing contributors, or create them if they don't exist.
+     * After creating them, the new contributor IDs are returned. Remember to keep the contributor arrays name, "contributors", in plural.
+     *
+     * @return array
+     */
+    private function getContributorsIdsAndAddMissingEntities(array $contributors): array
+    {
+        $normalizedContributors = [];
+        foreach ($contributors as $contributor) {
+            $existing = $this->Contributors->findByName($contributor['name'])->first();
+            if ($existing) {
+                $normalizedContributors[] = ['id' => $existing->id];
+            } else {
+                $newContributor = $this->Contributors->newEntity($contributor);
+                if ($this->Contributors->save($newContributor)) {
+                    $normalizedContributors[] = ['id' => $newContributor->id];
+                } else {
+                    $this->Flash->error(__('Unable to add the contributor :(: ' . $contributor['name']));
+                }
+            }
+        }
+
+        return $normalizedContributors;
+    }
+
     public function edit($id): Response
     {
-        $cat = $this->Cats->findById($id)->firstOrFail();
+        $cat            = $this->Cats->findById($id)->firstOrFail();
+        $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->select(['contributor_id'])->extract('contributor_id')->toList();
+
+        if (empty($contributorIds)) {
+            $contributors = [];
+        } else {
+            $contributors = $this->Contributors->find()->where(['id IN' => $contributorIds, 'deleted IS' => null])->toArray();
+        }
 
         if ($this->request->is(['put'])) {
-            $this->Cats->patchEntity($cat, $this->request->getData());
+            $data = $this->request->getData();
+
+            $ids = $this->getContributorsIds($data['contributors']);
+            if (!empty($ids['notFound'])) {
+                $this->Flash->error(__('The following contributors do not exist: ' . implode(', ', $ids['notFound'])));
+
+                return $this->redirect(['action' => 'edit', $id]);
+            }
+            $data['contributors'] = $ids['found'];
+
+            $this->Cats->patchEntity($cat, $data);
 
             if ($this->Cats->save($cat)) {
                 $this->Flash->success(__('Cat got updated.'));
@@ -161,9 +214,27 @@ class CatsController extends AppController
             }
         }
 
-        $this->set('cat', $cat);
+        $this->set(compact('cat', 'contributors'));
 
         return $this->render();
+    }
+
+    private function getContributorsIds(array $contributors): array
+    {
+        $normalizedContributors = [
+            'found'    => [],
+            'notFound' => [],
+        ];
+        foreach ($contributors as $contributor) {
+            $existing = $this->Contributors->findByName($contributor['name'])->first();
+            if ($existing) {
+                $normalizedContributors['found'][] = ['id' => $existing->id];
+            } else {
+                $normalizedContributors['notFound'][] = $contributor['name'];
+            }
+        }
+
+        return $normalizedContributors;
     }
 
     public function delete($id): Response
@@ -171,18 +242,32 @@ class CatsController extends AppController
         date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
+        $page = $this->request->getQuery('page');
+
         $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
             $this->Flash->success(__('The "{0}" article has been archived as deleted.', $cat->function_name));
 
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'index', '?' => ['page' => $page]]);
         } else {
             $this->Flash->error(__('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name));
 
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'index', '?' => ['page' => $page]]);
         }
+    }
+
+    public function fullDelete($id): Response
+    {
+        $cat = $this->Cats->findById($id)->firstOrFail();
+        if ($this->Cats->delete($cat)) {
+            $this->Flash->success(__('The "{0}" article has been deleted fully.', $cat->function_name));
+        } else {
+            $this->Flash->error(__('The "{0}" article could not be deleted fully. Please, try again.', $cat->function_name));
+        }
+
+        return $this->redirect(['action' => 'deleted']);
     }
 
     public function deleted(): void
@@ -192,7 +277,7 @@ class CatsController extends AppController
         $this->set(compact('cats'));
     }
 
-    public function restore($id)
+    public function restore($id): Response
     {
         $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => null]);
@@ -203,7 +288,7 @@ class CatsController extends AppController
             $this->Flash->error(__('The "{0}" article could not be restored. Please, try again.', $cat->function_name));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'deleted']);
     }
 
 }

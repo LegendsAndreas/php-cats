@@ -6,14 +6,14 @@ use Cake\Event\EventInterface;
 use Cake\Log\Log;
 use Cake\ORM\Table;
 
-class CatsTable extends Table
+class ContributorsTable extends Table
 {
     public function initialize(array $config): void
     {
         $this->addBehavior('Timestamp');
-        $this->belongsToMany('Contributors', [
-            'foreignKey' => 'cat_id',
-            'targetForeignKey' => 'contributor_id',
+        $this->belongsToMany('Cats', [
+            'foreignKey' => 'contributor_id',
+            'targetForeignKey' => 'cat_id',
             'joinTable' => 'cat_contributors'
         ]);
     }
