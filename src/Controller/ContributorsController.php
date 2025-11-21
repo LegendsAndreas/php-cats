@@ -92,4 +92,10 @@ class ContributorsController extends AppController
 
         $this->set(compact('contributor'));
     }
+
+    public function view($id)
+    {
+        $contributor = $this->Contributors->get($id);
+        $this->set(compact('contributor'));
+    }
 }
