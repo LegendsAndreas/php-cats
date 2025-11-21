@@ -40,3 +40,7 @@ Replace ToDo:
         'cookieKey' => 'your-secure-key-here', // Must be a strong random string
     ],
 
+If you have a many-to-many relation, you can specify one of the relations to contain the other relation.
+For example, if you have Cats and Contributors, with the table CatContributors, you can call all Contributors with their relevant cats:
+
+    $contributors   = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats'])->toList();

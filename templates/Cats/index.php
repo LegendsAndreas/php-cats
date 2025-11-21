@@ -92,32 +92,19 @@ $tester->getIpCountry($this->request->clientIp());
         <?php
         foreach ($cats as $cat) { ?>
             <div class="col cat-index">
-                <div class="cat-index__wrapper">
-                    <div class="position-relative cat-index__wrapper">
-                        <?= $this->Html->link($this->Html->image('data:image/png;base64,' . h($cat->base64_image), [
-                            'style' => 'width: 100%; height: 100%; object-fit: cover;',
-                            'alt'   => "$cat->function_name cat image",
-                            'class' => 'cat-index__image img-fluid',
-                            'title' => 'Go to cat ' . $cat->id,
-                        ]), ['controller' => 'Cats', 'action' => 'view', $cat->id], ['escape' => false, 'class' => 'position-relative'],) ?>
-                    </div>
-
-                    <div class="cat-index__image__footer">
-                        <h2 class="fs-1"><?= $cat->function_name ?></h2>
-                        <div class="cat-index__image__footer__button-a d-inline">
-                            <?= $this->Form->postLink('Delete', ['action' => 'delete', $cat->id, '?' => ['page' => $this->request->getQuery('page')]],
-                                ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]) ?>
-                        </div>
-                        <div class="cat-index__image__footer__button-a d-inline">
-                            <?= $this->Html->link('Edit', [
-                                'action' => 'edit',
-                                $cat->id,
-                            ], [
-                                'title' => 'Edit cat ' . $cat->id,
-                            ]) ?>
-                        </div>
-                    </div>
-                </div>
+                <?= $this->element('Cats/cat-template', [
+                    'cat'     => $cat,
+                    'buttons' => [
+                        $this->Form->postLink('Delete', ['action' => 'delete', $cat->id, '?' => ['page' => $this->request->getQuery('page')]],
+                            ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]),
+                        $this->Html->link('Edit', [
+                            'action' => 'edit',
+                            $cat->id,
+                        ], [
+                            'title' => 'Edit cat ' . $cat->id,
+                        ]),
+                    ],
+                ]) ?>
             </div>
         <?php }; ?>
     </div>

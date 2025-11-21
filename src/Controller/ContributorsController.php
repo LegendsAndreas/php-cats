@@ -35,7 +35,9 @@ class ContributorsController extends AppController
 
     public function index()
     {
-        $contributors   = $this->Contributors->find()->Where(['deleted IS' => null])->toArray();
+        $contributors   = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats' => function ($cat) {
+            return $cat->select(['id', 'function_name'])->Where(['deleted IS' => null]);
+        }])->toList();
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
