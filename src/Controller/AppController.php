@@ -65,15 +65,36 @@ class AppController extends Controller
         $this->set('currentUser', $this->request->getAttribute('identity'));
 
         if (!$this->Authentication->getResult()->isValid()) {
-            switch ($this->request->getParam('action')) {
-                case 'edit':
-                    $this->Flash->warning('You must log in, in order to edit a cat.');
-                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
-                    break;
-                case 'delete':
-                    $this->Flash->warning('You must log in, in order to delete a cat.');
-                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
-                    break;
+            $controller = $this->request->getParam('controller');
+            $action     = $this->request->getParam('action');
+            switch ($controller) {
+                case 'Cats':
+                    switch ($action) {
+                        case 'edit':
+                            $this->Flash->warning('You must log in, in order to edit a cat.');
+
+                            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                        break;
+                        case 'delete':
+                            $this->Flash->warning('You must log in, in order to delete a cat.');
+
+                            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                        break;
+                    }
+                break;
+                case 'Contributors':
+                    switch ($action) {
+                        case 'edit':
+                            $this->Flash->warning('You must log in, in order to edit a contributor.');
+
+                            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                        break;
+                        case 'delete':
+                            $this->Flash->warning('You must log in, in order to delete a contributor.');
+
+                            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                        break;
+                    }
             }
         }
     }

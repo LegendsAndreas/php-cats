@@ -28,7 +28,7 @@ $tester->getIpCountry($this->request->clientIp());
         I need your help...
     </a>
     <div class="py-4" style="background-color: wheat; border-radius: 5px;">
-        <div class="row text-center row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xxl-3">
+        <div class="row text-center row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xxl-4">
             <div class="col">
                 <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'add']) ?>" title="Add new Cat">
                     <button class="fs-3 mt-3 cat-index__top-button">Add new Cat</button>
@@ -37,6 +37,11 @@ $tester->getIpCountry($this->request->clientIp());
             <div class="col">
                 <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>" title="Go to deleted Cats">
                     <button class="fs-3 mt-3 cat-index__top-button">Deleted Cats</button>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= $this->Url->build(['controller' => 'Contributors', 'action' => 'index']) ?>" title="Go to Contributors">
+                    <button class="fs-3 mt-3 cat-index__top-button">Contributors</button>
                 </a>
             </div>
             <?php
@@ -94,22 +99,22 @@ $tester->getIpCountry($this->request->clientIp());
                             'alt'   => "$cat->function_name cat image",
                             'class' => 'cat-index__image img-fluid',
                             'title' => 'Go to cat ' . $cat->id,
-                            'loading' => 'lazy',
                         ]), ['controller' => 'Cats', 'action' => 'view', $cat->id], ['escape' => false, 'class' => 'position-relative'],) ?>
                     </div>
 
                     <div class="cat-index__image__footer">
                         <h2 class="fs-1"><?= $cat->function_name ?></h2>
                         <div class="cat-index__image__footer__button-a d-inline">
-                            <?= $this->Form->postLink('Delete', ['action' => 'delete', $cat->id], ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]) ?>
+                            <?= $this->Form->postLink('Delete', ['action' => 'delete', $cat->id, '?' => ['page' => $this->request->getQuery('page')]],
+                                ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]) ?>
                         </div>
                         <div class="cat-index__image__footer__button-a d-inline">
                             <?= $this->Html->link('Edit', [
-                                    'action' => 'edit',
-                                    $cat->id,
-                                ], [
-                                    'title' => 'Edit cat ' . $cat->id,
-                                ]) ?>
+                                'action' => 'edit',
+                                $cat->id,
+                            ], [
+                                'title' => 'Edit cat ' . $cat->id,
+                            ]) ?>
                         </div>
                     </div>
                 </div>
