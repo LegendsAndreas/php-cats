@@ -28,27 +28,32 @@
     <?= $this->Form->end() ?>
 </div>
 
-<div class="contributors">
-    <h3>Contributors List</h3>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Social</th>
-            <th>Created</th>
-            <th>Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($contributors as $contributor) {
-            echo $this->element('Contributors/contributor', ['contributor' => $contributor]);
-        }
-        ?>
-        </tbody>
-    </table>
-</div>
+
+<?php if (count($contributors) === 0) {
+    echo '<h4>No contributors yet.</h4>';
+} else { ?>
+    <div class="contributors">
+        <h3>Contributors list</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Social</th>
+                <th>Created</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($contributors as $contributor) {
+                echo $this->element('Contributors/contributor', ['contributor' => $contributor]);
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
 
 <style>
     .new-contributor {

@@ -194,6 +194,9 @@ class CatsController extends AppController
 
         if ($this->request->is(['put'])) {
             $data = $this->request->getData();
+            if (!isset($data['contributors'])) {
+                $data['contributors'] = [];
+            }
 
             $ids = $this->getContributorsIds($data['contributors']);
             if (!empty($ids['notFound'])) {
