@@ -2,7 +2,9 @@
 
 namespace App\Shell;
 
-class TestShell {
+use Cake\Console\Shell;
+
+class TestShell extends Shell {
     public function main(): void
     {
         echo "Hello, World!\n";
