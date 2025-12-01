@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.querySelector('.js-add-image');
     const base64Field = document.querySelector('#base64_image');
 
+    if (fileInput === null) {
+        console.warn('js-add-image element found.');
+        return;
+    }
+
     fileInput.addEventListener('change', function () {
         const file = this.files[0];
         if (!file) return;

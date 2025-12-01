@@ -7,7 +7,7 @@
 ?>
 
 <div class="pagination mt-5 cat-index__pagination">
-    <ul style="list-style: none; display: flex;">
+    <ul style="list-style: none; display: flex; padding-left: 0">
         <?= $this->Paginator->first('<< ' . __('First')) ?>
         <?= $this->Paginator->prev('< ' . __('Previous')) ?>
         <?= $this->Paginator->numbers(['before' => '', 'after' => '', 'modulus' => $modulus]) ?>
@@ -18,15 +18,32 @@
 <p class="text-center"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
 
 <script>
+    const originalContent = new Map();
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Store original content
+        const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
+        for (let paginatorLink of paginatorLinks) {
+            originalContent.set(paginatorLink, paginatorLink.innerHTML);
+        }
+
         removeArrowsOnMobile();
+
+        addEventListener('resize', () => removeArrowsOnMobile());
     });
 
     function removeArrowsOnMobile() {
+        const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
+
         if (window.matchMedia('(max-width: 768px)').matches) {
-            const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
             for (let paginatorLink of paginatorLinks) {
-                paginatorLink.innerHTML = paginatorLink.innerHTML.replace(/&lt;|&gt;/g, '');
+                paginatorLink.innerHTML = paginatorLink.innerHTML.replace(/Next|Last|First|Previous/g, '');
+            }
+        } else {
+            for (let paginatorLink of paginatorLinks) {
+                if (originalContent.has(paginatorLink)) {
+                    paginatorLink.innerHTML = originalContent.get(paginatorLink);
+                }
             }
         }
     }

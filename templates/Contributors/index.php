@@ -9,7 +9,6 @@
 <h1>
     Contributors
 </h1>
-
 <div class="new-contributor">
     <h3>Add a new contributor</h3>
     <?= $this->Form->create($newContributor) ?>
@@ -42,6 +41,7 @@
                 <th>Email</th>
                 <th>Social</th>
                 <th>Created</th>
+                <th>Contributions</th>
                 <th>Options</th>
             </tr>
             </thead>
