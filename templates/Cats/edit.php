@@ -53,6 +53,9 @@ echo $this->Form->end();
 </style>
 <?php $this->end() ?>
 
+<?= $this->Html->script('Cats/catImage', ['defer' => true]); ?>
+
+<?php $this->append('script') ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let currentContributorIndex = <?= count($contributors) - 1; ?>;
@@ -97,13 +100,17 @@ echo $this->Form->end();
             return newContributor;
         }
 
+        document.querySelectorAll('.js-remove-contributor').forEach(function (button) {
+            addDeleteListener(button);
+        })
+
         function reindexFromIndex(index) {
             console.log('Reindexing from index:', index);
             console.log('current index: ', currentContributorIndex);
             let startingIndex = index;
             let contributors  = document.querySelectorAll('.contributor');
             for (let i = startingIndex; i <= currentContributorIndex; i++) {
-                let contributor = contributors[i];
+                let contributor                           = contributors[i];
                 contributor.querySelector('button').value = i;
                 contributor.querySelector('label').setAttribute('for', 'contributors-' + i + '-name');
                 let input = contributor.querySelector('input');
@@ -120,9 +127,6 @@ echo $this->Form->end();
                 reindexFromIndex(buttonValue);
             })
         }
-
-        document.querySelectorAll('.js-remove-contributor').forEach(function (button) {
-            addDeleteListener(button);
-        })
     })
 </script>
+<?php $this->end() ?>

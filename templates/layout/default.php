@@ -54,6 +54,6 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
 </html>
 
 <!--'defer' makes it load when the whole DOM is ready -->
-<?= $this->Html->script('script', ['defer' => true, 'type' => 'module']) ?>
+<?= $this->Html->script('scripts', ['defer' => true, 'type' => 'module']) ?>
 <?= $this->Html->script('bootstrap.bundle.min', ['defer' => true, 'type' => 'module']) ?>
 <?= $this->fetch('script') ?>

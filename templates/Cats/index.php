@@ -113,3 +113,5 @@ $tester->getIpCountry($this->request->clientIp());
         'modulus' => $modulus,
     ]) ?>
 </div>
+
+<?= $this->Html->script('Cats/index.js', ['defer' => true]); ?>

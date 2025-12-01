@@ -52,7 +52,6 @@ echo $this->Form->end();
 </style>
 <?php $this->end() ?>
 
-
 <?php $this->append('script') ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -75,3 +74,5 @@ echo $this->Form->end();
     })
 </script>
 <?php $this->end() ?>
+
+<?= $this->Html->script('Cats/catImage', ['defer' => true]); ?>

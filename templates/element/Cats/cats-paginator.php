@@ -16,35 +16,3 @@
     </ul>
 </div>
 <p class="text-center"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-
-<script>
-    const originalContent = new Map();
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Store original content
-        const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
-        for (let paginatorLink of paginatorLinks) {
-            originalContent.set(paginatorLink, paginatorLink.innerHTML);
-        }
-
-        removeArrowsOnMobile();
-
-        addEventListener('resize', () => removeArrowsOnMobile());
-    });
-
-    function removeArrowsOnMobile() {
-        const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
-
-        if (window.matchMedia('(max-width: 768px)').matches) {
-            for (let paginatorLink of paginatorLinks) {
-                paginatorLink.innerHTML = paginatorLink.innerHTML.replace(/Next|Last|First|Previous/g, '');
-            }
-        } else {
-            for (let paginatorLink of paginatorLinks) {
-                if (originalContent.has(paginatorLink)) {
-                    paginatorLink.innerHTML = originalContent.get(paginatorLink);
-                }
-            }
-        }
-    }
-</script>
