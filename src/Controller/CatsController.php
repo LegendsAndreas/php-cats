@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
@@ -22,12 +23,13 @@ use \Cake\Error;
  */
 class CatsController extends AppController
 {
-
+    private bool $cacheEnabled;
     public function initialize(): void
     {
         parent::initialize();
         $this->Contributors    = $this->fetchTable('Contributors');
         $this->CatContributors = $this->fetchTable('CatContributors');
+        $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -40,7 +42,7 @@ class CatsController extends AppController
     public function view($id): void
     {
         $cacheKey = 'cat_' . $id;
-        $cat      = Cache::read($cacheKey, 'cats_view');
+        $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
             $cat = $this->Cats->get($id); // Fetch the cat by ID
@@ -108,7 +110,7 @@ class CatsController extends AppController
         $page         = $this->request->getQuery('page', '1');
         $cacheKey     = sprintf('cats_index_%s_%s_%s', $reverseOrder, md5($catName), $page);
 
-        $cached = Cache::read($cacheKey, 'cats_index');
+        $cached = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_index') : null;
 
         // If we just use Cache::write($cacheKey, $cats), it will not work, because the meta data for pagination will not be saved.
         if (!is_array($cached) || !isset($cached['cats']) || !isset($cached['paging'])) {
@@ -311,7 +313,7 @@ class CatsController extends AppController
 
     public function deleted(): void
     {
-        $cats = Cache::read('cats_deleted_index', 'cats_deleted');
+        $cats = $this->cacheEnabled ? Cache::read('cats_deleted_index', 'cats_deleted') : null;
 
         if ($cats === null) {
             $cats = $this->Cats->find('all')->where(['deleted IS NOT' => null]);

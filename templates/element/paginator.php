@@ -3,7 +3,9 @@
  * @var \App\View\AppView $this
  * @var int               $modulus
  */
-
+if (!($this->Paginator->counter('{{count}}') > $this->Paginator->param('perPage'))) {
+    return;
+}
 ?>
 
 <div class="pagination mt-5 cat-index__pagination">

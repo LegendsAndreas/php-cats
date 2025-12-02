@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
@@ -20,10 +22,11 @@ use \Cake\Error;
  */
 class ContributorsController extends AppController
 {
-
+    private bool $cacheEnabled;
     public function initialize(): void
     {
         parent::initialize();
+        $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -36,16 +39,12 @@ class ContributorsController extends AppController
     public function index()
     {
         $this->loadComponent('Paginator');
-        $query = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats' => function ($cat) {
-            return $cat->select(['id', 'function_name'])->Where(['deleted IS' => null]);
-        }]);
-
-        $contributors = $this->Paginator->paginate($query, ['limit' => 3]);
 
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
                 $this->Flash->error(__('You must be logged in to add a contributor.'));
+
                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
             }
             $data          = $this->request->getData();
@@ -66,7 +65,44 @@ class ContributorsController extends AppController
             }
         }
 
-        $this->set(compact('contributors', 'newContributor'));
+        $contributorName = $this->request->getQuery('name', '');
+        $page            = $this->request->getQuery('page', '1');
+
+        $cacheKey = sprintf('contributors_index_%s_%s', $contributorName, $page);
+        $cached   = $this->cacheEnabled ? Cache::read($cacheKey, 'contributors_index') : null;
+
+        if ($cached === null) {
+            $query = $this->Contributors->find()->Where(['deleted IS' => null])->contain([
+                'Cats' => function ($cat) {
+                    return $cat->select(['id', 'function_name'])->Where(['deleted IS' => null]);
+                },
+            ]);
+
+            if (!empty($contributorName)) {
+                $contributorName = $this->formatContributorName($contributorName);
+                $query->where(['name LIKE' => '%' . $contributorName . '%']);
+            }
+
+            $contributors = $this->Paginator->paginate($query, ['limit' => 20]);
+
+            $cached = [
+                'contributors' => $contributors,
+                'paging'       => $this->request->getAttribute('paging'),
+            ];
+
+            Cache::write($cacheKey, $cached, 'contributors_index');
+        } else {
+            // Cache hit - restore pagination params
+            $this->request = $this->request->withAttribute('paging', $cached['paging']);
+        }
+
+        $this->set('contributors', $cached['contributors']);
+        $this->set('newContributor');
+    }
+
+    private function formatContributorName(string $catName): string
+    {
+        return str_replace(['%', '_'], ['\\%', '\\_'], $catName);
     }
 
     public function delete($id)

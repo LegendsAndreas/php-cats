@@ -44,3 +44,9 @@ If you have a many-to-many relation, you can specify one of the relations to con
 For example, if you have Cats and Contributors, with the table CatContributors, you can call all Contributors with their relevant cats:
 
     $contributors   = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats'])->toList();
+
+phpcats.dk search engines
+If i write phpcats.dk, or any other correct variations of it, it will almost always give me phpcats.dk as the first result.
+However, for google, if i search for phpcats, it will assume that i meant pfp cats, and just ignore my actual search. If i click
+"Søg i stedet efter phpcats", it will still give me the wrong answer, but at least why are a bit more coding related.
+If i search for phpcats.dk, it will give me nearly ONLY pizzarias/grill related results.
