@@ -100,6 +100,27 @@ return [
             'path'      => CACHE,
             'url'       => env('CACHE_DEFAULT_URL', null),
         ],
+        'cats_index'    => [
+            'className' => FileEngine::class,
+            'path'      => CACHE . 'custom' . DS,
+            'url'       => env('CACHE_CUSTOM_URL', null),
+            'duration'  => '+1 hours',
+            'groups'     => ['cats-index'],
+        ],
+        'cats_deleted'  => [
+            'className' => FileEngine::class,
+            'path'      => CACHE . 'custom' . DS,
+            'url'       => env('CACHE_CUSTOM_URL', null),
+            'duration'  => '+1 hours',
+            'groups'     => ['cats-deleted'],
+        ],
+        'cats_view'     => [
+            'className' => FileEngine::class,
+            'path'      => CACHE . 'custom' . DS,
+            'url'       => env('CACHE_CUSTOM_URL', null),
+            'duration'  => '+1 hours',
+            'groups'     => ['cats-view'],
+        ],
         'ip_logging'    => [
             'className' => FileEngine::class,
             'path'      => CACHE,

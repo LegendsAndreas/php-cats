@@ -31,6 +31,9 @@
 <?php if (count($contributors) === 0) {
     echo '<h4>No contributors yet.</h4>';
 } else { ?>
+    <?= $this->element('paginator', [
+        'modulus' => 2
+    ]) ?>
     <div class="contributors">
         <h3>Contributors list</h3>
         <table class="table table-striped">

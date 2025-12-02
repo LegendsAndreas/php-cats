@@ -15,7 +15,7 @@
     <div class="text-start">
         <h2 class="fw-bold fs-1 mb-4 text-white">Description</h2>
         <p class="cats-view__function-description fs-2"><?= $cat->function_description ?></p>
-        <p class="cats-view__function-examples p-3 js-color-comments"><strong>Usage:</strong> <?= h($cat->function_example) ?>
+        <p class="cats-view__function-examples p-3 js-color-segments"><strong>Usage:</strong> <?= h($cat->function_example) ?>
         </p>
     </div>
 
@@ -27,24 +27,13 @@
     .comment {
         color: green;
     }
+
+    .html-content {
+        background-color: whitesmoke;
+        padding: 2px 5px 2px 5px;
+        display: block;
+    }
 </style>
 <?php $this->end() ?>
 
-<?php $this->append('script') ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        colorComment();
-    });
-
-    function colorComment() {
-        const description = document.querySelector('.js-color-comments');
-        if (!description) {
-            console.warn('js-color-comments element not found.');
-            return;
-        }
-        description.innerHTML = description.innerHTML.replace(/CC(.*)CC/g, (match, matchContent) => {
-            return `<span class="comment">${matchContent}</span>`;
-        });
-    }
-</script>
-<?php $this->end() ?>
+<?= $this->Html->script('/js/Cats/view.js', ['defer' => true]) ?>

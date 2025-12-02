@@ -35,9 +35,13 @@ class ContributorsController extends AppController
 
     public function index()
     {
-        $contributors   = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats' => function ($cat) {
+        $this->loadComponent('Paginator');
+        $query = $this->Contributors->find()->Where(['deleted IS' => null])->contain(['Cats' => function ($cat) {
             return $cat->select(['id', 'function_name'])->Where(['deleted IS' => null]);
-        }])->toList();
+        }]);
+
+        $contributors = $this->Paginator->paginate($query, ['limit' => 3]);
+
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
