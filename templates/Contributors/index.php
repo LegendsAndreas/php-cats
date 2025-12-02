@@ -10,7 +10,7 @@
     Contributors
 </h1>
 <div class="new-contributor">
-    <h3>Add a new contributor</h3>
+    <h2>Add a new contributor</h2>
     <?= $this->Form->create($newContributor) ?>
     <div class="row">
         <div class="col">
@@ -23,14 +23,17 @@
             <?= $this->Form->control('social', ['required' => true]) ?>
         </div>
     </div>
-    <?= $this->Form->button('Add contributor') ?>
+    <?= $this->Form->button('Add contributor', ['class' => 'mt-3']) ?>
     <?= $this->Form->end() ?>
 </div>
 
 
 <?php if (count($contributors) === 0) {
-    echo '<h4>No contributors yet.</h4>';
+    echo '<h3>No contributors yet.</h3>';
 } else { ?>
+    <?= $this->element('paginator', [
+        'modulus' => 2
+    ]) ?>
     <div class="contributors">
         <h3>Contributors list</h3>
         <table class="table table-striped">
@@ -62,5 +65,15 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #f9f9f9;
+    }
+
+    /*The buttons are pretty big on mobile, and since making the button smaller is really fucking hard, i just decided
+    to increase the font size, which works too*/
+    @media (max-width: 768px) {
+        .contributors {
+            th, td {
+                font-size: 19px;
+            }
+        }
     }
 </style>

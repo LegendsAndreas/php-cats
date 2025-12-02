@@ -1,15 +1,7 @@
 // phpcs:ignoreFile
-let originalContent = new Map();
 document.addEventListener('DOMContentLoaded', () => {
     modifySearchHref();
     toggleCheckbox();
-
-    const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
-    for (let paginatorLink of paginatorLinks) {
-        originalContent.set(paginatorLink, paginatorLink.innerHTML);
-    }
-    removeArrowsOnMobile();
-    addEventListener('resize', () => removeArrowsOnMobile());
 });
 
 function modifySearchHref() {
@@ -41,21 +33,3 @@ function toggleCheckbox() {
     });
 }
 
-function removeArrowsOnMobile() {
-    const paginatorLinks = document.querySelectorAll('.cat-index__pagination a');
-
-    if (window.matchMedia('(max-width: 768px)').matches) {
-        for (let paginatorLink of paginatorLinks) {
-            paginatorLink.innerHTML = paginatorLink.innerHTML.replace(/Next|Last|First|Previous/g, '');
-        }
-    } else {
-        for (let paginatorLink of paginatorLinks) {
-            if (originalContent.has(paginatorLink)) {
-                paginatorLink.innerHTML = originalContent.get(paginatorLink);
-            }
-        }
-    }
-}
-
-window.modifySearchHref = modifySearchHref;
-window.toggleCheckbox = toggleCheckbox;

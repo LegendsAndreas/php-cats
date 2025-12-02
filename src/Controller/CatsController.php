@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
@@ -22,12 +23,13 @@ use \Cake\Error;
  */
 class CatsController extends AppController
 {
-
+    private bool $cacheEnabled;
     public function initialize(): void
     {
         parent::initialize();
         $this->Contributors    = $this->fetchTable('Contributors');
         $this->CatContributors = $this->fetchTable('CatContributors');
+        $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -39,7 +41,13 @@ class CatsController extends AppController
 
     public function view($id): void
     {
-        $cat = $this->Cats->get($id); // Fetch the cat by ID
+        $cacheKey = 'cat_' . $id;
+        $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
+
+        if ($cat === null) {
+            $cat = $this->Cats->get($id); // Fetch the cat by ID
+            Cache::write($cacheKey, $cat, 'cats_view');
+        }
 
         $this->set('cat', $cat);
     }
@@ -96,23 +104,45 @@ class CatsController extends AppController
     {
         $this->loadComponent('Paginator');
 
-        $query = $this->Cats->find('all')->where(['deleted IS' => null]);
+        // Build cache key based on query parameters
+        $reverseOrder = $this->request->getQuery('reverseOrder', 'false');
+        $catName      = $this->request->getQuery('catName', '');
+        $page         = $this->request->getQuery('page', '1');
+        $cacheKey     = sprintf('cats_index_%s_%s_%s', $reverseOrder, md5($catName), $page);
 
-        if ($this->request->getQuery('reverseOrder') === 'true') {
-            $query->orderDesc('created');
-        } else {
-            $query->orderAsc('created');
-        }
+        $cached = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_index') : null;
 
-        $catName = $this->request->getQuery('catName', '');
-        if (empty($catName)) {
+        // If we just use Cache::write($cacheKey, $cats), it will not work, because the meta data for pagination will not be saved.
+        if (!is_array($cached) || !isset($cached['cats']) || !isset($cached['paging'])) {
+            $query = $this->Cats->find('all')->where(['deleted IS' => null]);
+
+            if ($reverseOrder === 'true') {
+                $query->orderDesc('created');
+            } else {
+                $query->orderAsc('created');
+            }
+
+            if (!empty($catName)) {
+                $catName = $this->formatCatName($catName);
+                $query->where(['function_name LIKE' => '%' . $catName . '%']);
+            }
+
             $cats = $this->Paginator->paginate($query, ['limit' => 12]);
-        } else {
-            $catName = $this->formatCatName($catName);
 
-            $cats = $this->Paginator->paginate($query->where(['function_name LIKE' => '%' . $catName . '%']), ['limit' => 12]);
+            // Cache both the results and pagination params
+            $cached = [
+                'cats'   => $cats,
+                'paging' => $this->request->getAttribute('paging'),
+            ];
+
+            Cache::write($cacheKey, $cached, 'cats_index');
+        } else {
+            // Cache hit - restore pagination params
+            $this->request = $this->request->withAttribute('paging', $cached['paging']);
         }
-        $this->set(compact('cats'));
+
+        // Always pass cats from cached array (whether just cached or previously cached)
+        $this->set('cats', $cached['cats']);
     }
 
     // To make sure that it also looks after special characters, we add a backslash to escape them
@@ -122,7 +152,7 @@ class CatsController extends AppController
     }
 
     // Right now, it automatically creates the contributors and sets the cat contributors relations
-    public function add(): ?Response
+    public function add(): Response
     {
         $cat = $this->Cats->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -251,20 +281,28 @@ class CatsController extends AppController
         $this->Cats->patchEntity($cat, ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
-            $this->Flash->success(__('The "{0}" article has been archived as deleted.', $cat->function_name));
+            $this->clearCacheGroup([
+                'cats_index'   => 'cats-index',
+                'cats_deleted' => 'cats-deleted',
+            ]);
+            $this->deleteCacheKey(['cat_' . $id]);
 
-            return $this->redirect(['action' => 'index', '?' => ['page' => $page]]);
+            $this->Flash->success(__('The "{0}" article has been archived as deleted.', $cat->function_name));
         } else {
             $this->Flash->error(__('The "{0}" article could not be archived as deleted. Please, try again.', $cat->function_name));
-
-            return $this->redirect(['action' => 'index', '?' => ['page' => $page]]);
         }
+
+        return $this->redirect(['action' => 'index', '?' => ['page' => $page]]);
     }
 
     public function fullDelete($id): Response
     {
         $cat = $this->Cats->findById($id)->firstOrFail();
         if ($this->Cats->delete($cat)) {
+            $this->clearCacheGroup([
+                'cats_deleted' => 'cats-deleted',
+            ]);
+
             $this->Flash->success(__('The "{0}" article has been deleted fully.', $cat->function_name));
         } else {
             $this->Flash->error(__('The "{0}" article could not be deleted fully. Please, try again.', $cat->function_name));
@@ -275,8 +313,13 @@ class CatsController extends AppController
 
     public function deleted(): void
     {
-        $this->loadComponent('Paginator');
-        $cats = $this->Cats->find('all')->where(['deleted IS NOT' => null]);
+        $cats = $this->cacheEnabled ? Cache::read('cats_deleted_index', 'cats_deleted') : null;
+
+        if ($cats === null) {
+            $cats = $this->Cats->find('all')->where(['deleted IS NOT' => null]);
+            Cache::write('cats_deleted_index', $cats->toArray(), 'cats_deleted');
+        }
+
         $this->set(compact('cats'));
     }
 
@@ -286,6 +329,11 @@ class CatsController extends AppController
         $this->Cats->patchEntity($cat, ['deleted' => null]);
 
         if ($this->Cats->save($cat)) {
+            $this->clearCacheGroup([
+                'cats_index'   => 'cats-index',
+                'cats_deleted' => 'cats-deleted',
+            ]);
+
             $this->Flash->success(__('The "{0}" article has been restored.', $cat->function_name));
         } else {
             $this->Flash->error(__('The "{0}" article could not be restored. Please, try again.', $cat->function_name));
@@ -294,4 +342,28 @@ class CatsController extends AppController
         return $this->redirect(['action' => 'deleted']);
     }
 
+    /**
+     * @param array $cacheConfigGroup Key value list of cache config and group name.
+     *
+     * @return void
+     */
+    private function clearCacheGroup(array $cacheConfigGroup): void
+    {
+        foreach ($cacheConfigGroup as $config => $group) {
+            $result = Cache::clearGroup($group, $config);
+            if (!$result) {
+                Log::error('Could not clear cache group ' . $group);
+            }
+        }
+    }
+
+    private function deleteCacheKey(array $cacheKeys): void
+    {
+        foreach ($cacheKeys as $cacheKey) {
+            $result = Cache::delete($cacheKey);
+            if (!$result) {
+                Log::error('Could not delete cache key ' . $cacheKey);
+            }
+        }
+    }
 }

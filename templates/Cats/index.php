@@ -83,7 +83,7 @@ $tester->getIpCountry($this->request->clientIp());
             </div>
         </div>
 
-        <?= $this->element('Cats/cats-paginator', [
+        <?= $this->element('paginator', [
             'modulus' => $modulus,
         ]) ?>
     </div>
@@ -109,7 +109,7 @@ $tester->getIpCountry($this->request->clientIp());
         <?php }; ?>
     </div>
 
-    <?= $this->element('Cats/cats-paginator', [
+    <?= $this->element('paginator', [
         'modulus' => $modulus,
     ]) ?>
 </div>
