@@ -14,8 +14,6 @@
  * @var \App\View\AppView $this
  */
 
-//dd($this);
-
 // I assume that we get the title from the controller name.
 if ($this->getRequest()->getParam('controller') === 'Cats') {
     $this->assign('title', 'PHP Cats');
@@ -31,7 +29,9 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
     <title>
         <?= $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->meta('icon', '/fav/php-cats-logo-1.svg', ['type' => 'image/svg+xml']) ?>
+    <?= $this->Html->meta('icon', '/fav/php-cats-logo.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>
+    <?= $this->Html->meta('icon', '/fav/php-cats-logo.png', ['type' => 'image/png', 'sizes' => '32x32']) ?>
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'styles']) ?>
 
