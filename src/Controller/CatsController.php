@@ -305,6 +305,12 @@ class CatsController extends AppController
         return $this->redirect(['action' => 'deleted']);
     }
 
+    public function test()
+    {
+        $this->set('title', 'PHP Cats | Test');
+        return $this->render();
+    }
+
     /**
      * @param array $cacheConfigGroup Key value list of cache config and group name.
      *
