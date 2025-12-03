@@ -1,6 +1,6 @@
 const SegmentPattern = {
     COMMENT: 'CC',
-    HTML: 'BB',
+    HTML   : 'BB',
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,7 +14,15 @@ function colorSegment(pattern, className) {
         console.log('js-color-segments element not found.');
         return;
     }
-    description.innerHTML = description.innerHTML.replace(new RegExp(pattern + '(.*)' + pattern, 'gs'), (match, matchContent) => {
+
+    let flags;
+    if (pattern === SegmentPattern.COMMENT) {
+        flags = 'g';
+    } else {
+        flags = 'gs';
+    }
+
+    description.innerHTML = description.innerHTML.replace(new RegExp(pattern + '(.*)' + pattern, flags), (match, matchContent) => {
         return `<span class="${className}">${matchContent}</span>`;
     });
 }
