@@ -1,0 +1,58 @@
+.list-group-item {
+  z-index: 10;
+  border: none;
+  background-color: wheat;
+  padding: 0 5px;
+  transition: background-color 0.1s linear;
+}
+
+.list-group-item:hover {
+  background-color: rgb(236.1046511628, 192.6453488372, 111.3953488372);
+}
+
+.html-segment div {
+  transition: background-color 0.1s linear;
+}
+.html-segment pre {
+  color: #212529;
+}
+
+.html-segment:hover div {
+  background-color: rgb(206.75, 206.75, 206.75);
+}
+
+.delete-button {
+  height: unset;
+  padding: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-self: right;
+}
+
+.list-group-item:first-child {
+  padding-top: 5px;
+}
+
+.list-group-item:last-child {
+  padding-bottom: 5px;
+}
+
+.list-group {
+  border: 1px solid lightgray;
+  padding: 5px;
+  background-color: #C93941;
+}
+
+pre {
+  padding-left: 2px;
+  font-size: 20px;
+  border: none;
+  background-color: unset;
+}
+
+.comment-segment pre {
+  color: green;
+  margin-bottom: 0;
+}
+
+/*# sourceMappingURL=test.css.map */
