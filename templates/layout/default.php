@@ -12,12 +12,8 @@
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
+ * @var string $title // Set in each controller action
  */
-
-// I assume that we get the title from the controller name.
-if ($this->getRequest()->getParam('controller') === 'Cats') {
-    $this->assign('title', 'PHP Cats');
-}
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +23,7 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A website that parodies HTTP.cat, working as a lexicon for PHP functionalities, as well as CakePHP functions">
     <title>
-        <?= $this->fetch('title') ?>
+        <?= $title ?>
     </title>
     <?= $this->Html->meta('icon', '/favicon', ['type' => 'image/svg+xml']) ?>
     <?= $this->Html->meta('icon', '/favicon-16x16.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>

@@ -49,54 +49,13 @@ class CatsController extends AppController
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
+        $this->set('title', 'PHP Cats | View Cat - ' . $cat->function_name);
         $this->set('cat', $cat);
     }
 
     public function help(): Response
     {
-        if ($this->request->is('post')) {
-            /*            $mailer = new Mailer();
-                        $mailer->setTransport('default'); // Explicitly use 'default' transport from your configuration
-                        $mailer->setFrom(['andreas2x2@gmail.com' => 'CakePHP Email'])
-                               ->setTo('andreas2x2@gmail.com')
-                               ->setSubject('Testing Explicit Transport')
-                               ->deliver('This is a test email.');*/ //            mail.protonmail.ch
-            /*            $data = $this->request->getData();
-
-                        // Extract the form data
-                        $title = $data['email_title'] ?? 'No Title';
-                        $description = $data['email_description'] ?? 'No Description';
-                        $pictures = $data['email_pictures'] ?? [];
-
-                        // Set up the email
-                        $mailer = new Mailer('default');
-                        $mailer->setTo('andreasbxb@pm.me') // Recipient
-                               ->setSubject($title)
-                               ->deliver($description); // Email content
-
-
-                        // Handle attachments
-                        if (!empty($pictures)) {
-                            foreach ($pictures['tmp_name'] as $index => $tmpName) {
-                                if (is_uploaded_file($tmpName)) {
-                                    $mailer->addAttachments([
-                                        $pictures['name'][$index] => $tmpName,
-                                    ]);
-                                }
-                            }
-                        }
-
-                        // Send email
-                        if ($mailer->send()) {
-                            $this->Flash->success('Your email has been sent successfully!');
-                        } else {
-                            $this->Flash->error('There was a problem sending your email.');
-                        }
-
-                        // Redirect back
-                        return $this->render();*/
-        }
-
+        $this->set('title', 'PHP Cats | Help');
         return $this->render();
     }
 
@@ -142,6 +101,7 @@ class CatsController extends AppController
         }
 
         // Always pass cats from cached array (whether just cached or previously cached)
+        $this->set('title', 'PHP Cats');
         $this->set('cats', $cached['cats']);
     }
 
@@ -178,6 +138,7 @@ class CatsController extends AppController
             }
         }
 
+        $this->set('title', 'PHP Cats | Add new cat');
         $this->set(compact('cat'));
 
         return $this->render();
@@ -247,6 +208,7 @@ class CatsController extends AppController
             }
         }
 
+        $this->set('title', 'PHP Cats | Edit Cat - ' . $cat->function_name);
         $this->set(compact('cat', 'contributors'));
 
         return $this->render();
@@ -320,6 +282,7 @@ class CatsController extends AppController
             Cache::write('cats_deleted_index', $cats->toArray(), 'cats_deleted');
         }
 
+        $this->set('title', 'PHP Cats | Deleted Cats');
         $this->set(compact('cats'));
     }
 

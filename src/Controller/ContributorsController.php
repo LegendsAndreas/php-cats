@@ -96,6 +96,7 @@ class ContributorsController extends AppController
             $this->request = $this->request->withAttribute('paging', $cached['paging']);
         }
 
+        $this->set('title', 'PHP Cats | Contributors');
         $this->set('contributors', $cached['contributors']);
         $this->set('newContributor');
     }
@@ -132,12 +133,14 @@ class ContributorsController extends AppController
             }
         }
 
+        $this->set('title', 'PHP Cats | Edit Contributor - ' . $contributor->name);
         $this->set(compact('contributor'));
     }
 
     public function view($id)
     {
         $contributor = $this->Contributors->get($id);
+        $this->set('title', 'PHP Cats | View Contributor - ' . $contributor->name);
         $this->set(compact('contributor'));
     }
 }
