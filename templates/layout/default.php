@@ -29,9 +29,9 @@ if ($this->getRequest()->getParam('controller') === 'Cats') {
     <title>
         <?= $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon', '/fav/php-cats-logo-1.svg', ['type' => 'image/svg+xml']) ?>
-    <?= $this->Html->meta('icon', '/fav/php-cats-logo.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>
-    <?= $this->Html->meta('icon', '/fav/php-cats-logo.png', ['type' => 'image/png', 'sizes' => '32x32']) ?>
+    <?= $this->Html->meta('icon', '/favicon', ['type' => 'image/svg+xml']) ?>
+    <?= $this->Html->meta('icon', '/favicon-16x16.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>
+    <?= $this->Html->meta('icon', '/favicon-32x32.png', ['type' => 'image/png', 'sizes' => '32x32']) ?>
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'styles']) ?>
 
