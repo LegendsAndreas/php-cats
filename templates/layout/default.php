@@ -20,6 +20,7 @@
 <html lang="en">
 <head>
     <?= $this->Html->charset() ?>
+    <meta name="google-site-verification" content="ObNGwaWShPjHenJiwEyTXDxO-rVZVhacyhQqq5jVUqI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A website that parodies HTTP.cat, working as a lexicon for PHP functionalities, as well as CakePHP functions">
     <title>
