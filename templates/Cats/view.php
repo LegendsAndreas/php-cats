@@ -13,10 +13,31 @@
     </div>
 
     <div class="text-start">
+        <div style="color: white;">
+            Thanks to:
+            <?php
+            if (!empty($cat['contributors'])) {
+                foreach ($cat['contributors'] as $contributor) {
+                    echo $contributor->name . ', ';
+                }
+            } else {
+                echo 'No one :(';
+            }
+            ?>
+        </div>
         <h2 class="fw-bold fs-1 mb-4 text-white">Description</h2>
         <p class="cats-view__function-description fs-2"><?= $cat->function_description ?></p>
-        <p class="cats-view__function-examples p-3 js-color-segments"><strong>Usage:</strong> <?= h($cat->function_example) ?>
-        </p>
+        <?php if (!empty($cat['html_blocks'])) { ?>
+            <div class="cats-view__function-examples p-3">
+                <?php foreach ($cat['html_blocks'] as $block) { ?>
+                    <div class="<?= $block->type ?>-segment">
+                        <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>$block->content</pre>" ?>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } else { ?>
+            <p class="cats-view__function-examples p-3 js-color-segments"><strong>Usage:</strong> <?= h($cat->function_example) ?></p>
+        <?php } ?>
     </div>
 
     <?= $this->Html->link('<button>Edit Cat</button>', ['action' => 'edit', $cat->id], ['escape' => false]) ?>

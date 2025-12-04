@@ -16,12 +16,16 @@ echo $this->Form->control('Image', ['type' => 'file', 'required' => true, 'class
 echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']);
 ?>
 
+<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+    <?= $this->element('Cats/html-blocks') ?>
+</div>
+
 <button class="btn btn-primary js-add-contributor" type="button">
     Add contributor
 </button>
 
 <div class="contributors">
-    <div class="contributor" >
+    <div class="contributor">
         <fieldset>
             <legend class="contributor-legend">Contributor 1</legend>
             <?= $this->Form->control('contributors.0.name', ['label' => 'Contributor name']) ?>

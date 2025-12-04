@@ -45,7 +45,7 @@ class CatsController extends AppController
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
-            $cat = $this->Cats->get($id); // Fetch the cat by ID
+            $cat = $this->Cats->get($id, ['contain' => ['HtmlBlocks', 'Contributors']]); // Fetch the cat by ID
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
@@ -127,14 +127,22 @@ class CatsController extends AppController
                 return $this->redirect(['action' => 'add']);
             }
 
-            $cat = $this->Cats->newEntity($data);
+            $counter = 0;
+            foreach ($data['html_blocks'] as &$htmlBlock) {
+                $htmlBlock['sort_order'] = $counter++;
+            }
 
-            if ($this->Cats->save($cat)) {
+            $cat = $this->Cats->newEntity($data, [
+                'associated' => ['HtmlBlocks']
+            ]);
+
+            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks']])) {
                 $this->Flash->success(__('New cat added.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Unable to add the cat :(.'));
+                Log::error('Failed to save cat: ' . json_encode($cat->getErrors()));
             }
         }
 

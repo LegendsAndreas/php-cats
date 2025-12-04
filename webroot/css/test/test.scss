@@ -13,11 +13,14 @@
 .html-segment {
     div {
         transition: background-color 0.1s linear;
+        background-color: whitesmoke;
     }
+
     pre {
         color: #212529;
     }
 }
+
 .html-segment:hover {
     div {
         background-color: darken(whitesmoke, 15%);
@@ -51,12 +54,12 @@ pre {
     font-size: 20px;
     border: none;
     background-color: unset;
+    margin-bottom: 0;
 }
 
 .comment-segment {
 
     pre {
         color: green;
-        margin-bottom: 0;
     }
 }
