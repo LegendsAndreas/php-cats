@@ -14,6 +14,22 @@
         font-size: 20px;
         background-color: wheat;
         border-radius: 3px;
+
+        &__html-segment {
+            background-color: whitesmoke;
+        }
+
+        &__comment-segment {
+            color: green;
+        }
+
+        pre {
+            padding-left: 2px;
+            font-size: 20px;
+            border: none;
+            background-color: unset;
+            margin-bottom: 0;
+        }
     }
 
     &__image {

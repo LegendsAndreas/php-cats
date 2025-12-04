@@ -49,6 +49,10 @@
     background-color: #C93941;
 }
 
+.list-group:empty {
+    display: none;
+}
+
 pre {
     padding-left: 2px;
     font-size: 20px;

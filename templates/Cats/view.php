@@ -30,31 +30,23 @@
         <?php if (!empty($cat['html_blocks'])) { ?>
             <div class="cats-view__function-examples p-3">
                 <?php foreach ($cat['html_blocks'] as $block) { ?>
-                    <div class="<?= $block->type ?>-segment">
-                        <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>$block->content</pre>" ?>
-                    </div>
+                    <?php if (isset($block->escape) && $block->escape) { ?>
+                        <div class="cats-view__function-examples__<?= $block->type ?>-segment">
+                            <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>" . h($block->content) . "</pre>" ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="cats-view__function-examples__<?= $block->type ?>-segment">
+                            <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>" . $block->content . "</pre>" ?>
+                        </div>
+                    <?php } ?>
                 <?php } ?>
             </div>
         <?php } else { ?>
-            <p class="cats-view__function-examples p-3 js-color-segments"><strong>Usage:</strong> <?= h($cat->function_example) ?></p>
+            <p class="cats-view__function-examples p-3 js-color-segments" style="white-space: pre-wrap"><strong>Usage:</strong> <?= h($cat->function_example) ?></p>
         <?php } ?>
     </div>
 
-    <?= $this->Html->link('<button>Edit Cat</button>', ['action' => 'edit', $cat->id], ['escape' => false]) ?>
+    <?= $this->Html->link('<button class="mt-3">Edit Cat</button>', ['action' => 'edit', $cat->id], ['escape' => false]) ?>
 </div>
-
-<?php $this->append('css') ?>
-<style>
-    .comment {
-        color: green;
-    }
-
-    .html-content {
-        background-color: whitesmoke;
-        padding: 2px 5px 2px 5px;
-        display: block;
-    }
-</style>
-<?php $this->end() ?>
 
 <?= $this->Html->script('/js/Cats/view.js', ['defer' => true]) ?>

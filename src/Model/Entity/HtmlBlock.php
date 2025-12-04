@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property int        $cat_id
  * @property int        $sort_order
  * @property string     $type
+ * @property bool       $escape_html
  * @property string     $content
  * @property FrozenTime $created
  * @property FrozenTime $modified

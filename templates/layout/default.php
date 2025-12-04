@@ -47,6 +47,7 @@
 </main>
 <footer>
 </footer>
+<?= $this->element('custom-modal') ?>
 </body>
 </html>
 

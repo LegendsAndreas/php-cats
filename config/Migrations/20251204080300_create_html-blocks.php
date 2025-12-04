@@ -13,8 +13,9 @@ class CreateHtmlBlocks extends AbstractMigration
             CREATE TABLE `html_blocks` (
 	            `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `cat_id` INT(11) NULL DEFAULT '0',
-                `order` INT(11) NULL DEFAULT '0',
+                `sort_order` INT(11) NULL DEFAULT '0',
                 `type` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+            	`escape_html` TINYINT(1) NOT NULL DEFAULT '0',
                 `content` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
                 `created` TIMESTAMP NULL DEFAULT NULL,
                 `modified` TIMESTAMP NULL DEFAULT NULL,

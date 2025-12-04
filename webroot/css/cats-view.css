@@ -15,5 +15,18 @@
   background-color: wheat;
   border-radius: 3px;
 }
+.cats-view__function-examples__html-segment {
+  background-color: whitesmoke;
+}
+.cats-view__function-examples__comment-segment {
+  color: green;
+}
+.cats-view__function-examples pre {
+  padding-left: 2px;
+  font-size: 20px;
+  border: none;
+  background-color: unset;
+  margin-bottom: 0;
+}
 
 /*# sourceMappingURL=cats-view.css.map */

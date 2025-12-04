@@ -7,14 +7,17 @@
  */
 ?>
 
-<h1>Add Cat</h1>
+<h1>Edit Cat</h1>
 <?php
 echo $this->Form->create($cat);
 echo $this->Form->control('function_name', ['type' => 'text', 'required' => true]);
 echo $this->Form->control('function_description', ['type' => 'textarea', 'required' => true]);
-echo $this->Form->control('function_example', ['type' => 'textarea', 'required' => true, 'class' => 'cats-edit__textarea']);
 echo $this->Form->control('Image', ['type' => 'file', 'class' => 'js-add-image']);
 echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']); ?>
+
+<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+    <?= $this->element('Cats/html-blocks', ['htmlBlocks' => $cat->html_blocks]) ?>
+</div>
 
 <button class="btn btn-primary js-add-contributor" type="button">
     Add contributor
