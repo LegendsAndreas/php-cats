@@ -5,6 +5,9 @@
   padding: 0 5px;
   transition: background-color 0.1s linear;
 }
+.html-blocks .list-group-item pre {
+  white-space: initial;
+}
 .html-blocks .list-group-item-actions {
   display: inline-flex;
   margin-left: auto;
@@ -24,6 +27,16 @@
 }
 .html-blocks .html-segment:hover div {
   background-color: rgb(206.75, 206.75, 206.75);
+}
+.html-blocks .terminal-segment div {
+  transition: background-color 0.1s linear;
+  background-color: #1e1f22;
+}
+.html-blocks .terminal-segment pre {
+  color: #ffffff;
+}
+.html-blocks .terminal-segment:hover div {
+  background-color: rgb(65.859375, 68.0546875, 74.640625);
 }
 .html-blocks .delete-button {
   height: fit-content;

@@ -5,9 +5,10 @@
  * @var array                         $selectOptions
  */
 $selectOptions = [
-    'code'    => 'Code',
-    'comment' => 'Comment',
-    'html'    => 'HTML',
+    'code'     => 'Code',
+    'comment'  => 'Comment',
+    'html'     => 'HTML',
+    'terminal' => 'Terminal',
 ];
 
 ?>
@@ -15,9 +16,9 @@ $selectOptions = [
     <div>
         <label for="search-input">Function Examples</label>
         <textarea class="js-get-area-text" id="search-input" placeholder="Text..."></textarea>
-        <div class="text-actions">
+        <div class="text-actions d-flex align-items-center">
             <button class="js-bold-text" type="button">Bolden text</button>
-            <div class="d-inline">
+            <div class="d-inline ms-3">
                 <?= $this->Form->label('escape-html', 'Escape HTML', ['class' => 'escape-html-label']) ?>
                 <?= $this->Form->checkbox('escape_html', ['id' => 'escape-html', 'class' => 'js-escape-html-checkbox', 'checked' => false]) ?>
             </div>
@@ -39,7 +40,7 @@ $selectOptions = [
             foreach ($htmlBlocks as $htmlBlock) { ?>
                 <div class="list-group-item <?= $htmlBlock->type ?>-segment">
                     <div class="d-flex">
-                        <div class="overflow-hidden">
+                        <div class="overflow-hidden me-3">
                             <pre class="js-add-text-to-pre js-copy-to-clipboard-content"><?= $htmlBlock->content ?></pre>
                         </div>
                         <div class="list-group-item-actions">
@@ -111,6 +112,7 @@ $selectOptions = [
                 });
 
                 addRemoveElementListener(newElement.querySelector('.js-delete-list-item'));
+                addCopyToClipboardListener(newElement.querySelector('.js-copy-to-clipboard-button'));
 
                 itemBlock.appendChild(newElement);
                 itemDifferentialNum++;
@@ -155,9 +157,7 @@ $selectOptions = [
 
     function addCopyToClipboardListener(element) {
         element.addEventListener('click', () => {
-            console.log("Copy element");
-            let preElement = element.closest('.list-group-item').querySelector('.js-copy-to-clipboard-content');
-            navigator.clipboard.writeText(preElement.innerText);
+            navigator.clipboard.writeText(element.closest('.list-group-item').querySelector('input[name*="[content]"]').value);
             callModal('Copied', 1500);
         })
     }

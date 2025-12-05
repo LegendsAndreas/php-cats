@@ -6,6 +6,10 @@
         background-color: wheat;
         padding: 0 5px;
         transition: background-color 0.1s linear;
+
+        pre {
+            white-space: initial;
+        }
     }
 
     .list-group-item-actions {
@@ -35,6 +39,23 @@
     .html-segment:hover {
         div {
             background-color: darken(whitesmoke, 15%);
+        }
+    }
+
+    .terminal-segment {
+        div {
+            transition: background-color 0.1s linear;
+            background-color: #1e1f22;
+        }
+
+        pre {
+            color: #ffffff;
+        }
+    }
+
+    .terminal-segment:hover {
+        div {
+            background-color: lighten(#1e1f22, 15%);
         }
     }
 

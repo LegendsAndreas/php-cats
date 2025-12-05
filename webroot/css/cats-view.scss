@@ -10,6 +10,35 @@
         color: white;
     }
 
+    &__contributors {
+        color: white;
+    }
+
+    &__break-white-spaces-button {
+        all: unset;
+        border: 4px double wheat;
+        border-radius: 5px;
+        padding: 5px;
+        color: white;
+        background-color: #C93941;
+        transition: 0.2s background-color linear;
+    }
+
+    &__break-white-spaces-button:focus {
+        background-color: unset;
+        border: 4px double wheat;
+        border-radius: 5px;
+    }
+
+    &__break-white-spaces-button.active {
+        background-color: darken(#C93941, 15%);
+    }
+
+    &__break-white-spaces-button:hover {
+        border: 4px double wheat;
+        background-color: darken(#C93941, 15%);
+    }
+
     &__function-examples{
         font-size: 20px;
         background-color: wheat;
@@ -21,6 +50,11 @@
 
         &__comment-segment {
             color: green;
+        }
+
+        &__terminal-segment {
+            background-color: #1e1f22;
+            color: white;
         }
 
         pre {

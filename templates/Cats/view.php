@@ -13,7 +13,7 @@
     </div>
 
     <div class="text-start">
-        <div style="color: white;">
+        <div class="cats-view__contributors">
             Thanks to:
             <?php
             if (!empty($cat['contributors'])) {
@@ -27,18 +27,15 @@
         </div>
         <h2 class="fw-bold fs-1 mb-4 text-white">Description</h2>
         <p class="cats-view__function-description fs-2"><?= $cat->function_description ?></p>
+        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
+            Break
+        </button>
         <?php if (!empty($cat['html_blocks'])) { ?>
             <div class="cats-view__function-examples p-3">
                 <?php foreach ($cat['html_blocks'] as $block) { ?>
-                    <?php if (isset($block->escape) && $block->escape) { ?>
-                        <div class="cats-view__function-examples__<?= $block->type ?>-segment">
-                            <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>" . h($block->content) . "</pre>" ?>
-                        </div>
-                    <?php } else { ?>
-                        <div class="cats-view__function-examples__<?= $block->type ?>-segment">
-                            <?= empty($block->content) ? '<div>&nbsp;</div>' : "<pre>" . $block->content . "</pre>" ?>
-                        </div>
-                    <?php } ?>
+                    <div class="cats-view__function-examples__<?= $block->type ?>-segment">
+                        <?= empty($block->content) ? '<div>&nbsp;</div>' : '<pre class="js-break-white-spaces">' . ($block->escape_html ? h($block->content) : $block->content) . "</pre>" ?>
+                    </div>
                 <?php } ?>
             </div>
         <?php } else { ?>

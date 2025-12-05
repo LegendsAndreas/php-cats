@@ -1,6 +1,5 @@
 @import "bootstrap.min.css";
 @import "fonts.css";
-@import "terminal-window.css";
 @import "layout-default.css";
 @import "cat-index.css";
 @import "cats-view.css";
@@ -13,4 +12,8 @@
 
 * {
     font-family: "JetBrains Mono", sans-serif !important;
+}
+
+button {
+    transition: background-color 0.2s linear;
 }
