@@ -1,7 +1,7 @@
 <div class="list-group-item js-code-placeholder d-none">
     <div class="d-flex">
         <div class="overflow-hidden me-3">
-            <pre class="js-add-text-to-pre js-copy-to-clipboard-content"></pre>
+            <pre class="js-add-text-to-pre js-copy-to-clipboard-content js-break-white-spaces"></pre>
         </div>
         <div class="list-group-item-actions">
             <button class="js-delete-list-item delete-button" type="button">X</button>
