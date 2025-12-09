@@ -23,7 +23,7 @@
   transition: 0.2s background-color linear;
 }
 .cats-view__break-white-spaces-button:focus {
-  background-color: unset;
+  background-color: #C93941;
   border: 4px double wheat;
   border-radius: 5px;
 }
