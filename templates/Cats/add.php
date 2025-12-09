@@ -11,17 +11,20 @@
 echo $this->Form->create($cat);
 echo $this->Form->control('function_name', ['type' => 'text', 'required' => true]);
 echo $this->Form->control('function_description', ['type' => 'textarea', 'required' => true]);
-echo $this->Form->control('function_example', ['type' => 'textarea', 'required' => true, 'class' => 'cats-add__textarea']);
 echo $this->Form->control('Image', ['type' => 'file', 'required' => true, 'class' => 'js-add-image']);
 echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']);
 ?>
+
+<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+    <?= $this->element('Cats/html-blocks') ?>
+</div>
 
 <button class="btn btn-primary js-add-contributor" type="button">
     Add contributor
 </button>
 
 <div class="contributors">
-    <div class="contributor" >
+    <div class="contributor">
         <fieldset>
             <legend class="contributor-legend">Contributor 1</legend>
             <?= $this->Form->control('contributors.0.name', ['label' => 'Contributor name']) ?>

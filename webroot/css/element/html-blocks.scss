@@ -1,0 +1,111 @@
+.html-blocks {
+
+    .list-group-item {
+        z-index: 10;
+        border: none;
+        background-color: wheat;
+        padding: 0 5px;
+        transition: background-color 0.1s linear;
+
+        pre {
+            white-space: initial;
+        }
+    }
+
+    .list-group-item-actions {
+        display: inline-flex;
+        margin-left: auto;
+    }
+
+    .escape-html-label {
+        margin-bottom: 0;
+    }
+
+    .list-group-item:hover {
+        background-color: darken(wheat, 15%);
+    }
+
+    .html-segment {
+        div {
+            transition: background-color 0.1s linear;
+            background-color: whitesmoke;
+        }
+
+        pre {
+            color: #212529;
+        }
+    }
+
+    .html-segment:hover {
+        div {
+            background-color: darken(whitesmoke, 15%);
+        }
+    }
+
+    .terminal-segment {
+        div {
+            transition: background-color 0.1s linear;
+            background-color: #1e1f22;
+        }
+
+        pre {
+            color: #ffffff;
+        }
+    }
+
+    .terminal-segment:hover {
+        div {
+            background-color: lighten(#1e1f22, 15%);
+        }
+    }
+
+    .delete-button {
+        height: fit-content;
+        padding: 5px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-self: right;
+    }
+
+    .copy-button {
+        height: fit-content;
+        padding: 5px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-self: right;
+        margin-left: 5px;
+    }
+
+    .list-group-item:first-child {
+        padding-top: 5px;
+    }
+
+    .list-group-item:last-child {
+        padding-bottom: 5px;
+    }
+
+    .list-group {
+        border: 1px solid lightgray;
+        padding: 5px;
+        background-color: #C93941;
+    }
+
+    .list-group:empty {
+        display: none;
+    }
+
+    pre {
+        padding-left: 2px;
+        font-size: 20px;
+        border: none;
+        background-color: unset;
+        margin-bottom: 0;
+    }
+
+    .comment-segment {
+
+        pre {
+            color: green;
+        }
+    }
+}

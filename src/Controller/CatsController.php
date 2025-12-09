@@ -29,7 +29,7 @@ class CatsController extends AppController
         parent::initialize();
         $this->Contributors    = $this->fetchTable('Contributors');
         $this->CatContributors = $this->fetchTable('CatContributors');
-        $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
+        $this->cacheEnabled    = Configure::read('App.EnableCustomCaching');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -45,7 +45,7 @@ class CatsController extends AppController
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
-            $cat = $this->Cats->get($id); // Fetch the cat by ID
+            $cat = $this->Cats->get($id, ['contain' => ['HtmlBlocks', 'Contributors']]); // Fetch the cat by ID
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
@@ -56,6 +56,7 @@ class CatsController extends AppController
     public function help(): Response
     {
         $this->set('title', 'PHP Cats | Help');
+
         return $this->render();
     }
 
@@ -127,14 +128,22 @@ class CatsController extends AppController
                 return $this->redirect(['action' => 'add']);
             }
 
-            $cat = $this->Cats->newEntity($data);
+            $counter = 0;
+            foreach ($data['html_blocks'] as &$htmlBlock) {
+                $htmlBlock['sort_order'] = $counter++;
+            }
 
-            if ($this->Cats->save($cat)) {
+            $cat = $this->Cats->newEntity($data, [
+                'associated' => ['HtmlBlocks'],
+            ]);
+
+            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks']])) {
                 $this->Flash->success(__('New cat added.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Unable to add the cat :(.'));
+                Log::error('Failed to save cat: ' . json_encode($cat->getErrors()));
             }
         }
 
@@ -174,7 +183,7 @@ class CatsController extends AppController
 
     public function edit($id): Response
     {
-        $cat            = $this->Cats->findById($id)->firstOrFail();
+        $cat            = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
         $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->select(['contributor_id'])->extract('contributor_id')->toList();
 
         if (empty($contributorIds)) {
@@ -197,9 +206,39 @@ class CatsController extends AppController
             }
             $data['contributors'] = $ids['found'];
 
-            $this->Cats->patchEntity($cat, $data);
+            // Track existing HTML block IDs
+            $existingHtmlBlockIds = [];
+            foreach ($cat->html_blocks as $block) {
+                $existingHtmlBlockIds[] = $block->id;
+            }
 
-            if ($this->Cats->save($cat)) {
+            // Track HTML block IDs that are in the new data
+            $submittedHtmlBlockIds = [];
+            $counter               = 0;
+            foreach ($data['html_blocks'] as &$htmlBlock) {
+                $htmlBlock['sort_order'] = $counter++;
+                if (isset($htmlBlock['id'])) {
+                    $submittedHtmlBlockIds[] = $htmlBlock['id'];
+                }
+            }
+
+            // Find HTML blocks to delete (existing but not in submitted data)
+            $htmlBlockIdsToDelete = array_diff($existingHtmlBlockIds, $submittedHtmlBlockIds);
+
+            $this->Cats->patchEntity($cat, $data, [
+                'associated' => ['HtmlBlocks'],
+            ]);
+
+            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks']])) {
+                // Delete removed HTML blocks
+                if (!empty($htmlBlockIdsToDelete)) {
+                    $HtmlBlocks = $this->fetchTable('HtmlBlocks');
+                    foreach ($htmlBlockIdsToDelete as $blockId) {
+                        $block = $HtmlBlocks->get($blockId);
+                        $HtmlBlocks->delete($block);
+                    }
+                }
+
                 $this->Flash->success(__('Cat got updated.'));
 
                 return $this->redirect(['action' => 'edit', $id]);
@@ -303,6 +342,13 @@ class CatsController extends AppController
         }
 
         return $this->redirect(['action' => 'deleted']);
+    }
+
+    public function test()
+    {
+        $this->set('title', 'PHP Cats | Test');
+
+        return $this->render();
     }
 
     /**

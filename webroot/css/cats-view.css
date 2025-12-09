@@ -10,11 +10,51 @@
 .cats-view__function-description {
   color: white;
 }
+.cats-view__contributors {
+  color: white;
+}
+.cats-view__break-white-spaces-button {
+  all: unset;
+  border: 4px double wheat;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  background-color: #C93941;
+  transition: 0.2s background-color linear;
+}
+.cats-view__break-white-spaces-button:focus {
+  background-color: unset;
+  border: 4px double wheat;
+  border-radius: 5px;
+}
+.cats-view__break-white-spaces-button.active {
+  background-color: rgb(142.6071428571, 38.8928571429, 44.6547619048);
+}
+.cats-view__break-white-spaces-button:hover {
+  border: 4px double wheat;
+  background-color: rgb(142.6071428571, 38.8928571429, 44.6547619048);
+}
 .cats-view__function-examples {
   font-size: 20px;
   background-color: wheat;
   border-radius: 3px;
-  white-space: pre-wrap;
+}
+.cats-view__function-examples__html-segment {
+  background-color: whitesmoke;
+}
+.cats-view__function-examples__comment-segment {
+  color: green;
+}
+.cats-view__function-examples__terminal-segment {
+  background-color: #1e1f22;
+  color: white;
+}
+.cats-view__function-examples pre {
+  padding-left: 2px;
+  font-size: 20px;
+  border: none;
+  background-color: unset;
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=cats-view.css.map */
