@@ -6,12 +6,14 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
- * @property int $id
- * @property string $email
- * @property string $name
- * @property string $social
+ * @property int        $id
+ * @property string     $email
+ * @property string     $name
+ * @property string     $social
  * @property FrozenTime $created
  * @property FrozenTime $modified
+ *
+ * @property Cat[]      $cats
  */
 
 class Contributor extends Entity

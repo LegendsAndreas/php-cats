@@ -16,7 +16,7 @@ echo $this->Form->control('Image', ['type' => 'file', 'class' => 'js-add-image']
 echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']); ?>
 
 <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
-    <?= $this->element('Cats/html-blocks', ['htmlBlocks' => $cat->html_blocks]) ?>
+    <?= $this->element('Cats/edit-cat-html-blocks', ['htmlBlocks' => $cat->html_blocks]) ?>
 </div>
 
 <button class="btn btn-primary js-add-contributor" type="button">

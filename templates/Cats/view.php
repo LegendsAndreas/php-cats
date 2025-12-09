@@ -4,6 +4,9 @@
  * @var \App\View\AppView     $this
  * @var \App\Model\Entity\Cat $cat
  */
+
+use App\Model\Entity\HtmlBlock;
+
 ?>
 
 <div class="text-center cats-view p-3 my-3">
@@ -30,9 +33,9 @@
         <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
             Break
         </button>
-        <?php if (!empty($cat['html_blocks'])) { ?>
+        <?php if (!empty($cat->html_blocks)) { ?>
             <div class="cats-view__function-examples p-3">
-                <?php foreach ($cat['html_blocks'] as $block) { ?>
+                <?php foreach ($cat->html_blocks as $block) { ?>
                     <div class="cats-view__function-examples__<?= $block->type ?>-segment">
                         <?= empty($block->content) ? '<div>&nbsp;</div>' : '<pre class="js-break-white-spaces">' . ($block->escape_html ? h($block->content) : $block->content) . "</pre>" ?>
                     </div>

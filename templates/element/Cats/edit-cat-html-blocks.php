@@ -31,6 +31,9 @@ $selectOptions = [
         <button class="js-add-text mt-3" type="button">
             Add text
         </button>
+        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
+            Break
+        </button>
     </div>
 
     <?php if (!empty($htmlBlocks)) { ?>
@@ -41,7 +44,7 @@ $selectOptions = [
                 <div class="list-group-item <?= $htmlBlock->type ?>-segment">
                     <div class="d-flex">
                         <div class="overflow-hidden me-3">
-                            <pre class="js-add-text-to-pre js-copy-to-clipboard-content"><?= $htmlBlock->content ?></pre>
+                            <pre class="js-add-text-to-pre js-copy-to-clipboard-content js-break-white-spaces"><?= ($htmlBlock->escape_html ? h($htmlBlock->content) : $htmlBlock->content) ?></pre>
                         </div>
                         <div class="list-group-item-actions">
                             <button class="js-delete-list-item delete-button" type="button">X</button>
@@ -62,7 +65,6 @@ $selectOptions = [
     <?= $this->element('Cats/html-block-placeholder') ?>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         new Sortable(sortableHtmlBlocks, {
