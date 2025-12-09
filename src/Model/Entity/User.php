@@ -46,6 +46,17 @@ class User extends Entity
     }
 
     /**
+     * Check if the provided password matches the hashed password
+     *
+     * @param string $password Plain text password to verify
+     * @return bool True if password matches, false otherwise
+     */
+    public function checkPassword(string $password): bool
+    {
+        return (new DefaultPasswordHasher())->check($password, $this->password);
+    }
+
+    /**
      * Fields that are excluded from JSON versions of the entity.
      *
      * @var array<string>
