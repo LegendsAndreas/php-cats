@@ -105,3 +105,10 @@
         }
     }
 }
+
+pre.break-spaces-active {
+    white-space: break-spaces;
+    @supports (text-indent: 4ch hanging each-line) {
+        text-indent: 4ch hanging each-line;
+    }
+}

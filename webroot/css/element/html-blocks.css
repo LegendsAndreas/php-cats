@@ -75,4 +75,13 @@
   color: green;
 }
 
+pre.break-spaces-active {
+  white-space: break-spaces;
+}
+@supports (text-indent: 4ch hanging each-line) {
+  pre.break-spaces-active {
+    text-indent: 4ch hanging each-line;
+  }
+}
+
 /*# sourceMappingURL=html-blocks.css.map */
