@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     modifySearchHref();
     toggleCheckbox();
+    getOrderCookie();
 });
 
 function modifySearchHref() {
@@ -33,3 +34,12 @@ function toggleCheckbox() {
     });
 }
 
+function getOrderCookie() {
+    const checkbox = document.querySelector('.js-order-checkbox');
+    const cookies = document.cookie.split(';');
+    const orderCookie = cookies.find(cookie => cookie.trim().startsWith('order='));
+
+    if (orderCookie) {
+        checkbox.checked = orderCookie.split('=')[1] === 'true';
+    }
+}

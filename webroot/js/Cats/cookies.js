@@ -1,7 +1,6 @@
 // phpcs:ignoreFile
 document.addEventListener("DOMContentLoaded", function(event) {
     toggleOrderCookie();
-    getOrderCookie();
 
     toggleSearchQueryCookie();
     getSearchQueryCookie();
@@ -20,16 +19,6 @@ function toggleOrderCookie() {
 
         document.cookie = `order=${isChecked};expires=${expirationDate.toUTCString()};path=/`;
     });
-}
-
-function getOrderCookie() {
-    const checkbox = document.querySelector('.js-order-checkbox');
-    const cookies = document.cookie.split(';');
-    const orderCookie = cookies.find(cookie => cookie.trim().startsWith('order='));
-
-    if (orderCookie) {
-        checkbox.checked = orderCookie.split('=')[1] === 'true';
-    }
 }
 
 function toggleSearchQueryCookie() {

@@ -81,7 +81,7 @@
     }
 
     .list-group {
-        border: 1px solid lightgray;
+        border: 1px solid wheat;
         padding: 5px;
         background-color: #C93941;
     }
@@ -122,9 +122,22 @@
         }
     }
 
-    .color-text {
-        width: 50px;
+    .color-wheel-button {
+        border-right: none;
     }
+
+    //ToDo: figure out what gives the outline in the checkbox
+    .color-wheel {
+        width: 50px;
+        padding: 0;
+        border-radius: 0;
+        border-left: none;
+    }
+
+    .color-wheel:focus {
+        border-color: wheat;
+    }
+
     .color-selector {
         width: 100px;
     }

@@ -57,7 +57,7 @@
   padding-bottom: 5px;
 }
 .html-blocks .list-group {
-  border: 1px solid lightgray;
+  border: 1px solid wheat;
   padding: 5px;
   background-color: #C93941;
 }
@@ -84,8 +84,17 @@
   background: gray;
   border-radius: 6px;
 }
-.html-blocks .color-text {
+.html-blocks .color-wheel-button {
+  border-right: none;
+}
+.html-blocks .color-wheel {
   width: 50px;
+  padding: 0;
+  border-radius: 0;
+  border-left: none;
+}
+.html-blocks .color-wheel:focus {
+  border-color: wheat;
 }
 .html-blocks .color-selector {
   width: 100px;

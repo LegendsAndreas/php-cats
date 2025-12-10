@@ -21,19 +21,23 @@ $selectOptions = [
     <div>
         <label for="search-input">Function Examples</label>
         <textarea class="js-get-area-text" id="search-input" placeholder="Text..."></textarea>
-        <div class="text-actions d-flex align-items-center">
+        <div class="text-actions d-flex align-items-center flex-wrap">
             <button class="js-bold-text" type="button">Bolden text</button>
             <div class="d-flex">
-                <button class="js-color-text ms-3" type="button">Color text</button>
-                <input id="color-picker" type="color" class="js-color-picker me-2 color-text" value="#8E7397">
+                <button class="js-color-text color-wheel-button" type="button">Color text</button>
+                <input id="color-picker" type="color" class="js-color-picker me-2 color-wheel" value="#8E7397">
                 <?= $this->Form->select('color-type', $colorOptions, [
                     'id'    => 'color-type',
                     'class' => 'js-set-color color-selector',
                 ]) ?>
             </div>
-            <div class="d-inline ms-3">
+            <div class="d-flex align-items-center mx-3">
                 <?= $this->Form->label('escape-html', 'Escape HTML', ['class' => 'escape-html-label']) ?>
-                <?= $this->Form->checkbox('escape_html', ['id' => 'escape-html', 'class' => 'js-escape-html-checkbox', 'checked' => false]) ?>
+                <?= $this->Form->checkbox('escape_html', [
+                    'id'      => 'escape-html',
+                    'class'   => 'js-escape-html-checkbox js-check-checkbox ',
+                    'checked' => false,
+                ]) ?>
             </div>
         </div>
         <div>

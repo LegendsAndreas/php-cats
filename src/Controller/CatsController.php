@@ -134,10 +134,10 @@ class CatsController extends AppController
             }
 
             $cat = $this->Cats->newEntity($data, [
-                'associated' => ['HtmlBlocks'],
+                'associated' => ['HtmlBlocks', 'Contributors'],
             ]);
 
-            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks']])) {
+            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks', 'Contributors']])) {
                 $this->Flash->success(__('New cat added.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -226,10 +226,10 @@ class CatsController extends AppController
             $htmlBlockIdsToDelete = array_diff($existingHtmlBlockIds, $submittedHtmlBlockIds);
 
             $this->Cats->patchEntity($cat, $data, [
-                'associated' => ['HtmlBlocks'],
+                'associated' => ['HtmlBlocks', 'Contributors'],
             ]);
 
-            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks']])) {
+            if ($this->Cats->save($cat, ['associated' => ['HtmlBlocks', 'Contributors']])) {
                 // Delete removed HTML blocks
                 if (!empty($htmlBlockIdsToDelete)) {
                     $HtmlBlocks = $this->fetchTable('HtmlBlocks');

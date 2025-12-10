@@ -1,12 +1,12 @@
 @import "bootstrap.min.css";
 @import "fonts.css";
 @import "layout-default.css";
-@import "cat-index.css";
-@import "cats-view.css";
-@import "cats-edit.css";
-@import "cats-add.css";
-@import "cats-deleted.css";
-@import "cats-help.css";
+@import "cats/cat-index.css";
+@import "cats/cats-view.css";
+@import "cats/cats-edit.css";
+@import "cats/cats-add.css";
+@import "cats/cats-deleted.css";
+@import "cats/cats-help.css";
 /*@import "test/test.css";*/
 @import "element/html-blocks.css";
 @import "element/actions-block.css";
@@ -17,4 +17,22 @@
 
 button {
     transition: background-color 0.2s linear;
+    border: 1px solid wheat;
+}
+
+button:hover {
+    border-color: wheat;
+    background-color: #5a2a2d;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #C93941;
+    border: none;
+    color: white;
+}
+
+input[type="checkbox"] {
+    accent-color: #C93941;
+    height: 20px;
+    width: 20px;
 }

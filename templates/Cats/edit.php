@@ -7,37 +7,63 @@
  */
 ?>
 
-<h1>Edit Cat</h1>
-<?php
-echo $this->Form->create($cat);
-echo $this->Form->control('function_name', ['type' => 'text', 'required' => true]);
-echo $this->Form->control('function_description', ['type' => 'textarea', 'required' => true]);
-echo $this->Form->control('Image', ['type' => 'file', 'class' => 'js-add-image']);
-echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']); ?>
+<div class="cats-edit">
+    <h1 class="text-light">Edit Cat '<?= $cat->function_name ?>'</h1>
+    <div class="cats-edit__level-1">
 
-<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
-    <?= $this->element('Cats/html-blocks-editor', ['htmlBlocks' => $cat->html_blocks]) ?>
-</div>
+        <?php
+        echo $this->Form->create($cat);
+        echo $this->Form->control('function_name', [
+            'type'      => 'text',
+            'required'  => true,
+            'templates' => [
+                'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
+            ],
+        ]);
+        echo $this->Form->control('function_description', [
+            'type'      => 'textarea',
+            'required'  => true,
+            'templates' => [
+                'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
+            ],
+        ]);
+        echo $this->Form->control('Image', [
+            'type'      => 'file',
+            'class'     => 'js-add-image',
+            'templates' => [
+                'inputContainer' => '<div class="cats-edit__level-2 cats-edit__image-input">{{content}}</div>',
+            ],
+        ]);
+        echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']); ?>
 
-<button class="btn btn-primary js-add-contributor" type="button">
-    Add contributor
-</button>
-<div class="contributors">
-    <legend class="contributor-legend">Contributors</legend>
-    <?php foreach ($contributors as $index => $contributor) { ?>
-        <div class="contributor">
-            <?= $this->Form->control("contributors.$index.name", ['label' => 'Contributor name', 'value' => $contributor->name ?? '']) ?>
-            <button class="btn btn-danger js-remove-contributor" type="button" value="<?= $index ?>">
-                Remove
-            </button>
+        <div class="cats-edit__level-2">
+            <?= $this->element('Cats/html-blocks-editor', ['htmlBlocks' => $cat->html_blocks]) ?>
         </div>
-    <?php } ?>
-</div>
-<?php echo $this->Form->button('Edit Cat', ['class' => 'mt-3']);
-echo $this->Form->end();
-?>
 
-<?= $this->Html->link('<button class="my-4">Go to Cat</button>', ['action' => 'view', $cat->id], ['escape' => false]) ?>
+        <div class="cats-edit__level-2">
+            <button class=" js-add-contributor" type="button">
+                Add contributor
+            </button>
+            <div class="contributors">
+                <legend class="contributor-legend">Contributors</legend>
+                <?php foreach ($contributors as $index => $contributor) { ?>
+                    <div class="contributor">
+                        <?= $this->Form->control("contributors.$index.name", ['label' => 'Contributor name', 'value' => $contributor->name ?? '']) ?>
+                        <button class="btn btn-danger js-remove-contributor" type="button" value="<?= $index ?>">
+                            Remove
+                        </button>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php echo $this->Form->button('Edit Cat', ['class' => 'mt-3']);
+        echo $this->Form->end();
+        ?>
+
+        <?= $this->Html->link('<button class="my-4">Go to Cat</button>', ['action' => 'view', $cat->id], ['escape' => false]) ?>
+    </div>
+</div>
+
 
 <?php $this->append('css') ?>
 <style>
@@ -45,11 +71,12 @@ echo $this->Form->end();
         position: relative;
         bottom: 30px;
         font-size: 25px;
-        background-color: white;
         padding-left: 5px;
+        background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
     }
+
     .contributors {
-        border: 1px solid #ccc;
+        border: 1px solid wheat;
         padding: 10px;
         margin-top: 20px;
     }
