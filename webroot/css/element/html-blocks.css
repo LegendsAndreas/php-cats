@@ -74,6 +74,16 @@
 .html-blocks .comment-segment pre {
   color: green;
 }
+.html-blocks .pre-wrapper.remove-scroll ::-webkit-scrollbar {
+  display: none;
+}
+.html-blocks .pre-wrapper ::-webkit-scrollbar {
+  height: 6px;
+}
+.html-blocks .pre-wrapper ::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
 
 pre.break-spaces-active {
   white-space: break-spaces;

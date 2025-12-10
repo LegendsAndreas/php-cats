@@ -104,6 +104,24 @@
             color: green;
         }
     }
+
+    .pre-wrapper.remove-scroll {
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .pre-wrapper {
+        ::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: gray;
+            border-radius: 6px;
+        }
+    }
+
 }
 
 pre.break-spaces-active {

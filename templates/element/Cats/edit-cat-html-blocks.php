@@ -10,7 +10,6 @@ $selectOptions = [
     'html'     => 'HTML',
     'terminal' => 'Terminal',
 ];
-
 ?>
 <div class="html-blocks">
     <div>
@@ -34,6 +33,9 @@ $selectOptions = [
         <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
             Break
         </button>
+        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="removeScrollbar(this)">
+            Toggle scrollbar
+        </button>
     </div>
 
     <?php if (!empty($htmlBlocks)) { ?>
@@ -43,7 +45,7 @@ $selectOptions = [
             foreach ($htmlBlocks as $htmlBlock) { ?>
                 <div class="list-group-item <?= $htmlBlock->type ?>-segment">
                     <div class="d-flex">
-                        <div class="overflow-hidden me-3">
+                        <div class="overflow-hidden me-3 pre-wrapper js-remove-scroll">
                             <pre class="js-add-text-to-pre js-copy-to-clipboard-content js-break-white-spaces"><?= ($htmlBlock->escape_html ? h($htmlBlock->content) : $htmlBlock->content) ?></pre>
                         </div>
                         <div class="list-group-item-actions">

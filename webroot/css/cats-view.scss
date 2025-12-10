@@ -57,6 +57,26 @@
             color: white;
         }
 
+        &__segment {
+            ::-webkit-scrollbar {
+                height: 6px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: gray;
+                border-radius: 6px;
+                transition: 0.2s background-color linear;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: darken(gray, 10%);
+            }
+        }
+
+        &__segment.remove-scroll {
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
         pre {
             padding-left: 2px;
             font-size: 20px;

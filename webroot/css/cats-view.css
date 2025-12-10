@@ -49,6 +49,20 @@
   background-color: #1e1f22;
   color: white;
 }
+.cats-view__function-examples__segment ::-webkit-scrollbar {
+  height: 6px;
+}
+.cats-view__function-examples__segment ::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 6px;
+  transition: 0.2s background-color linear;
+}
+.cats-view__function-examples__segment ::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(102.5, 102.5, 102.5);
+}
+.cats-view__function-examples__segment.remove-scroll ::-webkit-scrollbar {
+  display: none;
+}
 .cats-view__function-examples pre {
   padding-left: 2px;
   font-size: 20px;
