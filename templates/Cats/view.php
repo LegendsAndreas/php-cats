@@ -30,12 +30,7 @@ use App\Model\Entity\HtmlBlock;
         </div>
         <h2 class="fw-bold fs-1 mb-4 text-white">Description</h2>
         <p class="cats-view__function-description fs-2"><?= $cat->function_description ?></p>
-        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
-            Break
-        </button>
-        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="removeScrollbar(this)">
-            Toggle scrollbar
-        </button>
+        <?= $this->element('HtmlBlocks/actions-blocks') ?>
         <?php if (!empty($cat->html_blocks)) { ?>
             <div class="cats-view__function-examples p-3">
                 <?php foreach ($cat->html_blocks as $block) { ?>

@@ -4,6 +4,12 @@
  * @var \App\Model\Entity\HtmlBlock[] $htmlBlocks
  * @var array                         $selectOptions
  */
+$colorOptions = [
+    ['value' => '#9f55b7', 'text' => 'Purple', 'class' => 'js-set-hexa-color'],
+    ['value' => '#008000', 'text' => 'Green', 'class' => 'js-set-hexa-color'],
+    ['value' => '#00acff', 'text' => 'Blue', 'class' => 'js-set-hexa-color'],
+];
+
 $selectOptions = [
     'code'     => 'Code',
     'comment'  => 'Comment',
@@ -17,6 +23,14 @@ $selectOptions = [
         <textarea class="js-get-area-text" id="search-input" placeholder="Text..."></textarea>
         <div class="text-actions d-flex align-items-center">
             <button class="js-bold-text" type="button">Bolden text</button>
+            <div class="d-flex">
+                <button class="js-color-text ms-3" type="button">Color text</button>
+                <input id="color-picker" type="color" class="js-color-picker me-2 color-text" value="#8E7397">
+                <?= $this->Form->select('color-type', $colorOptions, [
+                    'id'    => 'color-type',
+                    'class' => 'js-set-color color-selector',
+                ]) ?>
+            </div>
             <div class="d-inline ms-3">
                 <?= $this->Form->label('escape-html', 'Escape HTML', ['class' => 'escape-html-label']) ?>
                 <?= $this->Form->checkbox('escape_html', ['id' => 'escape-html', 'class' => 'js-escape-html-checkbox', 'checked' => false]) ?>
@@ -30,12 +44,7 @@ $selectOptions = [
         <button class="js-add-text mt-3" type="button">
             Add text
         </button>
-        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="breakWhiteSpaces(this)">
-            Break
-        </button>
-        <button type="button" class="cats-view__break-white-spaces-button my-3" onclick="removeScrollbar(this)">
-            Toggle scrollbar
-        </button>
+        <?= $this->element('HtmlBlocks/actions-blocks') ?>
     </div>
 
     <?php if (!empty($htmlBlocks)) { ?>
@@ -46,7 +55,8 @@ $selectOptions = [
                 <div class="list-group-item <?= $htmlBlock->type ?>-segment">
                     <div class="d-flex">
                         <div class="overflow-hidden me-3 pre-wrapper js-remove-scroll">
-                            <pre class="js-add-text-to-pre js-copy-to-clipboard-content js-break-white-spaces"><?= ($htmlBlock->escape_html ? h($htmlBlock->content) : $htmlBlock->content) ?></pre>
+                            <pre
+                                class="js-add-text-to-pre js-copy-to-clipboard-content js-break-white-spaces"><?= ($htmlBlock->escape_html ? h($htmlBlock->content) : $htmlBlock->content) ?></pre>
                         </div>
                         <div class="list-group-item-actions">
                             <button class="js-delete-list-item delete-button" type="button">X</button>
@@ -144,12 +154,39 @@ $selectOptions = [
             });
         });
 
+        document.querySelectorAll('.js-color-text').forEach(element => {
+            element.addEventListener('click', () => {
+                const textarea     = document.querySelector('.js-get-area-text');
+                const start        = textarea.selectionStart;
+                const end          = textarea.selectionEnd;
+                const selectedText = textarea.value.substring(start, end);
+
+                if (selectedText.length > 0) {
+                    const hexaColor  = document.querySelector('.js-color-picker').value;
+                    const beforeText = textarea.value.substring(0, start);
+                    const afterText  = textarea.value.substring(end);
+                    const boldText   = `<span style="color: ${hexaColor}">${selectedText}</span>`;
+
+                    textarea.value = beforeText + boldText + afterText;
+
+                    // Restore cursor position after the bold markers
+                    textarea.focus();
+                    textarea.setSelectionRange(start + 2, end + 2);
+                }
+            });
+        });
+
         document.querySelectorAll('.js-delete-list-item').forEach(element => {
             addRemoveElementListener(element);
-        })
+        });
+
         document.querySelectorAll('.js-copy-to-clipboard-button').forEach(element => {
             addCopyToClipboardListener(element);
-        })
+        });
+
+        document.querySelector('.js-set-color').addEventListener('change', (e) => {
+            document.querySelector('.js-color-picker').value = e.target.value;
+        });
     });
 
     function addRemoveElementListener(element) {

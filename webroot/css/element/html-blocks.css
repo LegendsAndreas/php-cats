@@ -84,6 +84,12 @@
   background: gray;
   border-radius: 6px;
 }
+.html-blocks .color-text {
+  width: 50px;
+}
+.html-blocks .color-selector {
+  width: 100px;
+}
 
 pre.break-spaces-active {
   white-space: break-spaces;
