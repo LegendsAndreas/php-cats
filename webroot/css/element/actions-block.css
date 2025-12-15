@@ -1,0 +1,26 @@
+.actions-blocks {
+  display: inline;
+}
+.actions-blocks__button {
+  all: unset;
+  border: 4px double wheat;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  background-color: #C93941;
+  transition: 0.2s background-color linear;
+}
+.actions-blocks__button:focus {
+  background-color: #C93941;
+  border: 4px double wheat;
+  border-radius: 5px;
+}
+.actions-blocks__button.active {
+  background-color: rgb(142.6071428571, 38.8928571429, 44.6547619048);
+}
+.actions-blocks__button:hover {
+  border: 4px double wheat;
+  background-color: rgb(142.6071428571, 38.8928571429, 44.6547619048);
+}
+
+/*# sourceMappingURL=actions-block.css.map */
