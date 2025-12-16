@@ -25,6 +25,11 @@ button:hover {
     background-color: #5a2a2d;
 }
 
+button:focus {
+    border-color: wheat;
+    background-color: #5a2a2d;
+}
+
 input[type="checkbox"]:checked {
     background-color: #C93941;
     border: none;
