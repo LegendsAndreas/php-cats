@@ -67,14 +67,6 @@
 
 <?php $this->append('css') ?>
 <style>
-    .contributor-legend {
-        position: relative;
-        bottom: 30px;
-        font-size: 25px;
-        padding-left: 5px;
-        background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
-    }
-
     .contributors {
         border: 1px solid wheat;
         padding: 10px;
