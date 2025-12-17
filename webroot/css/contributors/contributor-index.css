@@ -1,0 +1,37 @@
+body:has(.contributors-index) {
+  background-color: #d33c43;
+}
+
+.contributors-index {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.contributors-index pre {
+  text-shadow: none;
+}
+.contributors-index input {
+  background-color: white;
+}
+.contributors-index select {
+  background-color: white;
+}
+.contributors-index .table {
+  border: 2px solid wheat;
+  border-radius: 5px;
+}
+.contributors-index__level-1 {
+  background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 2px solid wheat;
+}
+.contributors-index__level-2 {
+  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 1px solid wheat;
+}
+
+/*# sourceMappingURL=contributor-index.css.map */

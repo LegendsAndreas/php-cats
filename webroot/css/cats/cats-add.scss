@@ -1,5 +1,84 @@
+@import "../variables.scss";
+body:has(.cats-add) {
+    background-color: $level-0-color;
+}
+
 .cats-add {
-    &__textarea {
-        min-height: 300px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+    pre {
+        text-shadow: none;
+    }
+
+    .contributor-legend {
+        position: relative;
+        bottom: 30px;
+        font-size: 25px;
+        padding-left: 5px;
+        background-color: lighten($level-0-color, 10%);
+    }
+    textarea {
+        min-height: 150px;
+        background-color: white;
+    }
+
+    input {
+        background-color: white;
+    }
+
+    select {
+        background-color: white;
+    }
+
+    &__image-input {
+        input {
+            background-color: transparent;
+        }
+
+        input[type="file"] {
+            &::file-selector-button {
+                display: none;
+            }
+            margin-left: 5px;
+        }
+
+        label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5a2a2d;
+            color: wheat;
+            border: 2px solid wheat;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0;
+
+            &:hover {
+                background-color: #7a3a3d;
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+    }
+
+    &__level-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+
+    &__level-2 {
+        background-color: lighten($level-0-color, 10%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 1px solid wheat;
     }
 }

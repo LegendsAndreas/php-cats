@@ -1,8 +1,9 @@
 <?php
 // phpcs:ignoreFile
+
 /**
- * @var \App\View\AppView               $this
- * @var \App\Model\Entity\Cat           $cat
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Cat $cat
  * @var \App\Model\Entity\Contributor[] $contributors
  */
 ?>
@@ -14,22 +15,22 @@
         <?php
         echo $this->Form->create($cat);
         echo $this->Form->control('function_name', [
-            'type'      => 'text',
-            'required'  => true,
+            'type' => 'text',
+            'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
             ],
         ]);
         echo $this->Form->control('function_description', [
-            'type'      => 'textarea',
-            'required'  => true,
+            'type' => 'textarea',
+            'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
             ],
         ]);
         echo $this->Form->control('Image', [
-            'type'      => 'file',
-            'class'     => 'js-add-image',
+            'type' => 'file',
+            'class' => 'js-add-image',
             'templates' => [
                 'inputContainer' => '<div class="cats-edit__level-2 cats-edit__image-input">{{content}}</div>',
             ],
@@ -46,26 +47,37 @@
             </button>
             <div class="contributors">
                 <legend class="contributor-legend">Contributors</legend>
-                <?php foreach ($contributors as $index => $contributor) { ?>
+                <?php
+                foreach ($contributors as $index => $contributor) { ?>
                     <div class="contributor">
-                        <?= $this->Form->control("contributors.$index.name", ['label' => 'Contributor name', 'value' => $contributor->name ?? '']) ?>
+                        <?= $this->Form->control(
+                            "contributors.$index.name",
+                            ['label' => 'Contributor name', 'value' => $contributor->name ?? '']
+                        ) ?>
                         <button class="btn btn-danger js-remove-contributor" type="button" value="<?= $index ?>">
                             Remove
                         </button>
                     </div>
-                <?php } ?>
+                    <?php
+                } ?>
             </div>
         </div>
-        <?php echo $this->Form->button('Edit Cat', ['class' => 'mt-3']);
+        <?php
+        echo $this->Form->button('Edit Cat', ['class' => 'mt-3']);
         echo $this->Form->end();
         ?>
 
-        <?= $this->Html->link('<button class="my-4">Go to Cat</button>', ['action' => 'view', $cat->id], ['escape' => false]) ?>
+        <?= $this->Html->link(
+            '<button class="my-4">Go to Cat</button>',
+            ['action' => 'view', $cat->id],
+            ['escape' => false]
+        ) ?>
     </div>
 </div>
 
 
-<?php $this->append('css') ?>
+<?php
+$this->append('css') ?>
 <style>
     .contributors {
         border: 1px solid wheat;
@@ -73,11 +85,13 @@
         margin-top: 20px;
     }
 </style>
-<?php $this->end() ?>
+<?php
+$this->end() ?>
 
 <?= $this->Html->script('Cats/catImage', ['defer' => true]); ?>
 
-<?php $this->append('script') ?>
+<?php
+$this->append('script') ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let currentContributorIndex = <?= count($contributors) - 1; ?>;
@@ -94,14 +108,14 @@
             inputText.classList.add('input');
             inputText.classList.add('text');
 
-            let label         = document.createElement('label');
+            let label = document.createElement('label');
             label.textContent = 'Contributor name';
             label.setAttribute('for', 'contributors-' + currentContributorIndex + '-name');
 
-            let input       = document.createElement('input');
-            input.type      = 'text';
-            input.name      = 'contributors[' + currentContributorIndex + '][name]';
-            input.id        = 'contributors-' + currentContributorIndex + '-name';
+            let input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'contributors[' + currentContributorIndex + '][name]';
+            input.id = 'contributors-' + currentContributorIndex + '-name';
             input.maxLength = 255;
 
             inputText.appendChild(label);
@@ -113,8 +127,8 @@
             removeButton.classList.add('btn-danger');
             removeButton.classList.add('js-remove-contributor');
             removeButton.textContent = 'Remove';
-            removeButton.type        = 'button';
-            removeButton.value       = currentContributorIndex;
+            removeButton.type = 'button';
+            removeButton.value = currentContributorIndex;
             addDeleteListener(removeButton);
 
             newContributor.appendChild(removeButton);
@@ -130,9 +144,9 @@
             console.log('Reindexing from index:', index);
             console.log('current index: ', currentContributorIndex);
             let startingIndex = index;
-            let contributors  = document.querySelectorAll('.contributor');
+            let contributors = document.querySelectorAll('.contributor');
             for (let i = startingIndex; i <= currentContributorIndex; i++) {
-                let contributor                           = contributors[i];
+                let contributor = contributors[i];
                 contributor.querySelector('button').value = i;
                 contributor.querySelector('label').setAttribute('for', 'contributors-' + i + '-name');
                 let input = contributor.querySelector('input');
@@ -151,4 +165,5 @@
         }
     })
 </script>
-<?php $this->end() ?>
+<?php
+$this->end() ?>

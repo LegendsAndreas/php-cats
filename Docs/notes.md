@@ -50,3 +50,11 @@ If i write phpcats.dk, or any other correct variations of it, it will almost alw
 However, for google, if i search for phpcats, it will assume that i meant pfp cats, and just ignore my actual search. If i click
 "Søg i stedet efter phpcats", it will still give me the wrong answer, but at least why are a bit more coding related.
 If i search for phpcats.dk, it will give me nearly ONLY pizzarias/grill related results.
+
+[M1\Env\Exception\ParseException] Key can only contain alphanumeric and underscores and can not start with a number: ��DATABASE_HOST near ��DATABASE_HOST at line 1 in C:\Users\andreas\Desktop\code\php\php-cats\vendor\m1\env\src\Parser\KeyParser.php on line 48
+[M1\Env\Exception\ParseException] Key can only contain alphanumeric and underscores and can not start with a number: ﻿DATABASE_HOST near ﻿DATABASE_HOST at line 1 in C:\Users\andreas\Desktop\code\php\php-cats\vendor\m1\env\src\Parser\KeyParser.php on line 48
+
+I think the problem i have been having this whole time with invisible characters, is because of the encoding was wrong in the bottom right corner.
+I believe it has to be UTF-8, no BOM
+
+The PHP compiler is very fucking sensitive/shit and as such it will break if it sees a fucking BOM mark.

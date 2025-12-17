@@ -1,0 +1,46 @@
+﻿@import "../variables.scss";
+body:has(.contributors-index) {
+    background-color: $level-0-color;
+}
+
+.contributors-index {
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+    pre {
+        text-shadow: none;
+    }
+
+    input {
+        background-color: white;
+    }
+
+    select {
+        background-color: white;
+    }
+
+    .table {
+        border: 2px solid wheat;
+        border-radius: 5px;
+        //--bs-table-striped-bg: lighten(#d33c43, 5%);
+        th, td {
+            //color: white;
+        }
+    }
+
+    &__level-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+
+    &__level-2 {
+        background-color: lighten($level-0-color, 10%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 1px solid wheat;
+    }
+}

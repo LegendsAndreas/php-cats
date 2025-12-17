@@ -10,6 +10,7 @@
 /*@import "test/test.css";*/
 @import "element/html-blocks.css";
 @import "element/actions-block.css";
+@import "contributors/contributor-index.css";
 
 * {
     font-family: "JetBrains Mono", sans-serif !important;

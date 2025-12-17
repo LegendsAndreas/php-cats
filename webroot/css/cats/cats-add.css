@@ -1,5 +1,72 @@
-.cats-add__textarea {
-  min-height: 300px;
+body:has(.cats-add) {
+  background-color: #d33c43;
+}
+
+.cats-add {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.cats-add pre {
+  text-shadow: none;
+}
+.cats-add .contributor-legend {
+  position: relative;
+  bottom: 30px;
+  font-size: 25px;
+  padding-left: 5px;
+  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
+}
+.cats-add textarea {
+  min-height: 150px;
+  background-color: white;
+}
+.cats-add input {
+  background-color: white;
+}
+.cats-add select {
+  background-color: white;
+}
+.cats-add__image-input input {
+  background-color: transparent;
+}
+.cats-add__image-input input[type=file] {
+  margin-left: 5px;
+}
+.cats-add__image-input input[type=file]::file-selector-button {
+  display: none;
+}
+.cats-add__image-input label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #5a2a2d;
+  color: wheat;
+  border: 2px solid wheat;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+.cats-add__image-input label:hover {
+  background-color: #7a3a3d;
+  transform: translateY(-2px);
+}
+.cats-add__image-input label:active {
+  transform: translateY(0);
+}
+.cats-add__level-1 {
+  background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 2px solid wheat;
+}
+.cats-add__level-2 {
+  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 1px solid wheat;
 }
 
 /*# sourceMappingURL=cats-add.css.map */
