@@ -7,9 +7,9 @@ use Cake\Cache\Cache;
 use Cake\Log\Log;
 
 /**
- * @var \App\View\AppView       $this
+ * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cat[] $cats
- * @var \App\Model\Entity\User  $currentUser
+ * @var \App\Model\Entity\User $currentUser
  */
 $modulus = 4;
 
@@ -35,12 +35,14 @@ $tester->getIpCountry($this->request->clientIp());
                 </a>
             </div>
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>" title="Go to deleted Cats">
+                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>"
+                   title="Go to deleted Cats">
                     <button class="fs-3 mt-3 cat-index__top-button">Deleted Cats</button>
                 </a>
             </div>
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Contributors', 'action' => 'index']) ?>" title="Go to Contributors">
+                <a href="<?= $this->Url->build(['controller' => 'Contributors', 'action' => 'index']) ?>"
+                   title="Go to Contributors">
                     <button class="fs-3 mt-3 cat-index__top-button">Contributors</button>
                 </a>
             </div>
@@ -58,7 +60,8 @@ $tester->getIpCountry($this->request->clientIp());
                         <button class="fs-3 mt-3 cat-index__top-button">Login</button>
                     </a>
                 </div>
-            <?php }; ?>
+                <?php
+            }; ?>
         </div>
 
         <div class="row text-center mt-5 justify-content-md-center">
@@ -67,14 +70,22 @@ $tester->getIpCountry($this->request->clientIp());
                     <input type="text"
                            class="bg-white form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
                            placeholder="Search by name">
-                    <?= $this->Html->link('<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button" title="Search">Search</button>',
-                        ['controller' => 'Cats', 'action' => 'index'], ['escape' => false, 'class' => 'text-decoration-none js-link-search', 'href' => '/cats/index//0'],) ?>
+                    <?= $this->Html->link(
+                        '<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button" title="Search">Search</button>',
+                        ['controller' => 'Cats', 'action' => 'index'],
+                        [
+                            'escape' => false,
+                            'class' => 'text-decoration-none js-link-search',
+                            'href' => '/cats/index//0'
+                        ],
+                    ) ?>
 
                     <div>
-                        <?= $this->Form->label('select-column', 'Reverse Order', ['class' => 'form-check-label fs-3']) ?>
+                        <?= $this->Form->label('select-column', 'Reverse Order', ['class' => 'form-check-label fs-3']
+                        ) ?>
                         <?= $this->Form->checkbox('select_column', [
-                            'class'   => 'form-check-input js-order-checkbox cat-index__order-checkbox',
-                            'id'      => 'select-column',
+                            'class' => 'form-check-input js-order-checkbox cat-index__order-checkbox',
+                            'id' => 'select-column',
                             'checked' => false,
                         ]) ?>
                     </div>
@@ -83,9 +94,11 @@ $tester->getIpCountry($this->request->clientIp());
             </div>
         </div>
 
-        <?= $this->element('paginator', [
-            'modulus' => $modulus,
-        ]) ?>
+        <div class="mt-5">
+            <?= $this->element('paginator', [
+                'modulus' => $modulus,
+            ]) ?>
+        </div>
     </div>
 
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3" style="justify-self: center">
@@ -93,10 +106,13 @@ $tester->getIpCountry($this->request->clientIp());
         foreach ($cats as $cat) { ?>
             <div class="col cat-index">
                 <?= $this->element('Cats/cat-template', [
-                    'cat'     => $cat,
+                    'cat' => $cat,
                     'buttons' => [
-                        $this->Form->postLink('Delete', ['action' => 'delete', $cat->id, '?' => ['page' => $this->request->getQuery('page')]],
-                            ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]),
+                        $this->Form->postLink(
+                            'Delete',
+                            ['action' => 'delete', $cat->id, '?' => ['page' => $this->request->getQuery('page')]],
+                            ['confirm' => 'Are you sure?', 'title' => 'Delete cat ' . $cat->id]
+                        ),
                         $this->Html->link('Edit', [
                             'action' => 'edit',
                             $cat->id,
@@ -106,12 +122,15 @@ $tester->getIpCountry($this->request->clientIp());
                     ],
                 ]) ?>
             </div>
-        <?php }; ?>
+            <?php
+        }; ?>
     </div>
 
-    <?= $this->element('paginator', [
-        'modulus' => $modulus,
-    ]) ?>
+    <div class="cat-index__bottom-paginator">
+        <?= $this->element('paginator', [
+            'modulus' => $modulus,
+        ]) ?>
+    </div>
 </div>
 
 <?= $this->Html->script('Cats/index.js', ['defer' => true]); ?>

@@ -1,3 +1,7 @@
+body:has(.cat-index) {
+    background-color: #d33c43;
+}
+
 .cat-index {
     margin-top: 65px;
     margin-bottom: 65px;
@@ -88,6 +92,8 @@
         width: 400px;
         height: 350px;
         margin: 0 auto;
+        background-color: white;
+        border-radius: 5px;
 
         @media (max-width: 768px) {
             width: 350px;
@@ -100,9 +106,10 @@
     }
 
     &__image {
-        border: 1px solid black;
+        border: 2px solid white;
         border-radius: 5px 5px 0 0;
         transition: opacity 0.2s ease-in-out;
+        border-bottom: none;
 
         &:hover {
             opacity: 80%;
@@ -111,8 +118,10 @@
         &__footer {
             padding: 5px 10px 15px 10px;
             color: #F6FDFF;
-            background-color: #C93941;
+            background-color: lighten(#d33c43, 5%);
             border-radius: 0 0 5px 5px;
+            border: 2px solid white;
+            border-top: none;
 
             &__button-a a {
                 border-radius: 4px;
@@ -126,5 +135,14 @@
                 background-color: #ff4750;
             }
         }
+    }
+
+    &__bottom-paginator {
+        background-color: wheat;
+        width: fit-content;
+        margin-top: 20px;
+        border-radius: 5px;
+        justify-self: center;
+        padding: 10px;
     }
 }

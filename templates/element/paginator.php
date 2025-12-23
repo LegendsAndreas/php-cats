@@ -8,7 +8,7 @@ if (!($this->Paginator->counter('{{count}}') > $this->Paginator->param('perPage'
 }
 ?>
 
-<div class="pagination mt-5 cat-index__pagination">
+<div class="pagination cat-index__pagination">
     <ul style="list-style: none; display: flex; padding-left: 0">
         <?= $this->Paginator->first('<< ' . __('First')) ?>
         <?= $this->Paginator->prev('< ' . __('Previous')) ?>
