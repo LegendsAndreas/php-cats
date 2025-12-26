@@ -1,0 +1,20 @@
+﻿@import "../variables.scss";
+body:has(.login) {
+    background-color: #d33c43;
+}
+
+.login {
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    a {
+        text-shadow: none;
+    }
+
+    &__level-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+}

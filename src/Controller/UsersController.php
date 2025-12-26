@@ -22,6 +22,7 @@ class UsersController extends AppController
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
+        $this->set('title', 'PHP Cats | Login');
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {

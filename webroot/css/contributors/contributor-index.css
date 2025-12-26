@@ -18,6 +18,15 @@ body:has(.contributors-index) {
 .contributors-index .table {
   border: 2px solid wheat;
   border-radius: 5px;
+  --bs-table-striped-bg: #ed989b;
+  --bs-table-bg: #eaaeb0;
+}
+.contributors-index .table th, .contributors-index .table td {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.contributors-index .table th a, .contributors-index .table td a {
+  text-shadow: none;
 }
 .contributors-index__level-1 {
   background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
