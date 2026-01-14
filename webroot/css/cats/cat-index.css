@@ -18,6 +18,27 @@ body:has(.cat-index) {
 .cat-index__top-button {
   width: 200px;
 }
+.cat-index__top-button-link {
+  display: block;
+  width: 200px;
+  justify-self: center;
+  color: white;
+  text-decoration: none;
+  background-color: #d33c43;
+  font-weight: 700;
+  padding: 5px 3rem;
+}
+.cat-index__top-button-link:hover {
+  color: white;
+  background-color: #5a2a2d;
+}
+.cat-index__top-button-link:focus {
+  color: white;
+  background-color: #5a2a2d;
+}
+.cat-index__input-search a {
+  padding: 6px 3rem;
+}
 @media (max-width: 768px) {
   .cat-index__input-search {
     width: 200px !important;
@@ -25,6 +46,7 @@ body:has(.cat-index) {
 }
 @media (max-width: 768px) {
   .cat-index__input-search__button {
+    display: block;
     width: 200px !important;
   }
 }
@@ -124,10 +146,10 @@ body:has(.cat-index) {
 }
 .cat-index__bottom-paginator {
   background-color: wheat;
-  width: fit-content;
+}
+.cat-index__bottom-paginator:has(.pagination) {
   margin-top: 20px;
   border-radius: 5px;
-  justify-self: center;
   padding: 10px;
 }
 

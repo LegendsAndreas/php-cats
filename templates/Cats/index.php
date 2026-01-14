@@ -30,34 +30,34 @@ $tester->getIpCountry($this->request->clientIp());
     <div class="py-4" style="background-color: wheat; border-radius: 5px;">
         <div class="row text-center row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xxl-4">
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'add']) ?>" title="Add new Cat">
-                    <button class="fs-3 mt-3 cat-index__top-button">Add new Cat</button>
+                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'add']) ?>" class="fs-3 mt-3 cat-index__top-button-link" title="Add new Cat">
+                    Add new Cat
                 </a>
             </div>
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>"
+                <a href="<?= $this->Url->build(['controller' => 'Cats', 'action' => 'deleted']) ?>" class="fs-3 mt-3 cat-index__top-button-link"
                    title="Go to deleted Cats">
-                    <button class="fs-3 mt-3 cat-index__top-button">Deleted Cats</button>
+                    Deleted Cats
                 </a>
             </div>
             <div class="col">
-                <a href="<?= $this->Url->build(['controller' => 'Contributors', 'action' => 'index']) ?>"
+                <a href="<?= $this->Url->build(['controller' => 'Contributors', 'action' => 'index']) ?>" class="fs-3 mt-3 cat-index__top-button-link"
                    title="Go to Contributors">
-                    <button class="fs-3 mt-3 cat-index__top-button">Contributors</button>
+                    Contributors
                 </a>
             </div>
             <?php
             if ($currentUser) { ?>
                 <div class="col">
-                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>" title="Logout">
-                        <button class="fs-3 mt-3 cat-index__top-button">Logout</button>
+                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>" class="fs-3 mt-3 cat-index__top-button-link" title="Logout">
+                        Logout
                     </a>
                 </div>
                 <?php
             } else { ?>
                 <div class="col">
-                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>" title="Login">
-                        <button class="fs-3 mt-3 cat-index__top-button">Login</button>
+                    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>" class="fs-3 mt-3 cat-index__top-button-link" title="Login">
+                        Login
                     </a>
                 </div>
                 <?php
@@ -68,15 +68,15 @@ $tester->getIpCountry($this->request->clientIp());
             <div class="col">
                 <div>
                     <input type="text"
-                           class="bg-white form-control fs-3 mt-3 d-inline js-input-search w-25 cat-index__input-search"
+                           class="bg-white form-control fs-3 d-inline js-input-search w-25 cat-index__input-search"
                            placeholder="Search by name">
                     <?= $this->Html->link(
-                        '<button class="fs-3 mt-3 d-inline js-search-button cat-index__input-search__button" title="Search">Search</button>',
+                        'Search',
                         ['controller' => 'Cats', 'action' => 'index'],
                         [
                             'escape' => false,
-                            'class' => 'text-decoration-none js-link-search',
-                            'href' => '/cats/index//0'
+                            'class' => 'text-decoration-none js-link-search fs-3 mt-3 d-inline js-search-button cat-index__input-search__button cat-index__top-button-link',
+                            'href' => '/cats/index/0'
                         ],
                     ) ?>
 

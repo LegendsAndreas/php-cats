@@ -20,12 +20,37 @@ body:has(.cat-index) {
         width: 200px;
     }
 
+    &__top-button-link {
+        display: block;
+        width: 200px;
+        justify-self: center;
+        color: white;
+        text-decoration: none;
+        background-color: #d33c43;
+        font-weight: 700;
+        padding: 5px 3.0rem;
+    }
+
+    &__top-button-link:hover {
+        color: white;
+        background-color: #5a2a2d;
+    }
+
+    &__top-button-link:focus {
+        color: white;
+        background-color: #5a2a2d;
+    }
+
     &__input-search {
+        a {
+            padding: 6px 3rem;
+        }
         @media (max-width: 768px) {
             width: 200px !important;
         }
         &__button {
             @media (max-width: 768px) {
+                display: block;
                 width: 200px !important;
             }
         }
@@ -139,10 +164,12 @@ body:has(.cat-index) {
 
     &__bottom-paginator {
         background-color: wheat;
-        width: fit-content;
+    }
+
+    // To avoid having an empty bar, we put the padding and margin on if a pagination element has actually been rendered
+    &__bottom-paginator:has(.pagination) {
         margin-top: 20px;
         border-radius: 5px;
-        justify-self: center;
         padding: 10px;
     }
 }
