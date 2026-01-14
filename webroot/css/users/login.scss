@@ -10,6 +10,11 @@ body:has(.login) {
         text-shadow: none;
     }
 
+    // We dont want shadow on the flash message
+    .message {
+        text-shadow: none;
+    }
+
     &__level-1 {
         background-color: lighten($level-0-color, 5%);
         padding: 10px;
