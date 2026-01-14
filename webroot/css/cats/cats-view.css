@@ -18,6 +18,7 @@ body:has(.cats-view) {
   color: white;
 }
 .cats-view__function-examples {
+  overflow: hidden;
   font-size: 20px;
   background-color: wheat;
   border-radius: 3px;
