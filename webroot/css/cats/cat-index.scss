@@ -1,3 +1,5 @@
+@import "../variables";
+
 body:has(.cat-index) {
     background-color: #d33c43;
 }
@@ -5,6 +7,21 @@ body:has(.cat-index) {
 .cat-index {
     margin-top: 65px;
     margin-bottom: 65px;
+
+    &__level-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+    &__level-2 {
+        background-color: lighten($level-0-color, 10%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
 
     &__header {
         display: grid;
@@ -131,7 +148,7 @@ body:has(.cat-index) {
     }
 
     &__image {
-        border: 2px solid white;
+        border: 2px solid wheat;
         border-radius: 5px 5px 0 0;
         transition: opacity 0.2s ease-in-out;
         border-bottom: none;
@@ -143,9 +160,9 @@ body:has(.cat-index) {
         &__footer {
             padding: 5px 10px 15px 10px;
             color: #F6FDFF;
-            background-color: lighten(#d33c43, 5%);
+            background-color: lighten(#d33c43, 10%);
             border-radius: 0 0 5px 5px;
-            border: 2px solid white;
+            border: 2px solid wheat;
             border-top: none;
 
             &__button-a a {
@@ -168,7 +185,7 @@ body:has(.cat-index) {
 
     // To avoid having an empty bar, we put the padding and margin on if a pagination element has actually been rendered
     &__bottom-paginator:has(.pagination) {
-        margin-top: 20px;
+        margin-top: 65px;
         border-radius: 5px;
         padding: 10px;
     }
