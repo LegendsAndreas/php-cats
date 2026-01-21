@@ -2,24 +2,19 @@
 
 namespace App\Controller;
 
+use App\Model\Table\CatContributorsTable;
+use App\Model\Table\CatsTable;
+use App\Model\Table\ContributorsTable;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
-use Cake\Mailer\Email;
-use Cake\Mailer\Mailer;
-use Cake\Mailer\TransportFactory;
-use JetBrains\PhpStorm\NoReturn;
-use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\Log\Log;
-use \Cake\Error;
 
 /**
- * @property \App\Model\Table\CatsTable            $Cats
- * @property \App\Model\Table\ContributorsTable    $Contributors
- * @property \App\Model\Table\CatContributorsTable $CatContributors
+ * @property CatsTable            $Cats
+ * @property ContributorsTable    $Contributors
+ * @property CatContributorsTable $CatContributors
  */
 class CatsController extends AppController
 {
@@ -344,7 +339,7 @@ class CatsController extends AppController
         return $this->redirect(['action' => 'deleted']);
     }
 
-    public function test()
+    public function test(): Response
     {
         $this->set('title', 'PHP Cats | Test');
 

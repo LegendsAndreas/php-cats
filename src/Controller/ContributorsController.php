@@ -5,17 +5,7 @@ namespace App\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\Http\Cookie\CookieCollection;
-use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
-use Cake\Mailer\Email;
-use Cake\Mailer\Mailer;
-use Cake\Mailer\TransportFactory;
-use JetBrains\PhpStorm\NoReturn;
-use Cake\ORM\Exception\PersistenceFailedException;
-use Cake\Log\Log;
-use \Cake\Error;
 
 /**
  * @property \App\Model\Table\ContributorsTable $Contributors

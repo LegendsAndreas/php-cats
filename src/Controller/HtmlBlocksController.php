@@ -39,7 +39,6 @@ class HtmlBlocksController extends AppController
 
     public function test()
     {
-        $this->loadModel('Cats');
         if ($this->request->is('post')) {
             $catId      = 73;
             $items      = $this->request->getData('items');

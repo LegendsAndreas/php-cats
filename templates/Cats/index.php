@@ -4,6 +4,7 @@ use App\Utility;
 
 // phpcs:ignoreFile
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Log\Log;
 
 /**

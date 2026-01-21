@@ -218,7 +218,7 @@ return [
      *   your application that still emit deprecations.
      */
     'Error'          => [
-        'errorLevel'              => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED,
+        'errorLevel'              => E_ALL,
         'skipLog'                 => [],
         'log'                     => true,
         'trace'                   => true,
