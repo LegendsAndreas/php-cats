@@ -126,8 +126,7 @@ body:has(.cat-index) {
     &__order-checkbox {
         position: relative;
         top: 25%;
-        width: 20px;
-        height: 20px;
+        display: inline-block !important;
     }
 
     &__wrapper {
