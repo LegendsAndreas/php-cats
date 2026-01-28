@@ -11,8 +11,8 @@ use Cake\ORM\Entity;
  * @property string        $function_description
  * @property string        $function_example
  * @property string        $base64_image
- * @property FrozenTime    $created
- * @property FrozenTime    $modified
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
  *
  * @property Contributor[] $contributors
  * @property HtmlBlock[]   $html_blocks

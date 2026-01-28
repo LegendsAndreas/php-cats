@@ -9,13 +9,12 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $cat_id
  * @property int $contributor_id
- * @property FrozenTime $created
- * @property FrozenTime $modified
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
  */
-
 class CatContributors extends Entity
 {
-    protected $_accessible = [
+    protected array $_accessible = [
         '*' => true,
         'id' => false,
     ];

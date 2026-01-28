@@ -40,7 +40,7 @@ class CatsController extends AppController
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
-            $cat = $this->Cats->get($id, ['contain' => ['HtmlBlocks', 'Contributors']]); // Fetch the cat by ID
+            $cat = $this->Cats->get($id, ['HtmlBlocks', 'Contributors']); // Fetch the cat by ID
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
@@ -274,7 +274,7 @@ class CatsController extends AppController
         $page = $this->request->getQuery('page');
 
         $cat = $this->Cats->findById($id)->firstOrFail();
-        $this->Cats->patchEntity($cat, ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
+        $this->Cats->patchEntity($cat, ['deleted' => new \Cake\I18n\DateTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
             $this->clearCacheGroup([

@@ -100,7 +100,7 @@ class ContributorsController extends AppController
     {
         date_default_timezone_set('Europe/Copenhagen');
         $contributor          = $this->Contributors->get($id);
-        $contributor->deleted = new FrozenTime(date('d-m-Y H:i:s'));
+        $contributor->deleted = new \Cake\I18n\DateTime(date('d-m-Y H:i:s'));
         if ($this->Contributors->save($contributor)) {
             $this->Flash->success(__('Contributor deleted successfully'));
         } else {

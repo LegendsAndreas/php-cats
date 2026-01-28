@@ -12,12 +12,12 @@ use Cake\ORM\Entity;
  * @property string     $type
  * @property bool       $escape_html
  * @property string     $content
- * @property FrozenTime $created
- * @property FrozenTime $modified
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
  */
 class HtmlBlock extends Entity
 {
-    protected $_accessible = [
+    protected array $_accessible = [
         '*'  => true,
         'id' => false,
     ];
