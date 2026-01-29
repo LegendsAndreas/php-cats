@@ -99,12 +99,12 @@ if (Configure::read('debug')) {
  * Set the default server timezone. Using UTC makes time calculations / conversions easier.
  * Check https://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
-date_default_timezone_set(Configure::read('App.defaultTimezone'));
+date_default_timezone_set("Europe/Copenhagen");
 
 /*
  * Configure the mbstring extension to use the correct encoding.
  */
-mb_internal_encoding(Configure::read('App.encoding'));
+mb_internal_encoding("UTF-8");
 
 /*
  * Set the default locale. This controls how dates, number and currency is
@@ -142,14 +142,14 @@ if (!$fullBaseUrl) {
     $trustProxy = false;
 
     $s = null;
-    if (env('HTTPS') || ($trustProxy && env('HTTP_X_FORWARDED_PROTO') === 'https')) {
+    if (getenv('HTTPS') || ($trustProxy && getenv('HTTP_X_FORWARDED_PROTO') === 'https')) {
         $s = 's';
     }
 
-    $httpHost = env('HTTP_HOST');
+    /*$httpHost = getenv('HTTP_HOST');
     if (isset($httpHost)) {
         $fullBaseUrl = 'http' . $s . '://' . $httpHost;
-    }
+    }*/
     unset($httpHost, $s);
 }
 if ($fullBaseUrl) {
@@ -157,12 +157,24 @@ if ($fullBaseUrl) {
 }
 unset($fullBaseUrl);
 
-Cache::setConfig(Configure::consume('Cache'));
-ConnectionManager::setConfig(Configure::consume('Datasources'));
-TransportFactory::setConfig(Configure::consume('EmailTransport'));
-Mailer::setConfig(Configure::consume('Email'));
-Log::setConfig(Configure::consume('Log'));
-Security::setSalt(Configure::consume('Security.salt'));
+Cache::setConfig('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
+ConnectionManager::setConfig('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
+TransportFactory::setConfig('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
+Mailer::setConfig('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
+Log::setConfig('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
+Security::setSalt('default', [
+    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
+]);
 
 /*
  * Setup detectors for mobile and tablet.

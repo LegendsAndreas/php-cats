@@ -85,9 +85,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new ErrorHandlerMiddleware(Configure::read('Error'), $this))
 
             // Handle plugin/theme assets like CakePHP normally does.
-            ->add(new AssetMiddleware([
-                'cacheTime' => Configure::read('Asset.cacheTime'),
-            ]))
+            ->add(new AssetMiddleware())
 
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
