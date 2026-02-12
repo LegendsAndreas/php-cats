@@ -19,7 +19,7 @@ use Cake\ORM\Entity;
  */
 class Cat extends Entity
 {
-    protected $_accessible = [
+    protected array $_accessible = [
         '*'  => true,
         'id' => false,
     ];

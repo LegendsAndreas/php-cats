@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use function Cake\Core\env;
 
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
@@ -19,6 +20,7 @@ declare(strict_types=1);
  * Configure paths required to find CakePHP + general filepath constants
  */
 require __DIR__ . DIRECTORY_SEPARATOR . 'paths.php';
+require CAKE . 'functions.php';
 
 /*
  * Bootstrap CakePHP.
@@ -99,12 +101,12 @@ if (Configure::read('debug')) {
  * Set the default server timezone. Using UTC makes time calculations / conversions easier.
  * Check https://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
-date_default_timezone_set("Europe/Copenhagen");
+date_default_timezone_set(Configure::read('App.defaultTimezone'));
 
 /*
  * Configure the mbstring extension to use the correct encoding.
  */
-mb_internal_encoding("UTF-8");
+mb_internal_encoding(Configure::read('App.encoding'));
 
 /*
  * Set the default locale. This controls how dates, number and currency is
@@ -142,14 +144,14 @@ if (!$fullBaseUrl) {
     $trustProxy = false;
 
     $s = null;
-    if (getenv('HTTPS') || ($trustProxy && getenv('HTTP_X_FORWARDED_PROTO') === 'https')) {
+    if (env('HTTPS') || ($trustProxy && env('HTTP_X_FORWARDED_PROTO') === 'https')) {
         $s = 's';
     }
 
-    /*$httpHost = getenv('HTTP_HOST');
+    $httpHost = env('HTTP_HOST');
     if (isset($httpHost)) {
         $fullBaseUrl = 'http' . $s . '://' . $httpHost;
-    }*/
+    }
     unset($httpHost, $s);
 }
 if ($fullBaseUrl) {
@@ -157,24 +159,12 @@ if ($fullBaseUrl) {
 }
 unset($fullBaseUrl);
 
-Cache::setConfig('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
-ConnectionManager::setConfig('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
-TransportFactory::setConfig('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
-Mailer::setConfig('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
-Log::setConfig('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
-Security::setSalt('default', [
-    'url' => getenv('CACHE_DEFAULT_URL') ?: 'file://?prefix=my_app_',
-]);
+Cache::setConfig(Configure::consume('Cache'));
+ConnectionManager::setConfig(Configure::consume('Datasources'));
+TransportFactory::setConfig(Configure::consume('EmailTransport'));
+Mailer::setConfig(Configure::consume('Email'));
+Log::setConfig(Configure::consume('Log'));
+Security::setSalt(Configure::consume('Security.salt'));
 
 /*
  * Setup detectors for mobile and tablet.

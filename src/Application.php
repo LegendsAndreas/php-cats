@@ -129,9 +129,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     protected function bootstrapCli(): void
     {
         $this->addOptionalPlugin('Bake');
-
-        $this->addPlugin('Migrations');
-        // Load more plugins here
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface

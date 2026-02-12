@@ -16,7 +16,6 @@ $modulus = 4;
 
 $tester = new Utility\LogCountry();
 $tester->getIpCountry($this->request->clientIp());
-dd(phpversion());
 ?>
 <div class="cat-index__level-1">
     <div class="my-5">

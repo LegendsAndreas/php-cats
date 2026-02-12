@@ -7,6 +7,7 @@
  */
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
+use function Cake\I18n\__d;
 
 $this->layout = 'error';
 

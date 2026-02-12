@@ -1,6 +1,7 @@
 <?php
+use function Cake\Core\env;
 return [
-    'debug' => getenv('DEBUG') ?? true,
+    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
 
     'Session' => [
         'defaults' => 'php',
@@ -9,17 +10,17 @@ return [
     ],
 
     'Security' => [
-        'salt' => getenv('SECURITY_KEY') ?? 'un-secure-string',
-        'cookieKey' => getenv('COOKIE_KEY') ?? 'un-secure-string',
+        'salt' => env('SECURITY_KEY', 'un-secure-string'),
+        'cookieKey' => env('COOKIE_KEY', 'un-secure-string'),
     ],
 
     'Datasources' => [
         'default' => [
-            'host' => getenv('DATABASE_HOST') ?? "piss",
-            'username' => getenv('DATABASE_USERNAME') ?? 'pisster',
-            'password' => getenv('DATABASE_PASSWORD') ?? "",
-            'database' => getenv('DATABASE_NAME') ?? 'my_app',
-            'url' => getenv('DATABASE_URL') ?? null,
+            'host' => env('DATABASE_HOST', 'piss'),
+            'username' => env('DATABASE_USERNAME', 'pisster'),
+            'password' => env('DATABASE_PASSWORD', ''),
+            'database' => env('DATABASE_NAME', 'my_app'),
+            'url' => env('DATABASE_URL', null),
         ],
         'test' => [
             'host' => 'localhost',
@@ -28,7 +29,7 @@ return [
             'password' => 'secret',
             'database' => 'test_myapp',
             //'schema' => 'myapp',
-            'url' => getenv('DATABASE_TEST_URL') ?? 'sqlite://127.0.0.1/tmp/tests.sqlite',
+//            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
         ],
     ],
 ];

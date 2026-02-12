@@ -40,7 +40,7 @@ class CatsController extends AppController
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
-            $cat = $this->Cats->get($id, ['HtmlBlocks', 'Contributors']); // Fetch the cat by ID
+            $cat = $this->Cats->find()->where(['id' => $id])->contain(['HtmlBlocks', 'Contributors'])->firstOrFail();
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
@@ -57,8 +57,6 @@ class CatsController extends AppController
 
     public function index(): void
     {
-        $this->loadComponent('Paginator');
-
         // Build cache key based on query parameters
         $reverseOrder = $this->request->getQuery('reverseOrder', 'false');
         $catName      = $this->request->getQuery('catName', '');
@@ -72,9 +70,9 @@ class CatsController extends AppController
             $query = $this->Cats->find('all')->where(['deleted IS' => null]);
 
             if ($reverseOrder === 'true') {
-                $query->orderDesc('created');
+                $query->orderByDesc('created');
             } else {
-                $query->orderAsc('created');
+                $query->orderByAsc('created');
             }
 
             if (!empty($catName)) {
@@ -82,7 +80,7 @@ class CatsController extends AppController
                 $query->where(['function_name LIKE' => '%' . $catName . '%']);
             }
 
-            $cats = $this->Paginator->paginate($query, ['limit' => 12]);
+            $cats = $this->paginate($query, ['limit' => 12]);
 
             // Cache both the results and pagination params
             $cached = [
@@ -176,10 +174,11 @@ class CatsController extends AppController
         return $normalizedContributors;
     }
 
-    public function edit($id): Response
+    public function edit(int $id): Response
     {
-        $cat            = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
-        $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->select(['contributor_id'])->extract('contributor_id')->toList();
+        $cat = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
+        // We want an array of ids and not of entities.
+        $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->all()->extract('contributor_id')->toArray();
 
         if (empty($contributorIds)) {
             $contributors = [];

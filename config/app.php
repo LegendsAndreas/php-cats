@@ -5,6 +5,7 @@ use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
+use function Cake\Core\env;
 
 return [
     /*
@@ -16,7 +17,7 @@ return [
      * Development Mode:
      * true: Errors and warnings shown.
      */
-    'debug'          => getenv("DEBUG") ?? true,
+    'debug'          => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
 
     /*
      * Configure basic information about the application.
@@ -48,15 +49,15 @@ return [
      */
     'App'            => [
         'namespace'       => 'App',
-        'encoding'        => getenv('APP_ENCODING') ?? 'UTF-8',
-        'defaultLocale'   => getenv('APP_DEFAULT_LOCALE') ?? 'en_US',
-        'defaultTimezone' => getenv('APP_DEFAULT_TIMEZONE') ?? 'Europe/Copenhagen',
+        'encoding'        => env('APP_ENCODING', 'UTF-8'),
+        'defaultLocale'   => env('APP_DEFAULT_LOCALE', 'en_US'),
+        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Copenhagen'),
         'base'            => false,
         'dir'             => 'src',
         'webroot'         => 'webroot',
         'wwwRoot'         => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
-        'fullBaseUrl'     => getenv('APP_FULL_BASE_URL') ?? false,
+        'fullBaseUrl'     => env('APP_FULL_BASE_URL', false),
         'imageBaseUrl'    => 'img/',
         'cssBaseUrl'      => 'css/',
         'jsBaseUrl'       => 'js/',
@@ -75,7 +76,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security'       => [
-        'salt' => getenv('SECURITY_KEY') ?? 'un-secure-string',
+        'salt' => env('SECURITY_KEY', 'un-secure-string'),
     ],
 
     /*
@@ -98,40 +99,40 @@ return [
         'default'       => [
             'className' => FileEngine::class,
             'path'      => CACHE,
-            'url'       => getenv('CACHE_DEFAULT_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_DEFAULT_URL', null),
         ],
         'cats_index'    => [
             'className' => FileEngine::class,
             'path'      => CACHE . 'cats_index' . DS,
-            'url'       => getenv('CACHE_CUSTOM_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CUSTOM_URL', null),
             'duration'  => '+1 hours',
             'groups'     => ['cats-index'],
         ],
         'cats_deleted'  => [
             'className' => FileEngine::class,
             'path'      => CACHE . 'cats_deleted' . DS,
-            'url'       => getenv('CACHE_CUSTOM_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CUSTOM_URL', null),
             'duration'  => '+1 hours',
             'groups'     => ['cats-deleted'],
         ],
         'contributors_index' => [
             'className' => FileEngine::class,
             'path'      => CACHE . 'contributors_index' . DS,
-            'url'       => getenv('CACHE_CUSTOM_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CUSTOM_URL', null),
             'duration'  => '+1 hours',
             'groups'     => ['contributors-index'],
         ],
         'cats_view'     => [
             'className' => FileEngine::class,
             'path'      => CACHE . 'cats_view' . DS,
-            'url'       => getenv('CACHE_CUSTOM_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CUSTOM_URL', null),
             'duration'  => '+1 hours',
             'groups'     => ['cats-view'],
         ],
         'ip_logging'    => [
             'className' => FileEngine::class,
             'path'      => CACHE,
-            'url'       => getenv('CACHE_DEFAULT_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_DEFAULT_URL', null),
             'duration'  => '+24 hours',
         ],
 
@@ -147,7 +148,7 @@ return [
             'path'      => CACHE . 'persistent' . DS,
             'serialize' => true,
             'duration'  => '+1 years',
-            'url'       => getenv('CACHE_CAKECORE_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CAKECORE_URL', null),
         ],
 
         /*
@@ -162,7 +163,7 @@ return [
             'path'      => CACHE . 'models' . DS,
             'serialize' => true,
             'duration'  => '+1 years',
-            'url'       => getenv('CACHE_CAKEMODEL_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CAKEMODEL_URL', null),
         ],
 
         /*
@@ -176,7 +177,7 @@ return [
             'path'      => CACHE,
             'serialize' => true,
             'duration'  => '+1 years',
-            'url'       => getenv('CACHE_CAKEROUTES_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('CACHE_CAKEROUTES_URL', null),
         ],
     ],
 
@@ -202,7 +203,7 @@ return [
      *   classes used in CLI and web environments you'll need to write that conditional logic as well.
      *   The conventional location for custom renderers is in `src/Error`. Your exception renderer needs to
      *   implement the `render()` method and return either a string or Http\Response.
-     *   `errorRenderer` - string - The class responsible for rendering PHP errors. 19The selected
+     *   `errorRenderer` - string - The class responsible for rendering PHP errors. The selected
      *   class will be used for both web and CLI contexts. If you want different classes for each environment
      *   you'll need to write that conditional logic as well. Error renderers need to
      *   to implement the `Cake\Error\ErrorRendererInterface`.
@@ -218,7 +219,7 @@ return [
      *   your application that still emit deprecations.
      */
     'Error'          => [
-        'errorLevel'              => E_ALL,
+        'errorLevel'              => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED,
         'skipLog'                 => [],
         'log'                     => true,
         'trace'                   => true,
@@ -277,7 +278,7 @@ return [
             //'password' => null,
             'client'    => null,
             'tls'       => false,
-            'url'       => getenv('EMAIL_TRANSPORT_DEFAULT_URL') ?? "file://?prefix=my_app_",
+            'url'       => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
 
@@ -391,7 +392,7 @@ return [
             'className' => FileLog::class,
             'path'      => LOGS,
             'file'      => 'debug',
-            'url'       => getenv('LOG_DEBUG_URL') ?? null,
+            'url'       => env('LOG_DEBUG_URL', null),
             'scopes'    => false,
             'levels'    => ['notice', 'info', 'debug'],
         ],
@@ -407,7 +408,7 @@ return [
             'className' => FileLog::class,
             'path'      => LOGS,
             'file'      => 'error',
-            'url'       => getenv('LOG_ERROR_URL') ?? null,
+            'url'       => env('LOG_ERROR_URL', null),
             'scopes'    => false,
             'levels'    => ['warning', 'error', 'critical', 'alert', 'emergency'],
         ],
@@ -416,7 +417,7 @@ return [
             'className' => FileLog::class,
             'path'      => LOGS,
             'file'      => 'queries',
-            'url'       => getenv('LOG_QUERIES_URL') ?? null,
+            'url'       => env('LOG_QUERIES_URL', null),
             'scopes'    => ['queriesLog'],
         ],
     ],

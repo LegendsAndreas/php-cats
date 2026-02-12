@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 
 /**
  * @property \App\Model\Table\ContributorsTable $Contributors
@@ -28,8 +27,6 @@ class ContributorsController extends AppController
 
     public function index()
     {
-        $this->loadComponent('Paginator');
-
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
@@ -73,7 +70,7 @@ class ContributorsController extends AppController
                 $query->where(['name LIKE' => '%' . $contributorName . '%']);
             }
 
-            $contributors = $this->Paginator->paginate($query, ['limit' => 20]);
+            $contributors = $this->paginate($query, ['limit' => 20]);
 
             $cached = [
                 'contributors' => $contributors,
