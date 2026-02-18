@@ -6,9 +6,10 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "cakephp/authentication": "2.4",
+        "cakephp/authentication": "3.3.4",
+        "cakephp/authorization": "3.1",
         "cakephp/cakephp": "^5.3.0",
-        "cakephp/migrations": "^4.0.0",
+        "cakephp/migrations": "^5.0.0",
         "cakephp/plugin-installer": "^2.0",
         "geoip2/geoip2": "^3.3",
         "mobiledetect/mobiledetectlib": "^4.8.03"

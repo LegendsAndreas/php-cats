@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Model\Table\CatContributorsTable;
 use App\Model\Table\CatsTable;
 use App\Model\Table\ContributorsTable;
+use Authentication\Controller\Component\AuthenticationComponent;
+use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Http\Response;
@@ -12,9 +14,11 @@ use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
 
 /**
- * @property CatsTable            $Cats
- * @property ContributorsTable    $Contributors
- * @property CatContributorsTable $CatContributors
+ * @property CatsTable               $Cats
+ * @property ContributorsTable       $Contributors
+ * @property CatContributorsTable    $CatContributors
+ * @property AuthenticationComponent $Authentication
+ * @property AuthorizationComponent  $Authorization
  */
 class CatsController extends AppController
 {
@@ -50,6 +54,7 @@ class CatsController extends AppController
 
     public function help(): Response
     {
+        $this->Authorization->skipAuthorization();
         $this->set('title', 'PHP Cats | Help');
 
         return $this->render();
@@ -57,6 +62,7 @@ class CatsController extends AppController
 
     public function index(): void
     {
+        $this->Authorization->skipAuthorization();
         // Build cache key based on query parameters
         $reverseOrder = $this->request->getQuery('reverseOrder', 'false');
         $catName      = $this->request->getQuery('catName', '');
@@ -109,6 +115,7 @@ class CatsController extends AppController
     public function add(): Response
     {
         $cat = $this->Cats->newEmptyEntity();
+        $this->Authorization->authorize($cat);
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
@@ -176,6 +183,7 @@ class CatsController extends AppController
 
     public function edit(int $id): Response
     {
+        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
         // We want an array of ids and not of entities.
         $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->all()->extract('contributor_id')->toArray();
@@ -267,6 +275,7 @@ class CatsController extends AppController
 
     public function delete($id): Response
     {
+        $this->Authorization->skipAuthorization();
         date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
@@ -292,6 +301,7 @@ class CatsController extends AppController
 
     public function fullDelete($id): Response
     {
+        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
         if ($this->Cats->delete($cat)) {
             $this->clearCacheGroup([
@@ -308,6 +318,7 @@ class CatsController extends AppController
 
     public function deleted(): void
     {
+        $this->Authorization->skipAuthorization();
         $cats = $this->cacheEnabled ? Cache::read('cats_deleted_index', 'cats_deleted') : null;
 
         if ($cats === null) {
@@ -321,6 +332,7 @@ class CatsController extends AppController
 
     public function restore($id): Response
     {
+        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => null]);
 
