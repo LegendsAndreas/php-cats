@@ -10,7 +10,7 @@
 
 <div class="cats-edit">
     <h1 class="text-light">Edit Cat '<?= $cat->function_name ?>'</h1>
-    <div class="cats-edit__level-1">
+    <div class="cats-edit level-1">
 
         <?php
         echo $this->Form->create($cat);
@@ -18,30 +18,30 @@
             'type' => 'text',
             'required' => true,
             'templates' => [
-                'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
+                'inputContainer' => '<div class="cats-edit level-2">{{content}}</div>',
             ],
         ]);
         echo $this->Form->control('function_description', [
             'type' => 'textarea',
             'required' => true,
             'templates' => [
-                'inputContainer' => '<div class="cats-edit__level-2">{{content}}</div>',
+                'inputContainer' => '<div class="cats-edit level-2">{{content}}</div>',
             ],
         ]);
         echo $this->Form->control('Image', [
             'type' => 'file',
             'class' => 'js-add-image',
             'templates' => [
-                'inputContainer' => '<div class="cats-edit__level-2 cats-edit__image-input">{{content}}</div>',
+                'inputContainer' => '<div class="cats-edit level-2 cats-edit__image-input">{{content}}</div>',
             ],
         ]);
         echo $this->Form->control('base64_image', ['type' => 'hidden', 'id' => 'base64_image']); ?>
 
-        <div class="cats-edit__level-2">
+        <div class="cats-edit level-2">
             <?= $this->element('Cats/html-blocks-editor', ['htmlBlocks' => $cat->html_blocks]) ?>
         </div>
 
-        <div class="cats-edit__level-2">
+        <div class="cats-edit level-2">
             <button class=" js-add-contributor" type="button">
                 Add contributor
             </button>

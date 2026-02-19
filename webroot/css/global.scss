@@ -1,0 +1,57 @@
+@import "variables";
+
+.level {
+    &-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+    &-2 {
+        background-color: lighten($level-0-color, 10%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+}
+
+* {
+    font-family: "JetBrains Mono", sans-serif !important;
+}
+
+html {
+    overscroll-behavior: none;
+}
+
+button {
+    transition: background-color 0.2s linear;
+    border: 1px solid wheat;
+}
+
+button:hover {
+    border-color: wheat;
+    background-color: #5a2a2d;
+}
+
+button:focus {
+    border-color: wheat;
+    background-color: #5a2a2d;
+}
+
+input {
+    background-color: white;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #C93941;
+    border: none;
+    color: white;
+}
+
+input[type="checkbox"] {
+    accent-color: #C93941;
+    height: 20px;
+    width: 20px;
+}

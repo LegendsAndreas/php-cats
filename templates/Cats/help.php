@@ -4,7 +4,7 @@
  */
 ?>
 
-<div class="cats-help">
+<div class="cats-help cat-index__level-1">
     <p class="cats-help__text">
         Hello friendo! This site is not fully completed, as you might have noticed. For example, some of the cat pictures chosen don't really fit
         the actual function definition, the same picture is used multiple times, and the list of functions/functionalities is not very long.

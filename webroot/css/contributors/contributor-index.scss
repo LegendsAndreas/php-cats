@@ -51,20 +51,4 @@ $table-bg: #eaaeb0;
             background-color: #5a2a2d;
         }
     }
-
-    &__level-1 {
-        background-color: lighten($level-0-color, 5%);
-        padding: 10px;
-        border-radius: 5px;
-        margin: 10px 0;
-        border: 2px solid wheat;
-    }
-
-    &__level-2 {
-        background-color: lighten($level-0-color, 10%);
-        padding: 10px;
-        border-radius: 5px;
-        margin: 10px 0;
-        border: 1px solid wheat;
-    }
 }

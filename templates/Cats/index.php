@@ -17,7 +17,7 @@ $modulus = 4;
 $tester = new Utility\LogCountry();
 $tester->getIpCountry($this->request->clientIp());
 ?>
-<div class="cat-index__level-1">
+<div class="level-1">
     <div class="my-5">
         <h1 class="cat-index__header">
             |--PHP cats--|

@@ -10,7 +10,7 @@
     <h1>
         Contributors
     </h1>
-    <div class="new-contributor contributors-index__level-1">
+    <div class="new-contributor contributors-index level-1">
         <h2>Add a new contributor</h2>
         <?= $this->Form->create($newContributor) ?>
         <div class="row">

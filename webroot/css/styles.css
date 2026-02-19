@@ -12,38 +12,4 @@
 @import "element/actions-block.css";
 @import "contributors/contributor-index.css";
 @import "users/login.css";
-
-* {
-    font-family: "JetBrains Mono", sans-serif !important;
-}
-
-button {
-    transition: background-color 0.2s linear;
-    border: 1px solid wheat;
-}
-
-button:hover {
-    border-color: wheat;
-    background-color: #5a2a2d;
-}
-
-button:focus {
-    border-color: wheat;
-    background-color: #5a2a2d;
-}
-
-input {
-    background-color: white;
-}
-
-input[type="checkbox"]:checked {
-    background-color: #C93941;
-    border: none;
-    color: white;
-}
-
-input[type="checkbox"] {
-    accent-color: #C93941;
-    height: 20px;
-    width: 20px;
-}
+@import "global.css";
