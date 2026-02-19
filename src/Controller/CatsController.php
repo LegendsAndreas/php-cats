@@ -10,7 +10,6 @@ use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Http\Response;
-use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
 
 /**
@@ -23,6 +22,9 @@ use Cake\Log\Log;
 class CatsController extends AppController
 {
     private bool $cacheEnabled;
+    private \Cake\ORM\Table|\App\Model\Table\CatContributorsTable $CatContributors;
+    private \Cake\ORM\Table|\App\Model\Table\ContributorsTable $Contributors;
+
     public function initialize(): void
     {
         parent::initialize();
@@ -31,15 +33,16 @@ class CatsController extends AppController
         $this->cacheEnabled    = Configure::read('App.EnableCustomCaching');
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'help']);
+        $this->Authentication->addUnauthenticatedActions(['help']);
     }
 
     public function view($id): void
     {
+        $this->Authorization->skipAuthorization();
         $cacheKey = 'cat_' . $id;
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 

@@ -5,9 +5,11 @@ namespace App\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Authorization\Controller\Component\AuthorizationComponent;
 
 /**
  * @property \App\Model\Table\ContributorsTable $Contributors
+ * @property AuthorizationComponent             $Authorization
  */
 class ContributorsController extends AppController
 {
@@ -18,15 +20,14 @@ class ContributorsController extends AppController
         $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
-
-        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'help']);
     }
 
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
@@ -126,6 +127,7 @@ class ContributorsController extends AppController
 
     public function view($id)
     {
+        $this->Authorization->skipAuthorization();
         $contributor = $this->Contributors->get($id);
         $this->set('title', 'PHP Cats | View Contributor - ' . $contributor->name);
         $this->set(compact('contributor'));

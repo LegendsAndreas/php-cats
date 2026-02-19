@@ -75,9 +75,6 @@ return [
      *   The salt value is also used as the encryption key.
      *   You should treat it as extremely sensitive data.
      */
-    'Security'       => [
-        'salt' => env('SECURITY_KEY', 'un-secure-string'),
-    ],
 
     /*
      * Apply timestamps with the last modified time to static assets (js, css, images).

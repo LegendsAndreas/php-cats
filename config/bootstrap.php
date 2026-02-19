@@ -93,6 +93,9 @@ ConnectionManager::setConfig(Configure::consume('Datasources'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
+if (Configure::read('Security.salt') === 'un-secure-string') {
+    trigger_error('You should set a unique value for Security.salt in config/app_local.php', E_USER_WARNING);
+}
 Security::setSalt(Configure::consume('Security.salt'));
 
 ServerRequest::addDetector('mobile', function ($request) {
@@ -108,4 +111,4 @@ ServerRequest::addDetector('tablet', function ($request) {
 
 TypeFactory::map('time', StringType::class);
 
-Configure::write('App.EnableCustomCaching', false);
+Configure::write('App.EnableCustomCaching', true);

@@ -3,9 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\Controller\Component\AuthenticationComponent;
+use Authorization\Controller\Component\AuthorizationComponent;
+use Cake\Http\Response;
+
 /**
  * Users Controller
  *
+ * @property AuthenticationComponent     $Authentication
+ * @property AuthorizationComponent      $Authorization
  * @property \App\Model\Table\UsersTable $Users
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -19,7 +25,7 @@ class UsersController extends AppController
         $this->Authentication->addUnauthenticatedActions(['login']);
     }
 
-    public function login()
+    public function login(): Response
     {
         $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['get', 'post']);
@@ -33,9 +39,11 @@ class UsersController extends AppController
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error(__('Invalid username or password'));
         }
+
+        return $this->render();
     }
 
-    public function logout()
+    public function logout(): Response
     {
         $this->Authorization->skipAuthorization();
         $result = $this->Authentication->getResult();
@@ -45,5 +53,8 @@ class UsersController extends AppController
 
             return $this->redirect(['controller' => 'Cats', 'action' => 'index']);
         }
+
+        $this->Flash->error(__('Authentication problem logging out. Please try again.'));
+        return $this->redirect(['controller' => 'Cats', 'action' => 'index']);
     }
 }

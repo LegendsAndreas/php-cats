@@ -8,7 +8,6 @@ use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
-use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use JetBrains\PhpStorm\NoReturn;
@@ -33,28 +32,5 @@ class HtmlBlocksController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-
-        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'help']);
-    }
-
-    public function test()
-    {
-        if ($this->request->is('post')) {
-            $catId      = 73;
-            $items      = $this->request->getData('items');
-            $htmlBlocks = [];
-            foreach ($items as $index => $item) {
-                $htmlBlocks[] = [
-                    'cat_id'  => $catId,
-                    'order'   => $index,
-                    'content' => $item['content'],
-                    'type'    => $item['type'],
-                ];
-            }
-            // Save to database
-            $this->HtmlBlocks->saveMany($htmlBlocks);
-        }
-
-        $this->set('title', 'PHP Cats | Test');
     }
 }

@@ -58,3 +58,7 @@ I think the problem i have been having this whole time with invisible characters
 I believe it has to be UTF-8, no BOM
 
 The PHP compiler is very fucking sensitive/shit and as such it will break if it sees a fucking BOM mark.
+
+ssh -i C:\Users\andreas\Desktop\code\Hetzner\php-cats root@91.99.125.72
+
+Cacheing can also be done on the server side of the project, like Cakephps own Cacheing does.
