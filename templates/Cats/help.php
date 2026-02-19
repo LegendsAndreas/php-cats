@@ -14,7 +14,7 @@
         suggestions on what functionalities of PHP/CakePHP should be added to the site!
     </p>
     <p class="cats-help__text">Right now, you can just contact me with an email at my business email:
-        <a href="mailto:andreas2x2@gmail.com">andreas2x2@gmail.com</a>
+        <a href="mailto:phpcatsmail@gmail.com">phpcatsmail@gmail.com</a>
     </p>
     <p class="cats-help__text">
         I am also trying to setup an emailing service, so if you have any suggestions, please do contact me!
