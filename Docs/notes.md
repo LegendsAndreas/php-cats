@@ -62,3 +62,30 @@ The PHP compiler is very fucking sensitive/shit and as such it will break if it 
 ssh -i C:\Users\andreas\Desktop\code\Hetzner\php-cats root@91.99.125.72
 
 Cacheing can also be done on the server side of the project, like Cakephps own Cacheing does.
+
+
+## Dotenv not loading correctly
+Since the bootstrap uses the environment variables, you HAVE to load them before the application bootstraps.
+
+    public function bootstrap(): void
+    {
+        $dotenv = new \josegonzalez\Dotenv\Loader(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
+        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
+        parent::bootstrap();
+
+        if (PHP_SAPI === 'cli') {
+            $this->bootstrapCli();
+        } else {
+            FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
+        }
+
+        /*
+         * Only try to load DebugKit in development mode
+         * Debug Kit should not be installed on a production system
+         */
+        if (Configure::read('debug')) {
+            $this->addPlugin('DebugKit');
+            $this->addPlugin('Migrations');
+        }
+        $this->addPlugin('Authorization');
+    }

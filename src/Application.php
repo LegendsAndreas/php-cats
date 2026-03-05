@@ -32,6 +32,7 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Routing\Router;
+use josegonzalez\Dotenv\Loader;
 use Psr\Http\Message\ServerRequestInterface;
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceInterface;
@@ -55,6 +56,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function bootstrap(): void
     {
         // Call parent to load bootstrap from files.
+        $dotenv = new Loader(dirname(__DIR__) . DS . '.env');
+        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
         parent::bootstrap();
 
         if (PHP_SAPI === 'cli') {
@@ -72,8 +75,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             $this->addPlugin('Migrations');
         }
         $this->addPlugin('Authorization');
-        $dotenv = new \josegonzalez\Dotenv\Loader(ROOT . DS . '.env');
-        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
     }
 
     /**
