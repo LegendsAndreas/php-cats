@@ -1,20 +1,9 @@
-body:has(.cat-index) {
-  background-color: #d33c43;
-}
-
 .cat-index {
   margin-top: 65px;
   margin-bottom: 65px;
 }
 .cat-index__level-1 {
   background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
-  padding: 10px;
-  border-radius: 5px;
-  margin: 10px 0;
-  border: 2px solid wheat;
-}
-.cat-index__level-2 {
-  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
   padding: 10px;
   border-radius: 5px;
   margin: 10px 0;

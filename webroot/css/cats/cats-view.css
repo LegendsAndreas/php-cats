@@ -1,10 +1,3 @@
-body:has(.cats-view) {
-  background-color: #d33c43;
-}
-
-.cats-view {
-  background-color: #C93941;
-}
 .cats-view__function-name {
   font-size: 60px;
   word-break: break-word;
@@ -53,13 +46,6 @@ body:has(.cats-view) {
   border: none;
   background-color: unset;
   margin-bottom: 0;
-}
-.cats-view__level-1 {
-  background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
-  padding: 10px;
-  border-radius: 5px;
-  margin: 10px 0;
-  border: 2px solid wheat;
 }
 .cats-view__level-2 {
   background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);

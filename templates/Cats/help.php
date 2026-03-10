@@ -4,7 +4,7 @@
  */
 ?>
 
-<div class="cats-help">
+<div class="cats-help cat-index__level-1">
     <p class="cats-help__text">
         Hello friendo! This site is not fully completed, as you might have noticed. For example, some of the cat pictures chosen don't really fit
         the actual function definition, the same picture is used multiple times, and the list of functions/functionalities is not very long.
@@ -14,7 +14,7 @@
         suggestions on what functionalities of PHP/CakePHP should be added to the site!
     </p>
     <p class="cats-help__text">Right now, you can just contact me with an email at my business email:
-        <a href="mailto:andreas2x2@gmail.com">andreas2x2@gmail.com</a>
+        <a href="mailto:phpcatsmail@gmail.com">phpcatsmail@gmail.com</a>
     </p>
     <p class="cats-help__text">
         I am also trying to setup an emailing service, so if you have any suggestions, please do contact me!

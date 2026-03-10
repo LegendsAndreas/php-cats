@@ -27,9 +27,6 @@ if (version_compare(PHP_VERSION, '7.2.0') < 0) {
 /*
  * You can remove this if you are confident you have intl installed.
  */
-if (!extension_loaded('intl')) {
-    trigger_error('You must enable the intl extension to use CakePHP.', E_USER_ERROR);
-}
 
 /*
  * You can remove this if you are confident you have proper version of intl.

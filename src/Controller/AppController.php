@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\Controller\Component\AuthenticationComponent;
+use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Controller\Controller;
 
 /**
@@ -25,6 +27,9 @@ use Cake\Controller\Controller;
  *
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
+ *
+ * @property AuthenticationComponent $Authentication
+ * @property AuthorizationComponent  $Authorization
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
@@ -44,15 +49,9 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Authentication.Authentication');
-
-        /*
-         * Enable the following component for recommended CakePHP form protection settings.
-         * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
-         */
-        //$this->loadComponent('FormProtection');
+        $this->loadComponent('Authorization.Authorization');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)

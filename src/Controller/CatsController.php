@@ -2,28 +2,29 @@
 
 namespace App\Controller;
 
+use App\Model\Table\CatContributorsTable;
+use App\Model\Table\CatsTable;
+use App\Model\Table\ContributorsTable;
+use Authentication\Controller\Component\AuthenticationComponent;
+use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Response;
-use Cake\I18n\FrozenTime;
-use Cake\Mailer\Email;
-use Cake\Mailer\Mailer;
-use Cake\Mailer\TransportFactory;
-use JetBrains\PhpStorm\NoReturn;
-use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\Log\Log;
-use \Cake\Error;
 
 /**
- * @property \App\Model\Table\CatsTable            $Cats
- * @property \App\Model\Table\ContributorsTable    $Contributors
- * @property \App\Model\Table\CatContributorsTable $CatContributors
+ * @property CatsTable               $Cats
+ * @property ContributorsTable       $Contributors
+ * @property CatContributorsTable    $CatContributors
+ * @property AuthenticationComponent $Authentication
+ * @property AuthorizationComponent  $Authorization
  */
 class CatsController extends AppController
 {
     private bool $cacheEnabled;
+    private \Cake\ORM\Table|\App\Model\Table\CatContributorsTable $CatContributors;
+    private \Cake\ORM\Table|\App\Model\Table\ContributorsTable $Contributors;
+
     public function initialize(): void
     {
         parent::initialize();
@@ -32,20 +33,21 @@ class CatsController extends AppController
         $this->cacheEnabled    = Configure::read('App.EnableCustomCaching');
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'help']);
+        $this->Authentication->addUnauthenticatedActions(['help']);
     }
 
     public function view($id): void
     {
+        $this->Authorization->skipAuthorization();
         $cacheKey = 'cat_' . $id;
         $cat      = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_view') : null;
 
         if ($cat === null) {
-            $cat = $this->Cats->get($id, ['contain' => ['HtmlBlocks', 'Contributors']]); // Fetch the cat by ID
+            $cat = $this->Cats->find()->where(['id' => $id])->contain(['HtmlBlocks', 'Contributors'])->firstOrFail();
             Cache::write($cacheKey, $cat, 'cats_view');
         }
 
@@ -55,6 +57,7 @@ class CatsController extends AppController
 
     public function help(): Response
     {
+        $this->Authorization->skipAuthorization();
         $this->set('title', 'PHP Cats | Help');
 
         return $this->render();
@@ -62,8 +65,7 @@ class CatsController extends AppController
 
     public function index(): void
     {
-        $this->loadComponent('Paginator');
-
+        $this->Authorization->skipAuthorization();
         // Build cache key based on query parameters
         $reverseOrder = $this->request->getQuery('reverseOrder', 'false');
         $catName      = $this->request->getQuery('catName', '');
@@ -77,9 +79,9 @@ class CatsController extends AppController
             $query = $this->Cats->find('all')->where(['deleted IS' => null]);
 
             if ($reverseOrder === 'true') {
-                $query->orderDesc('created');
+                $query->orderByDesc('created');
             } else {
-                $query->orderAsc('created');
+                $query->orderByAsc('created');
             }
 
             if (!empty($catName)) {
@@ -87,7 +89,7 @@ class CatsController extends AppController
                 $query->where(['function_name LIKE' => '%' . $catName . '%']);
             }
 
-            $cats = $this->Paginator->paginate($query, ['limit' => 12]);
+            $cats = $this->paginate($query, ['limit' => 12]);
 
             // Cache both the results and pagination params
             $cached = [
@@ -116,6 +118,7 @@ class CatsController extends AppController
     public function add(): Response
     {
         $cat = $this->Cats->newEmptyEntity();
+        $this->Authorization->authorize($cat);
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
@@ -181,10 +184,12 @@ class CatsController extends AppController
         return $normalizedContributors;
     }
 
-    public function edit($id): Response
+    public function edit(int $id): Response
     {
-        $cat            = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
-        $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->select(['contributor_id'])->extract('contributor_id')->toList();
+        $this->Authorization->skipAuthorization();
+        $cat = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
+        // We want an array of ids and not of entities.
+        $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->all()->extract('contributor_id')->toArray();
 
         if (empty($contributorIds)) {
             $contributors = [];
@@ -273,13 +278,14 @@ class CatsController extends AppController
 
     public function delete($id): Response
     {
+        $this->Authorization->skipAuthorization();
         date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
         $page = $this->request->getQuery('page');
 
         $cat = $this->Cats->findById($id)->firstOrFail();
-        $this->Cats->patchEntity($cat, ['deleted' => new FrozenTime(date('d-m-Y H:i:s'))]);
+        $this->Cats->patchEntity($cat, ['deleted' => new \Cake\I18n\DateTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
             $this->clearCacheGroup([
@@ -298,6 +304,7 @@ class CatsController extends AppController
 
     public function fullDelete($id): Response
     {
+        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
         if ($this->Cats->delete($cat)) {
             $this->clearCacheGroup([
@@ -314,6 +321,7 @@ class CatsController extends AppController
 
     public function deleted(): void
     {
+        $this->Authorization->skipAuthorization();
         $cats = $this->cacheEnabled ? Cache::read('cats_deleted_index', 'cats_deleted') : null;
 
         if ($cats === null) {
@@ -327,6 +335,7 @@ class CatsController extends AppController
 
     public function restore($id): Response
     {
+        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => null]);
 
@@ -344,7 +353,7 @@ class CatsController extends AppController
         return $this->redirect(['action' => 'deleted']);
     }
 
-    public function test()
+    public function test(): Response
     {
         $this->set('title', 'PHP Cats | Test');
 

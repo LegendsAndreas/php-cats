@@ -2,20 +2,19 @@
 // src/Model/Entity/Cat.php
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Cake\ORM\Entity;
 
 /**
  * @property int $id
  * @property int $cat_id
  * @property int $contributor_id
- * @property FrozenTime $created
- * @property FrozenTime $modified
+ * @property DateTime $created
+ * @property DateTime $modified
  */
-
 class CatContributors extends Entity
 {
-    protected $_accessible = [
+    protected array $_accessible = [
         '*' => true,
         'id' => false,
     ];

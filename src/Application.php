@@ -32,7 +32,13 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Routing\Router;
+use josegonzalez\Dotenv\Loader;
 use Psr\Http\Message\ServerRequestInterface;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
 
 /**
  * Application setup class.
@@ -40,7 +46,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -50,6 +56,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function bootstrap(): void
     {
         // Call parent to load bootstrap from files.
+        $dotenv = new Loader(dirname(__DIR__) . DS . '.env');
+        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
         parent::bootstrap();
 
         if (PHP_SAPI === 'cli') {
@@ -66,8 +74,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             $this->addPlugin('DebugKit');
             $this->addPlugin('Migrations');
         }
-        $dotenv = new \josegonzalez\Dotenv\Loader(ROOT . DS . '.env');
-        $dotenv->parse()->putenv(true)->toEnv(true)->toServer(true);
+        $this->addPlugin('Authorization');
     }
 
     /**
@@ -85,9 +92,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new ErrorHandlerMiddleware(Configure::read('Error'), $this))
 
             // Handle plugin/theme assets like CakePHP normally does.
-            ->add(new AssetMiddleware([
-                'cacheTime' => Configure::read('Asset.cacheTime'),
-            ]))
+            ->add(new AssetMiddleware())
 
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
@@ -104,7 +109,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/4/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -131,9 +136,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     protected function bootstrapCli(): void
     {
         $this->addOptionalPlugin('Bake');
-
-        $this->addPlugin('Migrations');
-        // Load more plugins here
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
@@ -143,25 +145,32 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'queryParam'              => 'redirect',
         ]);
 
-        // Load identifiers, ensure we check email and password fields
-        $authenticationService->loadIdentifier('Authentication.Password', [
-            'fields' => [
-                'username' => 'email',
-                'password' => 'password',
-            ],
-        ]);
-
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
-            'fields'   => [
+            'fields'     => [
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' => Router::url('/users/login'),
+            'identifier' => [
+                'Authentication.Password' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password',
+                    ],
+                ],
+            ],
+            'loginUrl'   => Router::url('/users/login'),
         ]);
 
         return $authenticationService;
+    }
+
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $resolver = new OrmResolver();
+
+        return new AuthorizationService($resolver);
     }
 }

@@ -5,20 +5,11 @@ namespace App\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\Http\Cookie\CookieCollection;
-use Cake\Http\Response;
-use Cake\I18n\FrozenTime;
-use Cake\Mailer\Email;
-use Cake\Mailer\Mailer;
-use Cake\Mailer\TransportFactory;
-use JetBrains\PhpStorm\NoReturn;
-use Cake\ORM\Exception\PersistenceFailedException;
-use Cake\Log\Log;
-use \Cake\Error;
+use Authorization\Controller\Component\AuthorizationComponent;
 
 /**
  * @property \App\Model\Table\ContributorsTable $Contributors
+ * @property AuthorizationComponent             $Authorization
  */
 class ContributorsController extends AppController
 {
@@ -29,17 +20,14 @@ class ContributorsController extends AppController
         $this->cacheEnabled = Configure::read('App.EnableCustomCaching');
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
-
-        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'help']);
     }
 
     public function index()
     {
-        $this->loadComponent('Paginator');
-
+        $this->Authorization->skipAuthorization();
         $newContributor = $this->Contributors->newEmptyEntity();
         if ($this->request->is('post')) {
             if (!$this->Authentication->getIdentity()) {
@@ -83,7 +71,7 @@ class ContributorsController extends AppController
                 $query->where(['name LIKE' => '%' . $contributorName . '%']);
             }
 
-            $contributors = $this->Paginator->paginate($query, ['limit' => 20]);
+            $contributors = $this->paginate($query, ['limit' => 20]);
 
             $cached = [
                 'contributors' => $contributors,
@@ -110,7 +98,7 @@ class ContributorsController extends AppController
     {
         date_default_timezone_set('Europe/Copenhagen');
         $contributor          = $this->Contributors->get($id);
-        $contributor->deleted = new FrozenTime(date('d-m-Y H:i:s'));
+        $contributor->deleted = new \Cake\I18n\DateTime(date('d-m-Y H:i:s'));
         if ($this->Contributors->save($contributor)) {
             $this->Flash->success(__('Contributor deleted successfully'));
         } else {
@@ -139,6 +127,7 @@ class ContributorsController extends AppController
 
     public function view($id)
     {
+        $this->Authorization->skipAuthorization();
         $contributor = $this->Contributors->get($id);
         $this->set('title', 'PHP Cats | View Contributor - ' . $contributor->name);
         $this->set(compact('contributor'));

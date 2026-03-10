@@ -1,22 +1,11 @@
 @import "../variables";
 
-body:has(.cat-index) {
-    background-color: #d33c43;
-}
-
 .cat-index {
     margin-top: 65px;
     margin-bottom: 65px;
 
     &__level-1 {
         background-color: lighten($level-0-color, 5%);
-        padding: 10px;
-        border-radius: 5px;
-        margin: 10px 0;
-        border: 2px solid wheat;
-    }
-    &__level-2 {
-        background-color: lighten($level-0-color, 10%);
         padding: 10px;
         border-radius: 5px;
         margin: 10px 0;

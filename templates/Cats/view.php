@@ -10,7 +10,7 @@ use App\Model\Entity\HtmlBlock;
 
 ?>
 
-<div class="text-center cats-view cats-view__level-1 p-3 my-3">
+<div class="text-center cats-view level-1 p-3 my-3">
         <h1 class="cats-view__function-name mt-4"><strong><?= h($cat->function_name) ?></strong></h1>
         <div>
             <img src="data:image/png;base64,<?= h($cat->base64_image) ?>" alt="ops..."

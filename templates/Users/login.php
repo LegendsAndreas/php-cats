@@ -15,7 +15,7 @@
             <?= $this->Form->control('email', ['required' => true]) ?>
             <?= $this->Form->control('password', ['required' => true]) ?>
         </fieldset>
-        <?= $this->Form->button('Add new cat', ['class' => 'mt-3', 'type' => 'submit']) ?>
+        <?= $this->Form->button('Login', ['class' => 'mt-3', 'type' => 'submit']) ?>
         <?= $this->Form->end() ?>
 
         <?= $this->Html->link("Add User", ['action' => 'add']) ?>

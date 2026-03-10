@@ -10,15 +10,14 @@ use Cake\ORM\Entity;
  * @property string     $email
  * @property string     $name
  * @property string     $social
- * @property FrozenTime $created
- * @property FrozenTime $modified
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
  *
  * @property Cat[]      $cats
  */
-
 class Contributor extends Entity
 {
-    protected $_accessible = [
+    protected array $_accessible = [
         '*' => true,
         'id' => false,
     ];
