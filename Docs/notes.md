@@ -89,3 +89,6 @@ Since the bootstrap uses the environment variables, you HAVE to load them before
         }
         $this->addPlugin('Authorization');
     }
+
+## On update main
+- composer update -W
