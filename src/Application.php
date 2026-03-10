@@ -171,6 +171,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     {
         $resolver = new OrmResolver();
 
-        return new AuthorizationService($resolver);
+        $service = new AuthorizationService($resolver);
+
+        // Skip authorization for the debug-kit in the corner.
+        if (str_starts_with($request->getPath(), '/debug-kit')) {
+            $service->skipAuthorization();
+        }
+
+        return $service;
     }
 }
