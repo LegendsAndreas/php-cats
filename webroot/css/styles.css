@@ -33,7 +33,7 @@ button:focus {
 }
 
 input {
-    background-color: white !important;
+    background-color: white;
 }
 
 input[type="checkbox"]:checked {

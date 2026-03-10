@@ -9,6 +9,9 @@ body:has(.login) {
 .login a {
   text-shadow: none;
 }
+.login .message {
+  text-shadow: none;
+}
 .login__level-1 {
   background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
   padding: 10px;

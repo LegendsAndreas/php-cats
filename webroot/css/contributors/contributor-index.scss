@@ -23,16 +23,32 @@ $table-bg: #eaaeb0;
     }
 
     .table {
+        border-collapse: unset;
         border: 2px solid wheat;
         border-radius: 5px;
         --bs-table-striped-bg: #ed989b;
         --bs-table-bg: #eaaeb0;
         th, td {
             color: white;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            text-shadow: 0 0 0 #000, 1px 0 0 #000, 0 1px 0 #000, 1px 1px 0 #000;
             a {
                 text-shadow: none;
             }
+        }
+    }
+
+    .dropdown-menu {
+        background-color: lighten($level-0-color, 5%);
+        border-radius: 5px;
+        border: 2px solid wheat;
+        color: white;
+
+        a {
+            color: white;
+        }
+
+        a:hover {
+            background-color: #5a2a2d;
         }
     }
 

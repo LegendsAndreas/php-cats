@@ -20,6 +20,7 @@ body:has(.cats-view) {
     }
 
     &__function-examples{
+        overflow: hidden;
         font-size: 20px;
         background-color: wheat;
         border-radius: 3px;

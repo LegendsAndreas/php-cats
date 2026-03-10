@@ -1,3 +1,5 @@
+@import "../variables";
+
 body:has(.cat-index) {
     background-color: #d33c43;
 }
@@ -5,6 +7,21 @@ body:has(.cat-index) {
 .cat-index {
     margin-top: 65px;
     margin-bottom: 65px;
+
+    &__level-1 {
+        background-color: lighten($level-0-color, 5%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
+    &__level-2 {
+        background-color: lighten($level-0-color, 10%);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border: 2px solid wheat;
+    }
 
     &__header {
         display: grid;
@@ -20,12 +37,37 @@ body:has(.cat-index) {
         width: 200px;
     }
 
+    &__top-button-link {
+        display: block;
+        width: 200px;
+        justify-self: center;
+        color: white;
+        text-decoration: none;
+        background-color: #d33c43;
+        font-weight: 700;
+        padding: 5px 3.0rem;
+    }
+
+    &__top-button-link:hover {
+        color: white;
+        background-color: #5a2a2d;
+    }
+
+    &__top-button-link:focus {
+        color: white;
+        background-color: #5a2a2d;
+    }
+
     &__input-search {
+        a {
+            padding: 6px 3rem;
+        }
         @media (max-width: 768px) {
             width: 200px !important;
         }
         &__button {
             @media (max-width: 768px) {
+                display: block;
                 width: 200px !important;
             }
         }
@@ -84,8 +126,7 @@ body:has(.cat-index) {
     &__order-checkbox {
         position: relative;
         top: 25%;
-        width: 20px;
-        height: 20px;
+        display: inline-block !important;
     }
 
     &__wrapper {
@@ -106,7 +147,7 @@ body:has(.cat-index) {
     }
 
     &__image {
-        border: 2px solid white;
+        border: 2px solid wheat;
         border-radius: 5px 5px 0 0;
         transition: opacity 0.2s ease-in-out;
         border-bottom: none;
@@ -118,9 +159,9 @@ body:has(.cat-index) {
         &__footer {
             padding: 5px 10px 15px 10px;
             color: #F6FDFF;
-            background-color: lighten(#d33c43, 5%);
+            background-color: lighten(#d33c43, 10%);
             border-radius: 0 0 5px 5px;
-            border: 2px solid white;
+            border: 2px solid wheat;
             border-top: none;
 
             &__button-a a {
@@ -139,10 +180,12 @@ body:has(.cat-index) {
 
     &__bottom-paginator {
         background-color: wheat;
-        width: fit-content;
-        margin-top: 20px;
+    }
+
+    // To avoid having an empty bar, we put the padding and margin on if a pagination element has actually been rendered
+    &__bottom-paginator:has(.pagination) {
+        margin-top: 65px;
         border-radius: 5px;
-        justify-self: center;
         padding: 10px;
     }
 }

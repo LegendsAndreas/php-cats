@@ -6,6 +6,20 @@ body:has(.cat-index) {
   margin-top: 65px;
   margin-bottom: 65px;
 }
+.cat-index__level-1 {
+  background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 2px solid wheat;
+}
+.cat-index__level-2 {
+  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  border: 2px solid wheat;
+}
 .cat-index__header {
   display: grid;
   justify-self: center;
@@ -18,6 +32,27 @@ body:has(.cat-index) {
 .cat-index__top-button {
   width: 200px;
 }
+.cat-index__top-button-link {
+  display: block;
+  width: 200px;
+  justify-self: center;
+  color: white;
+  text-decoration: none;
+  background-color: #d33c43;
+  font-weight: 700;
+  padding: 5px 3rem;
+}
+.cat-index__top-button-link:hover {
+  color: white;
+  background-color: #5a2a2d;
+}
+.cat-index__top-button-link:focus {
+  color: white;
+  background-color: #5a2a2d;
+}
+.cat-index__input-search a {
+  padding: 6px 3rem;
+}
 @media (max-width: 768px) {
   .cat-index__input-search {
     width: 200px !important;
@@ -25,6 +60,7 @@ body:has(.cat-index) {
 }
 @media (max-width: 768px) {
   .cat-index__input-search__button {
+    display: block;
     width: 200px !important;
   }
 }
@@ -73,8 +109,7 @@ body:has(.cat-index) {
 .cat-index__order-checkbox {
   position: relative;
   top: 25%;
-  width: 20px;
-  height: 20px;
+  display: inline-block !important;
 }
 .cat-index__wrapper {
   width: 400px;
@@ -96,7 +131,7 @@ body:has(.cat-index) {
   }
 }
 .cat-index__image {
-  border: 2px solid white;
+  border: 2px solid wheat;
   border-radius: 5px 5px 0 0;
   transition: opacity 0.2s ease-in-out;
   border-bottom: none;
@@ -107,9 +142,9 @@ body:has(.cat-index) {
 .cat-index__image__footer {
   padding: 5px 10px 15px 10px;
   color: #F6FDFF;
-  background-color: rgb(215.6945606695, 80.8054393305, 87.0585774059);
+  background-color: rgb(220.3891213389, 101.6108786611, 107.1171548117);
   border-radius: 0 0 5px 5px;
-  border: 2px solid white;
+  border: 2px solid wheat;
   border-top: none;
 }
 .cat-index__image__footer__button-a a {
@@ -124,10 +159,10 @@ body:has(.cat-index) {
 }
 .cat-index__bottom-paginator {
   background-color: wheat;
-  width: fit-content;
-  margin-top: 20px;
+}
+.cat-index__bottom-paginator:has(.pagination) {
+  margin-top: 65px;
   border-radius: 5px;
-  justify-self: center;
   padding: 10px;
 }
 
