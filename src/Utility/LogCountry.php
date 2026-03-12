@@ -3,6 +3,7 @@ namespace App\Utility;
 
 use Cake\I18n\DateTime;
 use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
@@ -42,25 +43,32 @@ class LogCountry
 
         $reader = new Reader($databasePath);
 
+        $countriesCount = [];
         foreach ($ips as $ipAddress => $value) {
             try {
                 $record = $reader->country($ipAddress);
             } catch (AddressNotFoundException $e) {
                 Log::write('error', "IP address not found: {$ipAddress}", ['scope' => 'countries']);
 
-                continue; // Skip this IP, process the rest
+                continue;
             } catch (InvalidDatabaseException $e) {
                 Log::write('error', "Invalid GeoLite2 database: {$e->getMessage()}", ['scope' => 'countries']);
 
-                return; // Database issue affects all, so return is appropriate here
+                continue;
             }
-            dd($record);
 
             $countryName = $record->country->name ?? 'Could not determine country';
+            if (!isset($countriesCount[$countryName])) {
+                $countriesCount[$countryName] = 0;
+            }
+            $countriesCount[$countryName]++;
+
             Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
         }
 
-        file_put_contents($path, '');
+        $this->addVisitorsToDatabase($countriesCount);
+
+//        file_put_contents($path, '');
     }
 
     private function translateTimestamps($ips): array
@@ -71,5 +79,28 @@ class LogCountry
         unset($ip);
 
         return $ips;
+    }
+
+    private function addVisitorsToDatabase(array $countriesCount)
+    {
+        $visitors = TableRegistry::getTableLocator()->get('Visitors');
+        foreach ($countriesCount as $country => $count) {
+            $dbVisitor = $visitors->find()->where(['country' => $country])->first();
+            if (!$dbVisitor) {
+                $newVisitor = $visitors->newEntity([
+                    'country' => $country,
+                    'count' => $count,
+                ]);
+                if (!$visitors->save($newVisitor)) {
+                    Log::write('error', "Failed to save visitor data for country: {$country}", ['scope' => 'countries']);
+                }
+                continue;
+            }
+
+            $dbVisitor->count += $count;
+            if (!$visitors->save($dbVisitor)) {
+                Log::write('error', "Failed to update visitor data for country: {$country}", ['scope' => 'countries']);
+            }
+        }
     }
 }

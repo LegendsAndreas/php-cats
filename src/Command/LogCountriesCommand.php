@@ -10,6 +10,7 @@ use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\I18n\DateTime;
 use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
@@ -49,22 +50,30 @@ class LogCountriesCommand extends BaseCommand
 
         $reader = new Reader($databasePath);
 
+        $countriesCount = [];
         foreach ($ips as $ipAddress => $value) {
             try {
                 $record = $reader->country($ipAddress);
             } catch (AddressNotFoundException $e) {
                 Log::write('error', "IP address not found: {$ipAddress}", ['scope' => 'countries']);
 
-                continue; // Skip this IP, process the rest
+                continue;
             } catch (InvalidDatabaseException $e) {
                 Log::write('error', "Invalid GeoLite2 database: {$e->getMessage()}", ['scope' => 'countries']);
 
-                return; // Database issue affects all, so return is appropriate here
+                continue;
             }
 
             $countryName = $record->country->name ?? 'Could not determine country';
+            if (!isset($countriesCount[$countryName])) {
+                $countriesCount[$countryName] = 0;
+            }
+            $countriesCount[$countryName]++;
+
             Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
         }
+
+        $this->addVisitorsToDatabase($countriesCount);
 
         file_put_contents($path, '');
     }
@@ -77,5 +86,14 @@ class LogCountriesCommand extends BaseCommand
         unset($ip);
 
         return $ips;
+    }
+
+    private function addVisitorsToDatabase(array $countriesCount)
+    {
+        \Cake\Error\dd($countriesCount);
+        $visitors = TableRegistry::getTableLocator()->get('Visitors');
+        foreach ($countriesCount as $country => $count) {
+
+        }
     }
 }
