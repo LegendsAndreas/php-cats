@@ -2,11 +2,6 @@
 
 use App\Utility;
 
-// phpcs:ignoreFile
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Log\Log;
-
 /**
  * @var \App\View\AppView       $this
  * @var \App\Model\Entity\Cat[] $cats
@@ -15,7 +10,7 @@ use Cake\Log\Log;
 $modulus = 4;
 
 $tester = new Utility\LogCountry();
-$tester->getIpCountry($this->request->clientIp());
+$tester->getIpCountry();
 ?>
 <div class="level-1">
     <div class="my-5">
@@ -70,13 +65,13 @@ $tester->getIpCountry($this->request->clientIp());
                 <div class="col">
                     <div>
                         <input type="text"
-                               class="bg-white form-control fs-3 d-inline js-input-search w-25 cat-index__input-search"
+                               class="form-control js-input-search fs-3 w-25 cat-index__input-search"
                                placeholder="Search by name">
                         <?= $this->Html->link('Search', ['controller' => 'Cats', 'action' => 'index'], [
-                                'escape' => false,
-                                'class'  => 'text-decoration-none js-link-search fs-3 mt-3 d-inline js-search-button cat-index__input-search__button cat-index__top-button-link',
-                                'href'   => '/cats/index/0',
-                            ],) ?>
+                            'escape' => false,
+                            'class'  => 'text-decoration-none js-link-search fs-3 js-search-button cat-index__input-search__button cat-index__top-button-link',
+                            'href'   => '/cats/index/0',
+                        ],) ?>
 
                         <div>
                             <?= $this->Form->label('select-column', 'Reverse Order', ['class' => 'form-check-label fs-3']) ?>

@@ -1,15 +1,22 @@
 <?php
-namespace App\Utility;
 
+declare(strict_types=1);
+
+namespace App\Command;
+
+use Cake\Cache\Cache;
+use Cake\Console\Arguments;
+use Cake\Console\BaseCommand;
+use Cake\Console\ConsoleIo;
 use Cake\I18n\DateTime;
 use Cake\Log\Log;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 
-class LogCountry
+class LogCountriesCommand extends BaseCommand
 {
-    public function getIpCountry(): void
+    public function execute(Arguments $args, ConsoleIo $io)
     {
         $path = ROOT . DS . 'logs' . DS . 'visitors.log';
 
@@ -54,7 +61,6 @@ class LogCountry
 
                 return; // Database issue affects all, so return is appropriate here
             }
-            dd($record);
 
             $countryName = $record->country->name ?? 'Could not determine country';
             Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
