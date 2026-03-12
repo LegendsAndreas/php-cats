@@ -31,5 +31,8 @@ return [
             //'schema' => 'myapp',
 //            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
         ],
+        'debug_kit' => [
+            'url'    => 'sqlite://127.0.0.1/tmp/debug_kit.sqlite'
+        ],
     ],
 ];
