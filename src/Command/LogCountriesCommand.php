@@ -15,9 +15,12 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 
+/**
+ *
+ */
 class LogCountriesCommand extends BaseCommand
 {
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): void
     {
         $path = ROOT . DS . 'logs' . DS . 'visitors.log';
 
@@ -36,9 +39,10 @@ class LogCountriesCommand extends BaseCommand
         $ips = [];
         foreach ($logEntries as $entry) {
             if ($entry['level'] !== 'info') {
-                continue; // Skip this entry, not all entries
+                continue;
             }
 
+            // Since the same guy can visit the website multiple times a day, we just overwrite that ip with the new timestamp
             $ips[$entry['request']['remote_ip']] = [
                 'timestamp' => $entry['ts'],
             ];
@@ -90,10 +94,24 @@ class LogCountriesCommand extends BaseCommand
 
     private function addVisitorsToDatabase(array $countriesCount)
     {
-        \Cake\Error\dd($countriesCount);
         $visitors = TableRegistry::getTableLocator()->get('Visitors');
         foreach ($countriesCount as $country => $count) {
+            $dbVisitor = $visitors->find()->where(['country' => $country])->first();
+            if (!$dbVisitor) {
+                $newVisitor = $visitors->newEntity([
+                    'country' => $country,
+                    'count' => $count,
+                ]);
+                if (!$visitors->save($newVisitor)) {
+                    Log::write('error', "Failed to save visitor data for country: {$country}", ['scope' => 'countries']);
+                }
+                continue;
+            }
 
+            $dbVisitor->count += $count;
+            if (!$visitors->save($dbVisitor)) {
+                Log::write('error', "Failed to update visitor data for country: {$country}", ['scope' => 'countries']);
+            }
         }
     }
 }
