@@ -63,7 +63,7 @@ class CatsController extends AppController
         return $this->render();
     }
 
-    public function index(): void
+    public function index(): Response
     {
         $this->Authorization->skipAuthorization();
         // Build cache key based on query parameters
@@ -71,6 +71,12 @@ class CatsController extends AppController
         $catName      = $this->request->getQuery('catName', '');
         $page         = $this->request->getQuery('page', '1');
         $cacheKey     = sprintf('cats_index_%s_%s_%s', $reverseOrder, md5($catName), $page);
+
+        $this->response = $this->response->withEtag($cacheKey);
+
+        if ($this->response->isNotModified($this->request)) {
+            return $this->response;
+        }
 
         $cached = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_index') : null;
 
@@ -106,6 +112,8 @@ class CatsController extends AppController
         // Always pass cats from cached array (whether just cached or previously cached)
         $this->set('title', 'PHP Cats');
         $this->set('cats', $cached['cats']);
+
+        return $this->render();
     }
 
     // To make sure that it also looks after special characters, we add a backslash to escape them
