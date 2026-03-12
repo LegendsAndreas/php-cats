@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property string     $social
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
+ * @property \Cake\I18n\DateTime $deleted
  *
  * @property Cat[]      $cats
  */

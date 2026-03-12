@@ -48,6 +48,11 @@
     }
 
     &__input-search {
+        display: inline;
+        background-color: white !important;
+        height: unset !important;
+        padding: .375rem .75rem !important;
+
         a {
             padding: 6px 3rem;
         }
@@ -55,9 +60,11 @@
             width: 200px !important;
         }
         &__button {
+            display: inline;
             @media (max-width: 768px) {
                 display: block;
                 width: 200px !important;
+                margin-top: 10px;
             }
         }
     }

@@ -126,7 +126,14 @@ class CatsController extends AppController
     public function add(): Response
     {
         $cat = $this->Cats->newEmptyEntity();
-        $this->Authorization->authorize($cat);
+
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to add cats.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
@@ -194,8 +201,15 @@ class CatsController extends AppController
 
     public function edit(int $id): Response
     {
-        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
+
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to edit cats.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         // We want an array of ids and not of entities.
         $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->all()->extract('contributor_id')->toArray();
 
@@ -286,13 +300,20 @@ class CatsController extends AppController
 
     public function delete($id): Response
     {
-        $this->Authorization->skipAuthorization();
-        date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
+        $cat = $this->Cats->findById($id)->firstOrFail();
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to delete cats.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
+
+        date_default_timezone_set('Europe/Copenhagen');
         $page = $this->request->getQuery('page');
 
-        $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => new \Cake\I18n\DateTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
@@ -312,8 +333,15 @@ class CatsController extends AppController
 
     public function fullDelete($id): Response
     {
-        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to full delete cats.'));
+
+            return $this->redirect(['action' => 'deleted']);
+        }
+
         if ($this->Cats->delete($cat)) {
             $this->clearCacheGroup([
                 'cats_deleted' => 'cats-deleted',
