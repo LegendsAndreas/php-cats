@@ -72,8 +72,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
          */
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit');
-            $this->addPlugin('Migrations');
         }
+
         $this->addPlugin('Authorization');
     }
 
@@ -136,6 +136,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     protected function bootstrapCli(): void
     {
         $this->addOptionalPlugin('Bake');
+        $this->addPlugin('Migrations');
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
