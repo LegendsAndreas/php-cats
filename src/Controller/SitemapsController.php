@@ -49,6 +49,29 @@ class SitemapsController extends AppController
                 ];
             }
 
+            $latestModifiedContributor = $this->fetchTable('Contributors')->find()->select('modified')->orderByDesc('modified')->first();
+            if ($latestModifiedContributor) {
+                $urls[] = [
+                    'loc'     => Router::url([
+                        'controller' => 'Contributors',
+                        'action'     => 'index',
+                    ], true),
+                    'lastmod' => $latestModifiedContributor->modified->format('Y-m-d'),
+                ];
+            }
+
+            $contributors = $this->fetchTable('Contributors')->find()->select(['id', 'modified'])->orderByAsc('id')->all();
+            foreach ($contributors as $contributor) {
+                $urls[] = [
+                    'loc'     => Router::url([
+                        'controller' => 'Contributors',
+                        'action'     => 'view',
+                        $contributor->id,
+                    ], true),
+                    'lastmod' => $contributor->modified->format('Y-m-d'),
+                ];
+            }
+
             return $urls;
         }, $cacheConfig);
 
