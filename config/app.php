@@ -132,6 +132,12 @@ return [
             'url'       => env('CACHE_DEFAULT_URL', null),
             'duration'  => '+24 hours',
         ],
+        'sitemap' => [
+            'className' => FileEngine::class,
+            'path'      => CACHE . 'sitemap' . DS,
+            'url'       => env('CACHE_DEFAULT_URL', null),
+            'duration'  => '+1 months',
+        ],
 
         /*
          * Configure the cache used for general framework caching.
