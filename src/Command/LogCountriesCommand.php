@@ -1,6 +1,13 @@
 <?php
-namespace App\Utility;
 
+declare(strict_types=1);
+
+namespace App\Command;
+
+use Cake\Cache\Cache;
+use Cake\Console\Arguments;
+use Cake\Console\BaseCommand;
+use Cake\Console\ConsoleIo;
 use Cake\I18n\DateTime;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
@@ -8,9 +15,12 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 
-class LogCountry
+/**
+ *
+ */
+class LogCountriesCommand extends BaseCommand
 {
-    public function getIpCountry(): void
+    public function execute(Arguments $args, ConsoleIo $io): void
     {
         $path = ROOT . DS . 'logs' . DS . 'visitors.log';
 
@@ -23,19 +33,22 @@ class LogCountry
         }, $lines);
 
         if (empty($logEntries)) {
+            Log::write('info', "No entries were found in the log file lol", ['scope' => 'countries']);
             return;
         }
 
         $ips = [];
         foreach ($logEntries as $entry) {
             if (empty($entry)) {
+                Log::write('warning', "No entry was found in the entry", ['scope' => 'countries']);
                 continue;
             }
 
             if ($entry['level'] !== 'info') {
-                continue; // Skip this entry, not all entries
+                continue;
             }
 
+            // Since the same guy can visit the website multiple times a day, we just overwrite that ip with the new timestamp
             $ips[$entry['request']['remote_ip']] = [
                 'timestamp' => $entry['ts'],
             ];
@@ -66,10 +79,7 @@ class LogCountry
                 $countriesCount[$countryName] = 0;
             }
             $countriesCount[$countryName]++;
-
-            Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
         }
-        \Cake\Error\dd($countriesCount);
 
         $this->addVisitorsToDatabase($countriesCount);
 
@@ -79,7 +89,7 @@ class LogCountry
     private function translateTimestamps($ips): array
     {
         foreach ($ips as &$ip) {
-            $ip['timestamp'] = new DateTime($ip['timestamp']);
+            $ip['timestamp'] = new DateTime((int)$ip['timestamp']);
         }
         unset($ip);
 

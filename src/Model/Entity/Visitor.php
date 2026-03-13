@@ -6,20 +6,16 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
- * @property int        $id
- * @property string     $email
- * @property string     $name
- * @property string     $social
+ * @property int                 $id
+ * @property string              $country
+ * @property int                 $count
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
- * @property \Cake\I18n\DateTime $deleted
- *
- * @property Cat[]      $cats
  */
-class Contributor extends Entity
+class Visitor extends Entity
 {
     protected array $_accessible = [
-        '*' => true,
+        '*'  => true,
         'id' => false,
     ];
 }

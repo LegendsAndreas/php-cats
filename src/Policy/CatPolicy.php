@@ -35,6 +35,10 @@ class CatPolicy
      */
     public function canEdit(IdentityInterface $user, Cat $cat)
     {
+        if ($user->get('role') === 'admin') {
+            return true;
+        }
+        return false;
     }
 
     /**

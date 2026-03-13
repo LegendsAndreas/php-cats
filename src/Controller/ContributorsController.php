@@ -96,8 +96,16 @@ class ContributorsController extends AppController
 
     public function delete($id)
     {
+        $contributor = $this->Contributors->get($id);
+        try {
+            $this->Authorization->authorize($contributor);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to delete contributors.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
+
         date_default_timezone_set('Europe/Copenhagen');
-        $contributor          = $this->Contributors->get($id);
         $contributor->deleted = new \Cake\I18n\DateTime(date('d-m-Y H:i:s'));
         if ($this->Contributors->save($contributor)) {
             $this->Flash->success(__('Contributor deleted successfully'));
@@ -111,6 +119,13 @@ class ContributorsController extends AppController
     public function edit($id)
     {
         $contributor = $this->Contributors->get($id);
+        try {
+            $this->Authorization->authorize($contributor);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to edit contributors.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
 
         if ($this->request->is(['put'])) {
             $this->Contributors->patchEntity($contributor, $this->request->getData());

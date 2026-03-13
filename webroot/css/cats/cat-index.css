@@ -39,6 +39,12 @@
   color: white;
   background-color: #5a2a2d;
 }
+.cat-index__input-search {
+  display: inline;
+  background-color: white !important;
+  height: unset !important;
+  padding: 0.375rem 0.75rem !important;
+}
 .cat-index__input-search a {
   padding: 6px 3rem;
 }
@@ -47,10 +53,14 @@
     width: 200px !important;
   }
 }
+.cat-index__input-search__button {
+  display: inline;
+}
 @media (max-width: 768px) {
   .cat-index__input-search__button {
     display: block;
     width: 200px !important;
+    margin-top: 10px;
   }
 }
 .cat-index__pagination li a {

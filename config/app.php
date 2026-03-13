@@ -132,6 +132,12 @@ return [
             'url'       => env('CACHE_DEFAULT_URL', null),
             'duration'  => '+24 hours',
         ],
+        'sitemap' => [
+            'className' => FileEngine::class,
+            'path'      => CACHE . 'sitemap' . DS,
+            'url'       => env('CACHE_DEFAULT_URL', null),
+            'duration'  => '+1 months',
+        ],
 
         /*
          * Configure the cache used for general framework caching.
@@ -460,5 +466,11 @@ return [
      */
     'Session'        => [
         'defaults' => 'php',
+    ],
+
+    'DebugKit' => [
+        'forceEnable' => filter_var(env('DEBUG_KIT_FORCE_ENABLE', false), FILTER_VALIDATE_BOOLEAN),
+        'safeTld' => env('DEBUG_KIT_SAFE_TLD', null),
+        'ignoreAuthorization' => env('DEBUG_KIT_IGNORE_AUTHORIZATION', false),
     ],
 ];

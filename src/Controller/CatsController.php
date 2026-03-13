@@ -63,7 +63,7 @@ class CatsController extends AppController
         return $this->render();
     }
 
-    public function index(): void
+    public function index(): Response
     {
         $this->Authorization->skipAuthorization();
         // Build cache key based on query parameters
@@ -71,6 +71,12 @@ class CatsController extends AppController
         $catName      = $this->request->getQuery('catName', '');
         $page         = $this->request->getQuery('page', '1');
         $cacheKey     = sprintf('cats_index_%s_%s_%s', $reverseOrder, md5($catName), $page);
+
+        $this->response = $this->response->withEtag(md5($cacheKey));
+
+        if ($this->response->isNotModified($this->request)) {
+            return $this->response;
+        }
 
         $cached = $this->cacheEnabled ? Cache::read($cacheKey, 'cats_index') : null;
 
@@ -106,6 +112,8 @@ class CatsController extends AppController
         // Always pass cats from cached array (whether just cached or previously cached)
         $this->set('title', 'PHP Cats');
         $this->set('cats', $cached['cats']);
+
+        return $this->render();
     }
 
     // To make sure that it also looks after special characters, we add a backslash to escape them
@@ -118,7 +126,14 @@ class CatsController extends AppController
     public function add(): Response
     {
         $cat = $this->Cats->newEmptyEntity();
-        $this->Authorization->authorize($cat);
+
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to add cats.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
@@ -186,8 +201,15 @@ class CatsController extends AppController
 
     public function edit(int $id): Response
     {
-        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->contain(['HtmlBlocks'])->firstOrFail();
+
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to edit cats.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         // We want an array of ids and not of entities.
         $contributorIds = $this->CatContributors->find()->where(['cat_id' => $id])->all()->extract('contributor_id')->toArray();
 
@@ -278,13 +300,20 @@ class CatsController extends AppController
 
     public function delete($id): Response
     {
-        $this->Authorization->skipAuthorization();
-        date_default_timezone_set('Europe/Copenhagen');
         $this->request->allowMethod(['post', 'delete']);
 
+        $cat = $this->Cats->findById($id)->firstOrFail();
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to delete cats.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
+
+        date_default_timezone_set('Europe/Copenhagen');
         $page = $this->request->getQuery('page');
 
-        $cat = $this->Cats->findById($id)->firstOrFail();
         $this->Cats->patchEntity($cat, ['deleted' => new \Cake\I18n\DateTime(date('d-m-Y H:i:s'))]);
 
         if ($this->Cats->save($cat)) {
@@ -304,8 +333,15 @@ class CatsController extends AppController
 
     public function fullDelete($id): Response
     {
-        $this->Authorization->skipAuthorization();
         $cat = $this->Cats->findById($id)->firstOrFail();
+        try {
+            $this->Authorization->authorize($cat);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not authorized to full delete cats.'));
+
+            return $this->redirect(['action' => 'deleted']);
+        }
+
         if ($this->Cats->delete($cat)) {
             $this->clearCacheGroup([
                 'cats_deleted' => 'cats-deleted',
