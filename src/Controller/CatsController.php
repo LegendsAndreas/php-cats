@@ -72,7 +72,7 @@ class CatsController extends AppController
         $page         = $this->request->getQuery('page', '1');
         $cacheKey     = sprintf('cats_index_%s_%s_%s', $reverseOrder, md5($catName), $page);
 
-        $this->response = $this->response->withEtag($cacheKey);
+        $this->response = $this->response->withEtag(md5($cacheKey));
 
         if ($this->response->isNotModified($this->request)) {
             return $this->response;

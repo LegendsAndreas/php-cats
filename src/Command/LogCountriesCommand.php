@@ -33,6 +33,7 @@ class LogCountriesCommand extends BaseCommand
         }, $lines);
 
         if (empty($logEntries)) {
+            Log::write('info', "No entries were found in the log file lol", ['scope' => 'countries']);
             return;
         }
 
@@ -78,13 +79,11 @@ class LogCountriesCommand extends BaseCommand
                 $countriesCount[$countryName] = 0;
             }
             $countriesCount[$countryName]++;
-
-            Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
         }
 
         $this->addVisitorsToDatabase($countriesCount);
 
-//        file_put_contents($path, '');
+        file_put_contents($path, '');
     }
 
     private function translateTimestamps($ips): array
