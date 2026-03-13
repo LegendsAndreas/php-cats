@@ -151,6 +151,19 @@
   border: 2px solid wheat;
   border-top: none;
 }
+.cat-index__image__footer h2 {
+  font-size: 25px;
+}
+@media (max-width: 992px) {
+  .cat-index__image__footer h2 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 400px) {
+  .cat-index__image__footer h2 {
+    font-size: 18px;
+  }
+}
 .cat-index__image__footer__button-a a {
   border-radius: 4px;
   text-decoration: none;

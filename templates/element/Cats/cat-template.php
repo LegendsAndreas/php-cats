@@ -17,7 +17,7 @@
     </div>
 
     <div class="cat-index__image__footer">
-        <h2 class="fs-1"><?= $cat->function_name ?></h2>
+        <h2><?= $cat->function_name ?></h2>
         <?php foreach ($buttons as $button) { ?>
           <div class="cat-index__image__footer__button-a d-inline">
               <?= $button ?>

@@ -173,6 +173,16 @@
             border: 2px solid wheat;
             border-top: none;
 
+            h2 {
+                font-size: 25px;
+                @media (max-width: 992px) {
+                    font-size: 20px;
+                }
+                @media (max-width: 400px) {
+                    font-size: 18px;
+                }
+            }
+
             &__button-a a {
                 border-radius: 4px;
                 text-decoration: none;
