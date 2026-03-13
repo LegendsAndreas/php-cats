@@ -38,6 +38,11 @@ class LogCountriesCommand extends BaseCommand
 
         $ips = [];
         foreach ($logEntries as $entry) {
+            if (empty($entry)) {
+                Log::write('warning', "No entry was found in the entry", ['scope' => 'countries']);
+                continue;
+            }
+
             if ($entry['level'] !== 'info') {
                 continue;
             }
@@ -79,13 +84,13 @@ class LogCountriesCommand extends BaseCommand
 
         $this->addVisitorsToDatabase($countriesCount);
 
-        file_put_contents($path, '');
+//        file_put_contents($path, '');
     }
 
     private function translateTimestamps($ips): array
     {
         foreach ($ips as &$ip) {
-            $ip['timestamp'] = new DateTime($ip['timestamp']);
+            $ip['timestamp'] = new DateTime((int)$ip['timestamp']);
         }
         unset($ip);
 

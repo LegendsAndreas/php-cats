@@ -8,9 +8,6 @@ use App\Utility;
  * @var \App\Model\Entity\User  $currentUser
  */
 $modulus = 4;
-
-$tester = new Utility\LogCountry();
-$tester->getIpCountry();
 ?>
 <div class="level-1">
     <div class="my-5">
