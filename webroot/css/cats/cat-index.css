@@ -105,6 +105,11 @@
 .cat-index__pagination .next.disabled {
   border-radius: 0px 25px 25px 0px !important;
 }
+@media (max-width: 768px) {
+  .cat-index__pagination__text {
+    display: none;
+  }
+}
 .cat-index__order-checkbox {
   position: relative;
   top: 25%;

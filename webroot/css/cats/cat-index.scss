@@ -56,9 +56,11 @@
         a {
             padding: 6px 3rem;
         }
+
         @media (max-width: 768px) {
             width: 200px !important;
         }
+
         &__button {
             display: inline;
             @media (max-width: 768px) {
@@ -89,6 +91,7 @@
                 background-color: #C93941;
                 border-left-color: #C93941;
                 border-right-color: #C93941;
+
                 a {
                     color: white !important;
                     transition: none;
@@ -100,6 +103,7 @@
             background-color: #C93941;
             border-left-color: #C93941;
             border-right-color: #C93941;
+
             a {
                 color: white !important;
             }
@@ -108,14 +112,23 @@
         .last {
             border-radius: 0px 25px 25px 0px;
         }
+
         .first {
             border-radius: 25px 0px 0px 25px;
         }
+
         .prev.disabled {
             border-radius: 25px 0px 0px 25px !important;
         }
+
         .next.disabled {
             border-radius: 0px 25px 25px 0px !important;
+        }
+
+        &__text {
+            @media (max-width: 768px) {
+                display: none;
+            }
         }
     }
 
