@@ -28,6 +28,10 @@ class LogCountry
 
         $ips = [];
         foreach ($logEntries as $entry) {
+            if (empty($entry)) {
+                continue;
+            }
+
             if ($entry['level'] !== 'info') {
                 continue; // Skip this entry, not all entries
             }
@@ -65,10 +69,11 @@ class LogCountry
 
             Log::write('info', $value['timestamp']->format('Y-m-d H:i:s') . ' ' . $countryName, ['scope' => 'countries']);
         }
+        \Cake\Error\dd($countriesCount);
 
         $this->addVisitorsToDatabase($countriesCount);
 
-//        file_put_contents($path, '');
+        file_put_contents($path, '');
     }
 
     private function translateTimestamps($ips): array
