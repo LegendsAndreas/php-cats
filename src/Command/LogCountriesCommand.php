@@ -24,8 +24,12 @@ class LogCountriesCommand extends BaseCommand
     {
         $path = ROOT . DS . 'logs' . DS . 'visitors.log';
 
-        // Read the entire file at once
-        $logs = file_get_contents($path);
+        try {
+            $logs = file_get_contents($path);
+        }
+        catch (\Exception $e) {
+            Log::write('error', "Failed to read the log file: {$e->getMessage()}", ['scope' => 'countries']);
+        }
 
         $lines      = array_filter(explode("\n", trim($logs)));
         $logEntries = array_map(function ($line) {
@@ -34,6 +38,7 @@ class LogCountriesCommand extends BaseCommand
 
         if (empty($logEntries)) {
             Log::write('info', "No entries were found in the log file lol", ['scope' => 'countries']);
+
             return;
         }
 
@@ -104,7 +109,7 @@ class LogCountriesCommand extends BaseCommand
             if (!$dbVisitor) {
                 $newVisitor = $visitors->newEntity([
                     'country' => $country,
-                    'count' => $count,
+                    'count'   => $count,
                 ]);
                 if (!$visitors->save($newVisitor)) {
                     Log::write('error', "Failed to save visitor data for country: {$country}", ['scope' => 'countries']);
