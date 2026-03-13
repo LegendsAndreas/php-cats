@@ -33,7 +33,7 @@ class LogCountriesCommand extends BaseCommand
 
         $lines      = array_filter(explode("\n", trim($logs)));
         $logEntries = array_map(function ($line) {
-            return json_decode($line, true); // true for associative array
+            return json_decode($line, true);
         }, $lines);
 
         if (empty($logEntries)) {
