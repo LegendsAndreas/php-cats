@@ -74,6 +74,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             $this->addPlugin('DebugKit');
         }
 
+        $this->addPlugin('AssetCompress');
         $this->addPlugin('Authorization');
     }
 

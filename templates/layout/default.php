@@ -12,9 +12,10 @@
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
+ * @var AssetCompress\View\Helper\AssetCompressHelper $AssetCompress
  * @var string $title // Set in each controller action
  */
-
+$AssetCompress = $this->loadHelper('AssetCompress.AssetCompress');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,8 +31,9 @@
     <?= $this->Html->meta('icon', '/favicon-16x16.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>
     <?= $this->Html->meta('icon', '/favicon-32x32.png', ['type' => 'image/png', 'sizes' => '32x32']) ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'styles']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
 
+    <?= $AssetCompress->css('styles') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
