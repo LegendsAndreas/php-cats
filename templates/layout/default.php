@@ -16,6 +16,7 @@
  * @var string $title // Set in each controller action
  */
 $AssetCompress = $this->loadHelper('AssetCompress.AssetCompress');
+$debug = \Cake\Core\Configure::read('debug');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,7 @@ $AssetCompress = $this->loadHelper('AssetCompress.AssetCompress');
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
 
-    <?= $AssetCompress->css('styles') ?>
+    <?= $AssetCompress->css('styles', ['raw' => $debug]) ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
