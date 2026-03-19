@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7eb9bc289b2f0154dfa683e67fcfba3",
+    "content-hash": "ebe386d830b82126bde657c0f4544b2d",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -321,16 +321,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "612764c7d69601b78b8efb43de861fc97cce1b03"
+                "reference": "c8cfb9359cec6a880f67eb25210fb02f260a5bd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/612764c7d69601b78b8efb43de861fc97cce1b03",
-                "reference": "612764c7d69601b78b8efb43de861fc97cce1b03",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/c8cfb9359cec6a880f67eb25210fb02f260a5bd8",
+                "reference": "c8cfb9359cec6a880f67eb25210fb02f260a5bd8",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +378,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2026-03-07T18:38:22+00:00"
+            "time": "2026-03-12T21:10:11+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -715,6 +715,72 @@
             "time": "2025-10-12T20:58:29+00:00"
         },
         {
+            "name": "league/climate",
+            "version": "3.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/climate.git",
+                "reference": "237f70e1032b16d32ff3f65dcda68706911e1c74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/climate/zipball/237f70e1032b16d32ff3f65dcda68706911e1c74",
+                "reference": "237f70e1032b16d32ff3f65dcda68706911e1c74",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "seld/cli-prompt": "^1.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6.12",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^9.5.10",
+                "squizlabs/php_codesniffer": "^3.10"
+            },
+            "suggest": {
+                "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\CLImate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Tannenbaum",
+                    "email": "hey@joe.codes",
+                    "homepage": "http://joe.codes/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Craig Duncan",
+                    "email": "git@duncanc.co.uk",
+                    "homepage": "https://github.com/duncan3dc",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP's best friend for the terminal. CLImate allows you to easily output colored text, special formats, and more.",
+            "keywords": [
+                "cli",
+                "colors",
+                "command",
+                "php",
+                "terminal"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/climate/issues",
+                "source": "https://github.com/thephpleague/climate/tree/3.10.0"
+            },
+            "time": "2024-11-18T09:09:55+00:00"
+        },
+        {
             "name": "league/container",
             "version": "5.1.0",
             "source": {
@@ -796,6 +862,141 @@
                 }
             ],
             "time": "2025-05-28T07:37:56+00:00"
+        },
+        {
+            "name": "markstory/asset_compress",
+            "version": "5.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/markstory/asset_compress.git",
+                "reference": "e1af3c8f615cb5f3fefae41c70d6bb021c8f6de5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/e1af3c8f615cb5f3fefae41c70d6bb021c8f6de5",
+                "reference": "e1af3c8f615cb5f3fefae41c70d6bb021c8f6de5",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^5.0",
+                "markstory/mini-asset": "^2.0",
+                "php": ">=8.1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^5.0",
+                "phpunit/phpunit": "^10.1.0"
+            },
+            "suggest": {
+                "328/jsqueeze": "For using the JSqueeze filter.",
+                "leafo/lessphp": "For using the LessPHP filter.",
+                "natxet/CssMin": "For using the CssMin filter.",
+                "patchwork/jshrink": "For using the JShrink filter.",
+                "scssphp/scssphp": "For using the ScssPHP filter."
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "AssetCompress\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Story",
+                    "homepage": "http://mark-story.com",
+                    "role": "Author"
+                }
+            ],
+            "description": "An asset compression plugin for CakePHP. Provides file concatenation and a flexible filter system for preprocessing and minification.",
+            "homepage": "https://github.com/markstory/asset_compress",
+            "keywords": [
+                "assets",
+                "cakephp",
+                "coffee-script",
+                "less",
+                "minifier",
+                "sass"
+            ],
+            "support": {
+                "issues": "https://github.com/markstory/asset_compress/issues",
+                "source": "https://github.com/markstory/asset_compress"
+            },
+            "time": "2025-11-20T16:24:40+00:00"
+        },
+        {
+            "name": "markstory/mini-asset",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/markstory/mini-asset.git",
+                "reference": "cddf390edfd1c56db49a7f2d2a06019f39e6a2d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/markstory/mini-asset/zipball/cddf390edfd1c56db49a7f2d2a06019f39e6a2d3",
+                "reference": "cddf390edfd1c56db49a7f2d2a06019f39e6a2d3",
+                "shasum": ""
+            },
+            "require": {
+                "league/climate": "~3.0",
+                "php": ">=8.1,<9"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^5.0",
+                "laminas/laminas-diactoros": "~2.0 | ~3.0",
+                "phpunit/phpunit": "^10.0",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "suggest": {
+                "matthiasmullie/minify": "For using Minify filter.",
+                "natxet/CssMin": "For using the CssMin filter.",
+                "oyejorge/less.php": "For using the LessDotPHP filter, see https://github.com/oyejorge/less.php",
+                "scssphp/scssphp:1.x": "For using the ScssPHP filter.",
+                "tchwork/jsqueeze": "For using the JSqueeze filter.",
+                "tedivm/jshrink": "For using the JShrink filter.",
+                "zendframework/diactoros": "The middleware layer relies on zendframework/diactoros."
+            },
+            "bin": [
+                "bin/mini_asset"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MiniAsset\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Story",
+                    "homepage": "http://mark-story.com",
+                    "role": "Author"
+                }
+            ],
+            "description": "An asset compression library. Provides file concatenation and a flexible filter system for preprocessing and minification.",
+            "homepage": "https://github.com/markstory/mini-asset",
+            "keywords": [
+                "assets",
+                "cakephp",
+                "coffee-script",
+                "less",
+                "minifier",
+                "psr7",
+                "sass"
+            ],
+            "support": {
+                "issues": "https://github.com/markstory/mini-asset/issues",
+                "source": "https://github.com/markstory/mini-asset"
+            },
+            "time": "2025-04-26T03:30:46+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -1450,6 +1651,61 @@
                 "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
             "time": "2021-10-29T13:26:27+00:00"
+        },
+        {
+            "name": "seld/cli-prompt",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/cli-prompt.git",
+                "reference": "b8dfcf02094b8c03b40322c229493bb2884423c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/cli-prompt/zipball/b8dfcf02094b8c03b40322c229493bb2884423c5",
+                "reference": "b8dfcf02094b8c03b40322c229493bb2884423c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.63"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Seld\\CliPrompt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be"
+                }
+            ],
+            "description": "Allows you to prompt for user input on the command line, and optionally hide the characters they type",
+            "keywords": [
+                "cli",
+                "console",
+                "hidden",
+                "input",
+                "prompt"
+            ],
+            "support": {
+                "issues": "https://github.com/Seldaek/cli-prompt/issues",
+                "source": "https://github.com/Seldaek/cli-prompt/tree/1.0.4"
+            },
+            "time": "2020-12-15T21:32:01+00:00"
         }
     ],
     "packages-dev": [
@@ -6361,5 +6617,5 @@
         "php": ">=8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
