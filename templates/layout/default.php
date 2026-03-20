@@ -32,8 +32,6 @@ $debug = \Cake\Core\Configure::read('debug');
     <?= $this->Html->meta('icon', '/favicon-16x16.png', ['type' => 'image/png', 'sizes' => '16x16']) ?>
     <?= $this->Html->meta('icon', '/favicon-32x32.png', ['type' => 'image/png', 'sizes' => '32x32']) ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
-
     <?= $AssetCompress->css('styles', ['raw' => $debug]) ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
