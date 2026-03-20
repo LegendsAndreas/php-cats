@@ -266,6 +266,8 @@ class CatsController extends AppController
                     }
                 }
 
+                Cache::clear("cats_view");
+
                 $this->Flash->success(__('Cat got updated.'));
 
                 return $this->redirect(['action' => 'edit', $id]);

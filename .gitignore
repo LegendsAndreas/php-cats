@@ -5,6 +5,8 @@
 /tmp/*
 /vendor/*
 
+/webroot/cache_css/styles.css
+
 # OS generated files #
 ######################
 .DS_Store

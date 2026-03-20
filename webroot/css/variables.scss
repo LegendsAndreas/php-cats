@@ -1,3 +1,5 @@
-﻿$level-0-color: #d33c43;
-$level-1-color: lighten($level-0-color, 5%);
-$level-2-color: lighten($level-0-color, 10%);
+﻿@use 'sass:color';
+
+$level-0-color: #d33c43;
+$level-1-color: color.scale($level-0-color, $lightness: 5%);
+$level-2-color: color.scale($level-0-color, $lightness: 10%);
