@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "cakephp/authentication": "3.3.4",
+        "cakephp/authentication": "4.1.0",
         "cakephp/authorization": "3.1",
         "cakephp/cakephp": "^5.3.0",
         "cakephp/migrations": "^5.0",
