@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+    env_file: ".env"
+    ports:
+      - "8080:80"
+    environment:
+      - APP_ENV=development
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cakephp
+      MYSQL_USER: cakephpuser
+      MYSQL_PASSWORD: cakephp_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
