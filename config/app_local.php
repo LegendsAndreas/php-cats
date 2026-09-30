@@ -1,5 +1,9 @@
 <?php
+
 use function Cake\Core\env;
+use Cake\Database\Connection;
+use Cake\Database\Driver\Sqlite;
+
 return [
     'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
 
@@ -29,10 +33,15 @@ return [
             'password' => 'secret',
             'database' => 'test_myapp',
             //'schema' => 'myapp',
-//            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
+            //            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
         ],
         'debug_kit' => [
-            'url'    => 'sqlite://127.0.0.1/tmp/debug_kit.sqlite'
+            'className' => Connection::class,
+            'driver' => Sqlite::class,
+            'database' => TMP . 'debug_kit.sqlite',
+            'encoding' => 'utf8',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
         ],
     ],
 ];
