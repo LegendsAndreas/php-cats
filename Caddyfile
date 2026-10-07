@@ -1,0 +1,10 @@
+phpcats.dk, www.phpcats.dk {
+    encode gzip zstd
+    reverse_proxy app:80
+}
+
+https://178.105.75.229/:8090 {
+    tls internal
+    encode gzip zstd
+    reverse_proxy app:80
+}
