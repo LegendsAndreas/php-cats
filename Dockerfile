@@ -17,6 +17,7 @@ RUN a2enmod rewrite
 COPY . /var/www/html
 
 # Set permissions for the application
+RUN mkdir -p tmp
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 777 tmp/
 
